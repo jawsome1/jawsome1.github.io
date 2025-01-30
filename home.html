@@ -27,6 +27,7 @@
     <form id="rsvp-form">
         <input type="text" id="name" placeholder="Your Name" required>
         <input type="email" id="email" placeholder="Your Email" required>
+        <input type="how_many" id="how_many" placeholder="How many guests" required>
         <button type="submit">RSVP</button>
     </form>
     
@@ -42,7 +43,7 @@
                 e.preventDefault();
                 const name = document.getElementById("name").value;
                 const email = document.getElementById("email").value;
-                
+                const how_many = document.getElementById("how_meny").value;
                 fetch("/api/rsvp", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

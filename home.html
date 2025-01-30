@@ -1,52 +1,87 @@
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="loading-bar.css"/>
-<script type="text/javascript" src="loading-bar.js"></script>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Jawsome's Web -- Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP - Home Party</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-<!---->
-<canvas id="c"></canvas>
-<center><h1 style="font-size: 500" class="unselect">Home</h1></center>
-<center><button id="btn" class="unselect">Info</button></center>
-<center><label class="unselect">Percent of update done</label>
-<p></p>
-<div
-  data-preset="stripe"
-  class="ldBar label-center unselect"
-  data-value="75"
-  style="width:100%;height:60px"
-></div>
-<button id="btn2" class="unselect">Discord</button></body><center>
-<button id="btn3" class="unselect">Credits</button></body>
-<script>
-    function test() {
-      document.location.href = 'https://jawsome1.github.io/info.html'
-    }
-    let btn = document.getElementById("btn");
-    btn.addEventListener('click', event => {
-      test();
-    });
-    function test2() {
-      document.location.href = 'https://discord.gg/XuNpEpWfT9'
-    }
-    let btn2 = document.getElementById("btn2");
-    btn2.addEventListener('click', event => {
-      test2();
-    });
-    function test3() {
-      document.location.href = 'https://jawsome1.github.io/card.html'
-    }
-    let btn3 = document.getElementById("btn3");
-    btn3.addEventListener('click', event => {
-      test3();
-    });
-</script>
-<!---->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/1.0.0/anime.min.js'></script><script  src="./script.js"></script>
+    <h1>RSVP for the Upcoming Party</h1>
+    <p id="event-details">Loading event details...</p>
+    
+    <form id="rsvp-form">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <button type="submit">RSVP</button>
+    </form>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("/api/event-details")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("event-details").innerText = `Next Event: ${data.date} - Menu: ${data.menu}`;
+                });
+            
+            document.getElementById("rsvp-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+                
+                fetch("/api/rsvp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email })
+                }).then(response => {
+                    if (response.ok) {
+                        alert("RSVP submitted successfully!");
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <hr>
+    <h2>Admin Login</h2>
+    <form id="admin-login">
+        <input type="text" id="admin-username" placeholder="Username" required>
+        <input type="password" id="admin-password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    
+    <script>
+        document.getElementById("admin-login").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
+            
+            fetch("/api/admin-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "/admin.html";
+                } else {
+                    alert("Login failed. Check your credentials.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -61,7 +61,7 @@
                 let existingRsvp = rsvps.find(rsvp => rsvp.name.toLowerCase() === name.toLowerCase());
                 
                 if (existingRsvp) {
-                    alert("An RSVP with this name already exists. Please contact the admin to update it.");
+                    alert("An RSVP with this name already exists. Please text or call 918-706-9547 to update it.");
                 } else {
                     rsvps.push({ name, email, guests });
                     localStorage.setItem("rsvps", JSON.stringify(rsvps));

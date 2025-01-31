@@ -21,38 +21,30 @@
     </style>
 </head>
 <body>
-    <h1>RSVP for February 22</h1>
-    <p id="event-details">We are haveing pizza!.</p>
+    <h1>RSVP for the Upcoming Party</h1>
+    <p id="event-details">Next Event: TBD - Menu: TBD</p>
     
     <form id="rsvp-form">
         <input type="text" id="name" placeholder="Your Name" required>
         <input type="email" id="email" placeholder="Your Email" required>
-        <input type="how_many" id="how_many" placeholder="How Many Guests" required>
+        <input type="number" id="guests" placeholder="Number of Guests" min="0" required>
         <button type="submit">RSVP</button>
     </form>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch("/api/event-details")
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("event-details").innerText = `Next Event: ${data.date} - Menu: ${data.menu}`;
-                });
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             
             document.getElementById("rsvp-form").addEventListener("submit", function(e) {
                 e.preventDefault();
                 const name = document.getElementById("name").value;
                 const email = document.getElementById("email").value;
-                const how_many = document.getElementById("how_meny").value;
-                fetch("/api/rsvp", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, email })
-                }).then(response => {
-                    if (response.ok) {
-                        alert("RSVP submitted successfully!");
-                    }
-                });
+                const guests = document.getElementById("guests").value;
+                
+                rsvps.push({ name, email, guests });
+                localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                alert("RSVP submitted successfully!");
+                location.reload();
             });
         });
     </script>
@@ -71,18 +63,42 @@
             const username = document.getElementById("admin-username").value;
             const password = document.getElementById("admin-password").value;
             
-            fetch("/api/admin-login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, test })
-            }).then(response => {
-                if (response.ok) {
-                    window.location.href = "/admin.html";
-                } else {
-                    alert("Login failed. Check your credentials.");
-                }
-            });
+            if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
+                window.location.href = "admin.html";
+            } else {
+                alert("Login failed. Check your credentials.");
+            }
         });
+    </script>
+    
+    <hr>
+    <h2>Admin Panel</h2>
+    <ul id="rsvp-list"></ul>
+    
+    <script>
+        function loadRSVPs() {
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            const list = document.getElementById("rsvp-list");
+            list.innerHTML = "";
+            
+            rsvps.forEach((rsvp, index) => {
+                const li = document.createElement("li");
+                li.textContent = `${rsvp.name} (${rsvp.email}) - Guests: ${rsvp.guests}`;
+                
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = function() {
+                    rsvps.splice(index, 1);
+                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                    loadRSVPs();
+                };
+                
+                li.appendChild(removeBtn);
+                list.appendChild(li);
+            });
+        }
+        
+        document.addEventListener("DOMContentLoaded", loadRSVPs);
     </script>
 </body>
 </html>

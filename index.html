@@ -12,11 +12,17 @@
             padding: 20px;
             text-align: center;
         }
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
         input, button {
             display: block;
             width: 100%;
             margin: 10px 0;
             padding: 10px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -70,36 +76,5 @@
             }
         });
     </script>
-    
-    <hr>
-    <h2>Admin Panel</h2>
-    <ul id="rsvp-list"></ul>
-    
-    <script>
-        function loadRSVPs() {
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            const list = document.getElementById("rsvp-list");
-            list.innerHTML = "";
-            
-            rsvps.forEach((rsvp, index) => {
-                const li = document.createElement("li");
-                li.textContent = `${rsvp.name} (${rsvp.email}) - Guests: ${rsvp.guests}`;
-                
-                const removeBtn = document.createElement("button");
-                removeBtn.textContent = "Remove";
-                removeBtn.onclick = function() {
-                    rsvps.splice(index, 1);
-                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                    loadRSVPs();
-                };
-                
-                li.appendChild(removeBtn);
-                list.appendChild(li);
-            });
-        }
-        
-        document.addEventListener("DOMContentLoaded", loadRSVPs);
-    </script>
 </body>
 </html>
-

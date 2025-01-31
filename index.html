@@ -50,25 +50,30 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("rsvpSubmitted")) {
+                alert("You have already submitted an RSVP for this event.");
+                document.getElementById("rsvp-form").style.display = "none";
+            }
+            
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             
             document.getElementById("rsvp-form").addEventListener("submit", function(e) {
                 e.preventDefault();
-                const name = document.getElementById("name").value.trim();
-                const email = document.getElementById("email").value.trim();
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
                 const guests = document.getElementById("guests").value;
                 
-                let existingRsvp = rsvps.find(rsvp => rsvp.name.toLowerCase() === name.toLowerCase());
-                
-                if (existingRsvp) {
-                    alert("An RSVP with this name already exists. Please text or call 918-706-9547 to update it.");
-                } else {
-                    rsvps.push({ name, email, guests });
-                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                    alert("RSVP submitted successfully!");
-                    location.reload();
-                }
+                rsvps.push({ name, email, guests });
+                localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                localStorage.setItem("rsvpSubmitted", "true"); // Mark RSVP as submitted
+                alert("RSVP submitted successfully!");
+                location.reload();
             });
+
+            // Load event details
+            const eventDate = localStorage.getItem("eventDate") || "TBD";
+            const eventMenu = localStorage.getItem("eventMenu") || "TBD";
+            document.getElementById("event-details").textContent = `Next Event: ${eventDate} - Menu: ${eventMenu}`;
         });
     </script>
     
@@ -87,11 +92,52 @@
             const password = document.getElementById("admin-password").value;
             
             if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
+                localStorage.setItem("isAdmin", "true");  // Store admin status
                 window.location.href = "admin.html";
             } else {
                 alert("Login failed. Check your credentials.");
             }
         });
+    </script>
+
+    <hr>
+    <h2>Edit Event Details</h2>
+    <form id="event-form">
+        <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
+        <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
+        <button type="submit">Save Event Details</button>
+    </form>
+
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("isAdmin") !== "true") {
+                alert("Access Denied! Please log in.");
+                window.location.href = "index.html";
+            }
+
+            // Load existing event details
+            document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
+            document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
+
+            document.getElementById("event-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                const date = document.getElementById("event-date").value;
+                const menu = document.getElementById("event-menu").value;
+
+                localStorage.setItem("eventDate", date);
+                localStorage.setItem("eventMenu", menu);
+
+                alert("Event details updated!");
+            });
+        });
+
+        function logout() {
+            localStorage.removeItem("isAdmin");  // Remove admin status
+            alert("Logged out successfully!");
+            window.location.href = "index.html";  // Redirect to login
+        }
     </script>
 </body>
 </html>

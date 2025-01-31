@@ -50,24 +50,24 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem("rsvpSubmitted")) {
-                alert("You have already submitted an RSVP for this event.");
-                document.getElementById("rsvp-form").style.display = "none";
-            }
-            
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             
             document.getElementById("rsvp-form").addEventListener("submit", function(e) {
                 e.preventDefault();
-                const name = document.getElementById("name").value;
-                const email = document.getElementById("email").value;
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
                 const guests = document.getElementById("guests").value;
                 
-                rsvps.push({ name, email, guests });
-                localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                localStorage.setItem("rsvpSubmitted", "true"); // Mark RSVP as submitted
-                alert("RSVP submitted successfully!");
-                location.reload();
+                let existingRsvp = rsvps.find(rsvp => rsvp.name.toLowerCase() === name.toLowerCase());
+                
+                if (existingRsvp) {
+                    alert("An RSVP with this name already exists. Please contact the admin to update it.");
+                } else {
+                    rsvps.push({ name, email, guests });
+                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                    alert("RSVP submitted successfully!");
+                    location.reload();
+                }
             });
         });
     </script>

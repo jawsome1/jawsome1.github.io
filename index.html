@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 90%;
             margin: auto;
             padding: 20px;
             text-align: center;
@@ -21,8 +21,19 @@
             display: block;
             width: 100%;
             margin: 10px 0;
-            padding: 10px;
+            padding: 15px;
             box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -39,6 +50,11 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("rsvpSubmitted")) {
+                alert("You have already submitted an RSVP for this event.");
+                document.getElementById("rsvp-form").style.display = "none";
+            }
+            
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             
             document.getElementById("rsvp-form").addEventListener("submit", function(e) {
@@ -49,6 +65,7 @@
                 
                 rsvps.push({ name, email, guests });
                 localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                localStorage.setItem("rsvpSubmitted", "true"); // Mark RSVP as submitted
                 alert("RSVP submitted successfully!");
                 location.reload();
             });

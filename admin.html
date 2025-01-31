@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Guests</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="rsvp-list"></tbody>
+    </table>
+    <button onclick="logout()">Logout</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            const list = document.getElementById("rsvp-list");
+            list.innerHTML = "";
+            
+            rsvps.forEach((rsvp, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${rsvp.name}</td><td>${rsvp.email}</td><td>${rsvp.guests}</td>`;
+                
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = function() {
+                    rsvps.splice(index, 1);
+                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                    location.reload();
+                };
+                
+                const actionCell = document.createElement("td");
+                actionCell.appendChild(removeBtn);
+                row.appendChild(actionCell);
+                list.appendChild(row);
+            });
+        });
+        
+        function logout() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

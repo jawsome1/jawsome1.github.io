@@ -17,7 +17,7 @@
             max-width: 400px;
             margin: auto;
         }
-        input, button {
+        input, button, select {
             display: block;
             width: 100%;
             margin: 10px 0;
@@ -40,43 +40,59 @@
 <body>
     <h1>RSVP for the Home Party</h1>
 
-    <p><strong>Event Date:</strong> <span id="event-date">Loading...</span></p>
-    <p><strong>Event Time:</strong> <span id="event-time">Loading...</span></p>
-    <p><strong>Menu:</strong> <span id="event-menu">Loading...</span></p>
+    <h2 id="event-info"></h2>
+    <p id="event-menu"></p>
+    <p id="event-extra"></p>
 
     <form id="rsvp-form">
         <input type="text" id="rsvp-name" placeholder="Your Name" required>
         <input type="email" id="rsvp-email" placeholder="Your Email" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
+        
+        <label>Select what you can bring:</label>
+        <select id="rsvp-items">
+            <option value="">-- Select an item --</option>
+        </select>
+
         <button type="submit">Submit RSVP</button>
     </form>
 
     <script>
         function loadEventDetails() {
-            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {
-                date: "Not set",
-                time: "Not set",
-                menu: "Not set"
-            };
-
-            document.getElementById("event-date").innerText = eventData.date;
-            document.getElementById("event-time").innerText = eventData.time;
-            document.getElementById("event-menu").innerText = eventData.menu;
-
-            checkEventExpiration(eventData.date);
+            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {};
+            document.getElementById("event-info").innerText = \`Date: \${eventData.date || 'TBD'} Time: \${eventData.time || 'TBD'}\`;
+            document.getElementById("event-menu").innerText = "Menu: " + (eventData.menu || "TBD");
+            document.getElementById("event-extra").innerText = eventData.details || "";
+            
+            let guestItems = eventData.guestItems ? eventData.guestItems.split(",") : [];
+            let itemsDropdown = document.getElementById("rsvp-items");
+            itemsDropdown.innerHTML = '<option value="">-- Select an item --</option>';
+            guestItems.forEach(item => {
+                let option = document.createElement("option");
+                option.value = item.trim();
+                option.innerText = item.trim();
+                itemsDropdown.appendChild(option);
+            });
         }
 
-        function checkEventExpiration(eventDate) {
-            if (eventDate !== "Not set") {
-                let eventDateObj = new Date(eventDate);
-                let today = new Date();
+        document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("rsvp-name").value;
+            const email = document.getElementById("rsvp-email").value;
+            const guests = document.getElementById("rsvp-guests").value;
+            const items = document.getElementById("rsvp-items").value;
 
-                if (today > eventDateObj) {
-                    localStorage.removeItem("rsvps"); // Clear all RSVPs
-                    console.log("RSVPs cleared - Event date has passed.");
-                }
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            let existingRSVP = rsvps.find(rsvp => rsvp.email === email);
+
+            if (existingRSVP) {
+                alert("You have already RSVP'd.");
+            } else {
+                rsvps.push({ name, email, guests, items });
+                localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                alert("RSVP submitted successfully!");
             }
-        }
+        });
 
         document.addEventListener("DOMContentLoaded", loadEventDetails);
     </script>

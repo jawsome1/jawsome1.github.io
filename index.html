@@ -38,8 +38,8 @@
     </style>
 </head>
 <body>
-    <h1>RSVP for the Home Party</h1>
 
+    <h1>RSVP for the Home Party</h1>
     <h2 id="event-info"></h2>
     
     <form id="rsvp-form">
@@ -51,6 +51,11 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Redirect to admin if "admin" is in the address bar
+            if (window.location.pathname.endsWith("/admin")) {
+                window.location.href = "admin.html";
+            }
+
             // Load event details
             const eventDate = localStorage.getItem("eventDate") || "TBA";
             const eventMenu = localStorage.getItem("eventMenu") || "TBA";
@@ -73,5 +78,6 @@
             });
         });
     </script>
+
 </body>
 </html>

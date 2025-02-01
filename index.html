@@ -35,64 +35,67 @@
         button:hover {
             background-color: #0056b3;
         }
+        .checkbox-group {
+            text-align: left;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-
     <h1>RSVP for the Home Party</h1>
-    <h2 id="event-info"></h2>
     
     <form id="rsvp-form">
         <input type="text" id="rsvp-name" placeholder="Your Name" required>
         <input type="email" id="rsvp-email" placeholder="Your Email" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
+
+        <h3>Things You Can Bring:</h3>
+        <div id="items-list" class="checkbox-group"></div>
+
         <button type="submit">Submit RSVP</button>
     </form>
-
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Redirect to admin if "admin" is in the address bar
-            if (window.location.pathname.endsWith("/admin")) {
-                window.location.href = "admin.html";
-            }
+        function loadItems() {
+            let savedItems = JSON.parse(localStorage.getItem("eventItems")) || [];
+            let itemsList = document.getElementById("items-list");
+            itemsList.innerHTML = "";
 
-            // Load event details
-            let eventDate = localStorage.getItem("eventDate") || "TBA";
-            let eventMenu = localStorage.getItem("eventMenu") || "TBA";
-            document.getElementById("event-info").innerText = `📅 Date: ${eventDate} | 🍽️ Menu: ${eventMenu}`;
-
-            // Check if the event date has passed and clear RSVPs
-            if (eventDate !== "TBA") {
-                let eventDateObj = new Date(eventDate);
-                let today = new Date();
-                
-                if (today > eventDateObj) {
-                    localStorage.removeItem("rsvps"); // Clear RSVPs
-                    localStorage.setItem("eventDate", "TBA"); // Reset event date
-                    localStorage.setItem("eventMenu", "TBA"); // Reset event menu
-                    alert("The previous event has passed. RSVPs have been cleared.");
-                    location.reload(); // Refresh page to show cleared RSVPs
-                }
-            }
-
-            // Handle RSVP submission
-            document.getElementById("rsvp-form").addEventListener("submit", function (e) {
-                e.preventDefault();
-                const name = document.getElementById("rsvp-name").value;
-                const email = document.getElementById("rsvp-email").value;
-                const guests = document.getElementById("rsvp-guests").value;
-                
-                let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-                if (!rsvps.some(rsvp => rsvp.email === email)) {
-                    rsvps.push({ name, email, guests });
-                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                    alert("RSVP submitted successfully!");
-                } else {
-                    alert("You have already RSVP'd.");
-                }
+            savedItems.forEach(item => {
+                let label = document.createElement("label");
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.value = item;
+                checkbox.name = "rsvp-items";
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(" " + item));
+                itemsList.appendChild(label);
+                itemsList.appendChild(document.createElement("br"));
             });
-        });
-    </script>
+        }
 
+        document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("rsvp-name").value;
+            const email = document.getElementById("rsvp-email").value;
+            const guests = document.getElementById("rsvp-guests").value;
+
+            let selectedItems = [];
+            document.querySelectorAll("input[name='rsvp-items']:checked").forEach(checkbox => {
+                selectedItems.push(checkbox.value);
+            });
+
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            if (!rsvps.some(rsvp => rsvp.email === email)) {
+                rsvps.push({ name, email, guests, items: selectedItems });
+                localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                alert("RSVP submitted successfully!");
+            } else {
+                alert("You have already RSVP'd.");
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", loadItems);
+    </script>
 </body>
 </html>

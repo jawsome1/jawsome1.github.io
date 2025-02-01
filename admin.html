@@ -12,6 +12,9 @@
             padding: 20px;
             text-align: center;
         }
+        .hidden {
+            display: none;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -39,30 +42,55 @@
     </style>
 </head>
 <body>
-    <h1>Admin Panel</h1>
-    
-    <h2>Edit Event Details</h2>
-    <form id="event-form">
-        <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
-        <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
-        <button type="submit">Save Event Details</button>
-    </form>
 
-    <h2>RSVP List</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Guests</th>
-            </tr>
-        </thead>
-        <tbody id="rsvp-list">
-        </tbody>
-    </table>
+    <div id="login-section">
+        <h2>Admin Login</h2>
+        <input type="text" id="admin-username" placeholder="Username" required>
+        <input type="password" id="admin-password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+        <h1>Admin Panel</h1>
+        
+        <h2>Edit Event Details</h2>
+        <form id="event-form">
+            <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
+            <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
+            <button type="submit">Save Event Details</button>
+        </form>
+
+        <h2>RSVP List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Guests</th>
+                </tr>
+            </thead>
+            <tbody id="rsvp-list">
+            </tbody>
+        </table>
+    </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        function login() {
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
+            
+            // Check credentials
+            if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
+                localStorage.setItem("adminLoggedIn", "true");
+                document.getElementById("login-section").classList.add("hidden");
+                document.getElementById("admin-panel").classList.remove("hidden");
+                loadData();
+            } else {
+                alert("Incorrect login details.");
+            }
+        }
+
+        function loadData() {
             // Load event details
             document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
             document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
@@ -79,11 +107,21 @@
             // Load RSVP list
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             const rsvpList = document.getElementById("rsvp-list");
+            rsvpList.innerHTML = "";
             rsvps.forEach(rsvp => {
                 let row = `<tr><td>${rsvp.name}</td><td>${rsvp.email}</td><td>${rsvp.guests}</td></tr>`;
                 rsvpList.innerHTML += row;
             });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("adminLoggedIn") === "true") {
+                document.getElementById("login-section").classList.add("hidden");
+                document.getElementById("admin-panel").classList.remove("hidden");
+                loadData();
+            }
         });
     </script>
+
 </body>
 </html>

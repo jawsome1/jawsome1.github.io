@@ -35,39 +35,22 @@
         button:hover {
             background-color: #0056b3;
         }
-        .checkbox-group {
-            text-align: left;
-            margin-top: 10px;
-        }
-        #event-details {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
     <h1>RSVP for the Home Party</h1>
 
-    <div id="event-details">
-        <h3>Event Details</h3>
-        <p><strong>Date:</strong> <span id="event-date"></span></p>
-        <p><strong>Time:</strong> <span id="event-time"></span></p>
-        <p><strong>Menu:</strong> <span id="event-menu"></span></p>
-    </div>
-    
+    <p><strong>Event Date:</strong> <span id="event-date">Loading...</span></p>
+    <p><strong>Event Time:</strong> <span id="event-time">Loading...</span></p>
+    <p><strong>Menu:</strong> <span id="event-menu">Loading...</span></p>
+
     <form id="rsvp-form">
         <input type="text" id="rsvp-name" placeholder="Your Name" required>
         <input type="email" id="rsvp-email" placeholder="Your Email" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
-
-        <h3>Things You Can Bring:</h3>
-        <div id="items-list" class="checkbox-group"></div>
-
         <button type="submit">Submit RSVP</button>
     </form>
-    
+
     <script>
         function loadEventDetails() {
             let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {
@@ -75,54 +58,27 @@
                 time: "Not set",
                 menu: "Not set"
             };
+
             document.getElementById("event-date").innerText = eventData.date;
             document.getElementById("event-time").innerText = eventData.time;
             document.getElementById("event-menu").innerText = eventData.menu;
+
+            checkEventExpiration(eventData.date);
         }
 
-        function loadItems() {
-            let savedItems = JSON.parse(localStorage.getItem("eventItems")) || [];
-            let itemsList = document.getElementById("items-list");
-            itemsList.innerHTML = "";
+        function checkEventExpiration(eventDate) {
+            if (eventDate !== "Not set") {
+                let eventDateObj = new Date(eventDate);
+                let today = new Date();
 
-            savedItems.forEach(item => {
-                let label = document.createElement("label");
-                let checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.value = item;
-                checkbox.name = "rsvp-items";
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(" " + item));
-                itemsList.appendChild(label);
-                itemsList.appendChild(document.createElement("br"));
-            });
-        }
-
-        document.getElementById("rsvp-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const name = document.getElementById("rsvp-name").value;
-            const email = document.getElementById("rsvp-email").value;
-            const guests = document.getElementById("rsvp-guests").value;
-
-            let selectedItems = [];
-            document.querySelectorAll("input[name='rsvp-items']:checked").forEach(checkbox => {
-                selectedItems.push(checkbox.value);
-            });
-
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            if (!rsvps.some(rsvp => rsvp.email === email)) {
-                rsvps.push({ name, email, guests, items: selectedItems });
-                localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                alert("RSVP submitted successfully!");
-            } else {
-                alert("You have already RSVP'd.");
+                if (today > eventDateObj) {
+                    localStorage.removeItem("rsvps"); // Clear all RSVPs
+                    console.log("RSVPs cleared - Event date has passed.");
+                }
             }
-        });
+        }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadEventDetails();
-            loadItems();
-        });
+        document.addEventListener("DOMContentLoaded", loadEventDetails);
     </script>
 </body>
 </html>

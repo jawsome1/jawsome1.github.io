@@ -128,7 +128,7 @@
             rsvps.forEach((rsvp, index) => {
                 let row = table.insertRow();
                 row.insertCell(0).innerText = rsvp.name;
-                row.insertCell(1).innerText = `${rsvp.email} / ${rsvp.phone || ""}`; // Combined Email and Phone data
+                row.insertCell(1).innerText = `${rsvp.contact}`; // Combined Email and Phone data
                 row.insertCell(2).innerText = rsvp.guests;
                 row.insertCell(3).innerText = rsvp.items;
 

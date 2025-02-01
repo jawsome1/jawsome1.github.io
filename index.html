@@ -40,7 +40,7 @@
 <body>
     <h1>RSVP for the Home Party</h1>
 
-    <h2 id="event-info"></h2>
+    <h2 id="event-info">Loading event details...</h2>
     <p id="event-menu"></p>
     <p id="event-extra"></p>
 
@@ -49,7 +49,7 @@
         <input type="email" id="rsvp-email" placeholder="Your Email" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
         
-        <label>Select what you can bring. (optional):</label>
+        <label>Select what you can bring:</label>
         <select id="rsvp-items">
             <option value="">-- Select an item --</option>
         </select>
@@ -59,20 +59,26 @@
 
     <script>
         function loadEventDetails() {
-            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {};
-            document.getElementById("event-info").innerText = \`Date: \${eventData.date || 'TBD'} Time: \${eventData.time || 'TBD'}\`;
-            document.getElementById("event-menu").innerText = "Menu: " + (eventData.menu || "TBD");
-            document.getElementById("event-extra").innerText = eventData.details || "";
-            
-            let guestItems = eventData.guestItems ? eventData.guestItems.split(",") : [];
-            let itemsDropdown = document.getElementById("rsvp-items");
-            itemsDropdown.innerHTML = '<option value="">-- Select an item --</option>';
-            guestItems.forEach(item => {
-                let option = document.createElement("option");
-                option.value = item.trim();
-                option.innerText = item.trim();
-                itemsDropdown.appendChild(option);
-            });
+            let eventData = JSON.parse(localStorage.getItem("eventDetails"));
+
+            if (eventData) {
+                document.getElementById("event-info").innerText = \`Date: \${eventData.date || 'TBD'} Time: \${eventData.time || 'TBD'}\`;
+                document.getElementById("event-menu").innerText = "Menu: " + (eventData.menu || "TBD");
+                document.getElementById("event-extra").innerText = eventData.details || "";
+                
+                let guestItems = eventData.guestItems ? eventData.guestItems.split(",") : [];
+                let itemsDropdown = document.getElementById("rsvp-items");
+
+                itemsDropdown.innerHTML = '<option value="">-- Select an item --</option>';
+                guestItems.forEach(item => {
+                    let option = document.createElement("option");
+                    option.value = item.trim();
+                    option.innerText = item.trim();
+                    itemsDropdown.appendChild(option);
+                });
+            } else {
+                document.getElementById("event-info").innerText = "No event details found.";
+            }
         }
 
         document.getElementById("rsvp-form").addEventListener("submit", function (e) {

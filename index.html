@@ -17,7 +17,7 @@
             max-width: 400px;
             margin: auto;
         }
-        input, button {
+        input, button, select {
             display: block;
             width: 100%;
             margin: 10px 0;
@@ -38,43 +38,69 @@
     </style>
 </head>
 <body>
-    <h1>RSVP for the Upcoming Party</h1>
-    <p id="event-details">Next Event: TBD - Menu: TBD</p>
-    
-    <form id="rsvp-form">
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="email" id="email" placeholder="Your Email" required>
-        <input type="number" id="guests" placeholder="Number of Guests" min="0" required>
-        <button type="submit">RSVP</button>
-    </form>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem("rsvpSubmitted")) {
-                alert("You have already submitted an RSVP for this event.");
-                document.getElementById("rsvp-form").style.display = "none";
-            }
-            
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            
-            document.getElementById("rsvp-form").addEventListener("submit", function(e) {
-                e.preventDefault();
-                const name = document.getElementById("name").value;
-                const email = document.getElementById("email").value;
-                const guests = document.getElementById("guests").value;
-                
-                rsvps.push({ name, email, guests });
-                localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                localStorage.setItem("rsvpSubmitted", "true");
-                alert("RSVP submitted successfully!");
-                location.reload();
-            });
+    <h1>RSVP for the Home Party</h1>
 
-            const eventDetails = JSON.parse(localStorage.getItem("eventDetails")) || {};
-            const eventDate = eventDetails.date || "TBD";
-            const eventMenu = eventDetails.menu || "TBD";
-            document.getElementById("event-details").textContent = `Next Event: ${eventDate} - Menu: ${eventMenu}`;
+    <h2 id="event-info">Loading event details...</h2>
+    <p id="event-menu"></p>
+    <p id="event-extra"></p>
+
+    <form id="rsvp-form">
+        <input type="text" id="rsvp-name" placeholder="Your Name" required>
+        <input type="email" id="rsvp-email" placeholder="Your Email" required>
+        <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
+        
+        <label>Select what you can bring (optional):</label>
+        <select id="rsvp-items">
+            <option value="">-- Select an item --</option>
+        </select>
+
+        <button type="submit">Submit RSVP</button>
+    </form>
+
+    <script>
+        function loadEventDetails() {
+            let eventData = JSON.parse(localStorage.getItem("eventDetails"));
+
+            if (eventData) {
+                document.getElementById("event-info").innerText = \`Date: \${eventData.date || 'TBD'} Time: \${eventData.time || 'TBD'}\`;
+                document.getElementById("event-menu").innerText = "Menu: " + (eventData.menu || "TBD");
+                document.getElementById("event-extra").innerText = eventData.details || "";
+                
+                let guestItems = eventData.guestItems ? eventData.guestItems.split(",") : [];
+                let itemsDropdown = document.getElementById("rsvp-items");
+
+                itemsDropdown.innerHTML = '<option value="">-- Select an item --</option>';
+                guestItems.forEach(item => {
+                    let option = document.createElement("option");
+                    option.value = item.trim();
+                    option.innerText = item.trim();
+                    itemsDropdown.appendChild(option);
+                });
+            } else {
+                document.getElementById("event-info").innerText = "No event details found.";
+            }
+        }
+
+        document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("rsvp-name").value;
+            const email = document.getElementById("rsvp-email").value;
+            const guests = document.getElementById("rsvp-guests").value;
+            const items = document.getElementById("rsvp-items").value;
+
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            let existingRSVP = rsvps.find(rsvp => rsvp.email === email);
+
+            if (existingRSVP) {
+                alert("You have already RSVP'd.");
+            } else {
+                rsvps.push({ name, email, guests, items });
+                localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                alert("RSVP submitted successfully!");
+            }
         });
+
+        document.addEventListener("DOMContentLoaded", loadEventDetails);
     </script>
 </body>
 </html>

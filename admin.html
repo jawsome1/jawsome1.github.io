@@ -26,17 +26,9 @@
             padding: 10px;
             font-size: 16px;
         }
-        .login-section, .admin-section {
-            display: none;
-        }
         .delete-button {
             background-color: #dc3545;
             color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-left: 10px;
         }
         .delete-button:hover {
             background-color: #c82333;
@@ -44,25 +36,19 @@
         .edit-button {
             background-color: #007BFF;
             color: white;
-            border: none;
         }
         .edit-button:hover {
             background-color: #0056b3;
+        }
+        .checkbox-group {
+            text-align: left;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Login Section -->
-    <div class="login-section" id="login-section">
-        <h1>Admin Login</h1>
-        <input type="text" id="admin-username" placeholder="Username">
-        <input type="password" id="admin-password" placeholder="Password">
-        <button onclick="login()">Login</button>
-    </div>
-
-    <!-- Admin Panel (Hidden until logged in) -->
-    <div class="admin-section" id="admin-section">
+    <div id="admin-section">
         <h1>Admin Panel</h1>
         
         <h2>Manage Event</h2>
@@ -72,61 +58,35 @@
         <label for="event-menu">Menu:</label>
         <input type="text" id="event-menu" placeholder="Enter menu details">
 
+        <h3>Edit Items Guests Can Bring:</h3>
+        <textarea id="event-items" placeholder="Enter items, separated by commas"></textarea>
+
         <button class="edit-button" onclick="saveEventDetails()">Save Event Details</button>
 
         <h2>RSVP List</h2>
         <ul id="rsvp-list"></ul>
 
         <button onclick="clearRSVPs()">❌ Clear All RSVPs</button>
-        <button onclick="logout()">Logout</button>
     </div>
 
     <script>
-        const ADMIN_USER = "TheJAWsome1";
-        const ADMIN_PASS = "N9JaW2010@Y()U";
-
-        function login() {
-            let username = document.getElementById("admin-username").value;
-            let password = document.getElementById("admin-password").value;
-
-            if (username === ADMIN_USER && password === ADMIN_PASS) {
-                localStorage.setItem("adminLoggedIn", "true");
-                document.getElementById("login-section").style.display = "none";
-                document.getElementById("admin-section").style.display = "block";
-                loadAdminPanel();
-            } else {
-                alert("Incorrect username or password!");
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem("adminLoggedIn");
-            document.getElementById("admin-section").style.display = "none";
-            document.getElementById("login-section").style.display = "block";
-        }
-
         function loadAdminPanel() {
-            if (localStorage.getItem("adminLoggedIn") !== "true") return;
-
-            // Load event details
             document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
             document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
+            document.getElementById("event-items").value = (JSON.parse(localStorage.getItem("eventItems")) || []).join(", ");
 
-            // Load RSVP list
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             let rsvpList = document.getElementById("rsvp-list");
             rsvpList.innerHTML = "";
 
             rsvps.forEach((rsvp, index) => {
                 let li = document.createElement("li");
-                li.textContent = `${rsvp.name} - ${rsvp.email} - Guests: ${rsvp.guests}`;
-                
+                li.innerHTML = `${rsvp.name} - ${rsvp.email} - Guests: ${rsvp.guests}<br>Bringing: ${rsvp.items.join(", ") || "Nothing"}`;
+
                 let deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "Remove";
                 deleteBtn.className = "delete-button";
-                deleteBtn.onclick = function() {
-                    removeRSVP(index);
-                };
+                deleteBtn.onclick = function() { removeRSVP(index); };
 
                 li.appendChild(deleteBtn);
                 rsvpList.appendChild(li);
@@ -136,9 +96,13 @@
         function saveEventDetails() {
             let date = document.getElementById("event-date").value;
             let menu = document.getElementById("event-menu").value;
+            let items = document.getElementById("event-items").value.split(",").map(item => item.trim()).filter(item => item);
+
             localStorage.setItem("eventDate", date);
             localStorage.setItem("eventMenu", menu);
-            alert("Event details saved!");
+            localStorage.setItem("eventItems", JSON.stringify(items));
+
+            alert("Event details and items saved!");
         }
 
         function clearRSVPs() {
@@ -153,20 +117,12 @@
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             rsvps.splice(index, 1);
             localStorage.setItem("rsvps", JSON.stringify(rsvps));
-            alert("RSVP removed!");
             loadAdminPanel();
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            if (localStorage.getItem("adminLoggedIn") === "true") {
-                document.getElementById("login-section").style.display = "none";
-                document.getElementById("admin-section").style.display = "block";
-                loadAdminPanel();
-            } else {
-                document.getElementById("login-section").style.display = "block";
-            }
-        });
+        document.addEventListener("DOMContentLoaded", loadAdminPanel);
     </script>
 
 </body>
 </html>
+

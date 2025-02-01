@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage RSVPs</title>
+    <title>Admin - Manage Event</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,7 +23,7 @@
             text-align: center;
         }
         button {
-            background-color: #dc3545;
+            background-color: #007BFF;
             color: white;
             padding: 10px;
             border: none;
@@ -31,17 +31,32 @@
             border-radius: 5px;
         }
         button:hover {
-            background-color: #b02a37;
+            background-color: #0056b3;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <h1>Admin Panel</h1>
 
-    <h2>Event Details</h2>
-    <p><strong>Event Date:</strong> <span id="event-date">Loading...</span></p>
-    <p><strong>Event Time:</strong> <span id="event-time">Loading...</span></p>
-    <p><strong>Menu:</strong> <span id="event-menu">Loading...</span></p>
+    <h2>Edit Event Details</h2>
+    <label>Event Date:</label>
+    <input type="date" id="event-date">
+    <label>Event Time:</label>
+    <input type="time" id="event-time">
+    <label>Menu:</label>
+    <textarea id="event-menu"></textarea>
+    <label>Extra Details:</label>
+    <textarea id="event-details"></textarea>
+    <label>Items Guests Can Bring:</label>
+    <textarea id="guest-items"></textarea>
+
+    <button onclick="saveEventDetails()">Save Changes</button>
 
     <h2>RSVP List</h2>
     <table id="rsvp-table">
@@ -49,6 +64,8 @@
             <th>Name</th>
             <th>Email</th>
             <th>Guests</th>
+            <th>Items Bringing</th>
+            <th>Edit</th>
             <th>Remove</th>
         </tr>
     </table>
@@ -64,6 +81,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Guests</th>
+                <th>Items Bringing</th>
+                <th>Edit</th>
                 <th>Remove</th>
             </tr>`;
 
@@ -71,56 +90,29 @@
                 let row = table.insertRow();
                 row.insertCell(0).innerText = rsvp.name;
                 row.insertCell(1).innerText = rsvp.email;
-                row.insertCell(2).innerText = rsvp.guests;
+                row.insertCell(2).innerHTML = `<input type="number" value="${rsvp.guests}" onchange="editRSVP(${index}, this, 'guests')">`;
+                row.insertCell(3).innerHTML = `<input type="text" value="${rsvp.items}" onchange="editRSVP(${index}, this, 'items')">`;
+
                 let removeBtn = document.createElement("button");
                 removeBtn.innerText = "❌";
-                removeBtn.onclick = function () {
-                    removeRSVP(index);
-                };
-                row.insertCell(3).appendChild(removeBtn);
+                removeBtn.onclick = function () { removeRSVP(index); };
+                row.insertCell(5).appendChild(removeBtn);
             });
 
             loadEventDetails();
         }
 
+        function editRSVP(index, input, field) {
+            let rsvps = JSON.parse(localStorage.getItem("rsvps"));
+            rsvps[index][field] = input.value;
+            localStorage.setItem("rsvps", JSON.stringify(rsvps));
+        }
+
         function removeRSVP(index) {
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            let rsvps = JSON.parse(localStorage.getItem("rsvps"));
             rsvps.splice(index, 1);
             localStorage.setItem("rsvps", JSON.stringify(rsvps));
             loadRSVPs();
-        }
-
-        function clearAllRSVPs() {
-            if (confirm("Are you sure you want to clear all RSVPs?")) {
-                localStorage.removeItem("rsvps");
-                loadRSVPs();
-            }
-        }
-
-        function loadEventDetails() {
-            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {
-                date: "Not set",
-                time: "Not set",
-                menu: "Not set"
-            };
-
-            document.getElementById("event-date").innerText = eventData.date;
-            document.getElementById("event-time").innerText = eventData.time;
-            document.getElementById("event-menu").innerText = eventData.menu;
-
-            checkEventExpiration(eventData.date);
-        }
-
-        function checkEventExpiration(eventDate) {
-            if (eventDate !== "Not set") {
-                let eventDateObj = new Date(eventDate);
-                let today = new Date();
-
-                if (today > eventDateObj) {
-                    localStorage.removeItem("rsvps"); // Clear all RSVPs
-                    alert("RSVPs have been cleared because the event date has passed.");
-                }
-            }
         }
 
         document.addEventListener("DOMContentLoaded", loadRSVPs);

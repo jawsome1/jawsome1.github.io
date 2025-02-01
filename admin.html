@@ -16,6 +16,8 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            overflow-x: auto;
+            display: block;
         }
         th, td {
             border: 1px solid black;
@@ -38,6 +40,24 @@
             margin: 5px 0;
             padding: 10px;
             font-size: 16px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 5px;
+            }
+            button {
+                padding: 8px;
+            }
+            input, textarea {
+                padding: 8px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -123,6 +143,11 @@
             let rsvps = JSON.parse(localStorage.getItem("rsvps"));
             rsvps.splice(index, 1);
             localStorage.setItem("rsvps", JSON.stringify(rsvps));
+            loadRSVPs();
+        }
+
+        function clearAllRSVPs() {
+            localStorage.removeItem("rsvps");
             loadRSVPs();
         }
 

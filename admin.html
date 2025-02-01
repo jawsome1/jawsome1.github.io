@@ -92,15 +92,6 @@
     <button onclick="clearAllRSVPs()">Clear All RSVPs</button>
 
     <script>
-        function loadEventDetails() {
-            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {};
-            document.getElementById("event-date").value = eventData.date || "";
-            document.getElementById("event-time").value = eventData.time || "";
-            document.getElementById("event-menu").value = eventData.menu || "";
-            document.getElementById("event-details").value = eventData.details || "";
-            document.getElementById("guest-items").value = eventData.guestItems || "";
-        }
-
         function saveEventDetails() {
             let eventData = {
                 date: document.getElementById("event-date").value,
@@ -111,6 +102,15 @@
             };
             localStorage.setItem("eventDetails", JSON.stringify(eventData));
             alert("Event details updated!");
+        }
+
+        function loadEventDetails() {
+            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {};
+            document.getElementById("event-date").value = eventData.date || "";
+            document.getElementById("event-time").value = eventData.time || "";
+            document.getElementById("event-menu").value = eventData.menu || "";
+            document.getElementById("event-details").value = eventData.details || "";
+            document.getElementById("guest-items").value = eventData.guestItems || "";
         }
 
         function loadRSVPs() {

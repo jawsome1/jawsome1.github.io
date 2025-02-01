@@ -82,7 +82,7 @@
     <table id="rsvp-table">
         <tr>
             <th>Name</th>
-            <th>Email</th>
+            <th>Contact Info</th> <!-- Combined Email and Phone column -->
             <th>Guests</th>
             <th>Items Bringing</th>
             <th>Remove</th>
@@ -119,7 +119,7 @@
 
             table.innerHTML = `<tr>
                 <th>Name</th>
-                <th>Email</th>
+                <th>Contact Info</th> <!-- Combined Email and Phone column -->
                 <th>Guests</th>
                 <th>Items Bringing</th>
                 <th>Remove</th>
@@ -128,7 +128,7 @@
             rsvps.forEach((rsvp, index) => {
                 let row = table.insertRow();
                 row.insertCell(0).innerText = rsvp.name;
-                row.insertCell(1).innerText = rsvp.email;
+                row.insertCell(1).innerText = `${rsvp.email} / ${rsvp.phone || ""}`; // Combined Email and Phone data
                 row.insertCell(2).innerText = rsvp.guests;
                 row.insertCell(3).innerText = rsvp.items;
 

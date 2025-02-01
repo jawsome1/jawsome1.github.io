@@ -65,7 +65,6 @@
             <th>Email</th>
             <th>Guests</th>
             <th>Items Bringing</th>
-            <th>Edit</th>
             <th>Remove</th>
         </tr>
     </table>
@@ -73,6 +72,27 @@
     <button onclick="clearAllRSVPs()">Clear All RSVPs</button>
 
     <script>
+        function loadEventDetails() {
+            let eventData = JSON.parse(localStorage.getItem("eventDetails")) || {};
+            document.getElementById("event-date").value = eventData.date || "";
+            document.getElementById("event-time").value = eventData.time || "";
+            document.getElementById("event-menu").value = eventData.menu || "";
+            document.getElementById("event-details").value = eventData.details || "";
+            document.getElementById("guest-items").value = eventData.guestItems || "";
+        }
+
+        function saveEventDetails() {
+            let eventData = {
+                date: document.getElementById("event-date").value,
+                time: document.getElementById("event-time").value,
+                menu: document.getElementById("event-menu").value,
+                details: document.getElementById("event-details").value,
+                guestItems: document.getElementById("guest-items").value
+            };
+            localStorage.setItem("eventDetails", JSON.stringify(eventData));
+            alert("Event details updated!");
+        }
+
         function loadRSVPs() {
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
             let table = document.getElementById("rsvp-table");
@@ -82,7 +102,6 @@
                 <th>Email</th>
                 <th>Guests</th>
                 <th>Items Bringing</th>
-                <th>Edit</th>
                 <th>Remove</th>
             </tr>`;
 
@@ -90,22 +109,14 @@
                 let row = table.insertRow();
                 row.insertCell(0).innerText = rsvp.name;
                 row.insertCell(1).innerText = rsvp.email;
-                row.insertCell(2).innerHTML = `<input type="number" value="${rsvp.guests}" onchange="editRSVP(${index}, this, 'guests')">`;
-                row.insertCell(3).innerHTML = `<input type="text" value="${rsvp.items}" onchange="editRSVP(${index}, this, 'items')">`;
+                row.insertCell(2).innerText = rsvp.guests;
+                row.insertCell(3).innerText = rsvp.items;
 
                 let removeBtn = document.createElement("button");
                 removeBtn.innerText = "❌";
                 removeBtn.onclick = function () { removeRSVP(index); };
-                row.insertCell(5).appendChild(removeBtn);
+                row.insertCell(4).appendChild(removeBtn);
             });
-
-            loadEventDetails();
-        }
-
-        function editRSVP(index, input, field) {
-            let rsvps = JSON.parse(localStorage.getItem("rsvps"));
-            rsvps[index][field] = input.value;
-            localStorage.setItem("rsvps", JSON.stringify(rsvps));
         }
 
         function removeRSVP(index) {
@@ -115,7 +126,11 @@
             loadRSVPs();
         }
 
-        document.addEventListener("DOMContentLoaded", loadRSVPs);
+        document.addEventListener("DOMContentLoaded", function () {
+            loadEventDetails();
+            loadRSVPs();
+        });
     </script>
 </body>
 </html>
+

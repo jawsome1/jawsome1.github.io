@@ -151,6 +151,27 @@
             loadRSVPs();
         }
 
+        function checkAdminCredentials(username, password) {
+            const correctUsername = "TheJAWsome1";
+            const correctPassword = "N9JaW2010@Y()U";
+
+            if (username !== correctUsername || password !== correctPassword) {
+                alert("Oops! Wrong credentials. Did you forget your own admin password?");
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById("admin-login-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
+
+            if (checkAdminCredentials(username, password)) {
+                // Proceed with admin actions
+            }
+        });
+
         document.addEventListener("DOMContentLoaded", function () {
             loadEventDetails();
             loadRSVPs();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP - Home Party</title>
+    <title>Admin Panel - RSVP Management</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,103 +38,78 @@
     </style>
 </head>
 <body>
-    <h1>RSVP for the Upcoming Party</h1>
-    <p id="event-details">Next Event: TBD - Menu: TBD</p>
+    <h1>Admin Panel - RSVP Management</h1>
     
-    <form id="rsvp-form">
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="email" id="email" placeholder="Your Email" required>
-        <input type="number" id="guests" placeholder="Number of Guests" min="0" required>
-        <button type="submit">RSVP</button>
-    </form>
+    <div id="login-section">
+        <h2>Admin Login</h2>
+        <input type="text" id="admin-username" placeholder="Username">
+        <input type="password" id="admin-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem("rsvpSubmitted")) {
-                alert("You have already submitted an RSVP for this event.");
-                document.getElementById("rsvp-form").style.display = "none";
-            }
-            
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            
-            document.getElementById("rsvp-form").addEventListener("submit", function(e) {
-                e.preventDefault();
-                const name = document.getElementById("name").value;
-                const email = document.getElementById("email").value;
-                const guests = document.getElementById("guests").value;
-                
-                rsvps.push({ name, email, guests });
-                localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                localStorage.setItem("rsvpSubmitted", "true");
-                alert("RSVP submitted successfully!");
-                location.reload();
-            });
-
-            const eventDate = localStorage.getItem("eventDate") || "TBD";
-            const eventMenu = localStorage.getItem("eventMenu") || "TBD";
-            document.getElementById("event-details").textContent = `Next Event: ${eventDate} - Menu: ${eventMenu}`;
-        });
-    </script>
+    <div id="admin-section" style="display: none;">
+        <h2>Edit Event Details</h2>
+        <form id="event-form">
+            <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
+            <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
+            <button type="submit">Save Event Details</button>
+        </form>
+        
+        <h2>RSVP List</h2>
+        <ul id="rsvp-list"></ul>
+        
+        <button onclick="logout()">Logout</button>
+    </div>
     
-    <hr>
-    <h2>Admin Login</h2>
-    <form id="admin-login">
-        <input type="text" id="admin-username" placeholder="Username" required>
-        <input type="password" id="admin-password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
-    
-    <script>
-        document.getElementById("admin-login").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const username = document.getElementById("admin-username").value;
-            const password = document.getElementById("admin-password").value;
-            
-            if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
-                localStorage.setItem("isAdmin", "true");
-                window.location.href = "admin.html";
-            } else {
-                alert("Login failed. Check your credentials.");
-            }
-        });
-    </script>
-
-    <hr>
-    <h2>Edit Event Details</h2>
-    <form id="event-form">
-        <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
-        <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
-        <button type="submit">Save Event Details</button>
-    </form>
-
-    <button onclick="logout()">Logout</button>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            if (localStorage.getItem("isAdmin") !== "true") {
-                alert("Access Denied! Please log in.");
-                window.location.href = "index.html";
+            if (localStorage.getItem("isAdmin") === "true") {
+                showAdminPanel();
             }
+        });
 
+        function login() {
+            const username = document.getElementById("admin-username").value;
+            const password = document.getElementById("admin-password").value;
+
+            if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
+                localStorage.setItem("isAdmin", "true");
+                showAdminPanel();
+            } else {
+                alert("Incorrect username or password.");
+            }
+        }
+
+        function showAdminPanel() {
+            document.getElementById("login-section").style.display = "none";
+            document.getElementById("admin-section").style.display = "block";
+            
             document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
             document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
-
+            
             document.getElementById("event-form").addEventListener("submit", function (e) {
                 e.preventDefault();
                 const date = document.getElementById("event-date").value;
                 const menu = document.getElementById("event-menu").value;
-
                 localStorage.setItem("eventDate", date);
                 localStorage.setItem("eventMenu", menu);
-
                 alert("Event details updated!");
             });
-        });
+            
+            const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            const rsvpList = document.getElementById("rsvp-list");
+            rsvpList.innerHTML = "";
+            rsvps.forEach((rsvp) => {
+                const li = document.createElement("li");
+                li.textContent = `${rsvp.name} - ${rsvp.email} - Guests: ${rsvp.guests}`;
+                rsvpList.appendChild(li);
+            });
+        }
 
         function logout() {
             localStorage.removeItem("isAdmin");
             alert("Logged out successfully!");
-            window.location.href = "index.html";
+            location.reload();
         }
     </script>
 </body>

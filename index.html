@@ -12,11 +12,6 @@
             padding: 20px;
             text-align: center;
         }
-        form {
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-        }
         input, button {
             display: block;
             width: 100%;
@@ -49,66 +44,54 @@
     
     <div id="admin-section" style="display: none;">
         <h2>Edit Event Details</h2>
-        <form id="event-form">
-            <input type="text" id="event-date" placeholder="Event Date (e.g., March 5, 2025)">
-            <input type="text" id="event-menu" placeholder="Menu (e.g., BBQ & Salad)">
-            <button type="submit">Save Event Details</button>
-        </form>
+        <input type="text" id="event-date" placeholder="Event Date">
+        <input type="text" id="event-menu" placeholder="Menu">
+        <button onclick="saveEventDetails()">Save</button>
         
         <h2>RSVP List</h2>
         <ul id="rsvp-list"></ul>
-        
         <button onclick="logout()">Logout</button>
     </div>
     
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (localStorage.getItem("isAdmin") === "true") {
-                showAdminPanel();
-            }
-        });
-
         function login() {
             const username = document.getElementById("admin-username").value;
             const password = document.getElementById("admin-password").value;
-
             if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
                 localStorage.setItem("isAdmin", "true");
                 showAdminPanel();
             } else {
-                alert("Incorrect username or password.");
+                alert("Incorrect credentials");
             }
         }
-
+        
         function showAdminPanel() {
             document.getElementById("login-section").style.display = "none";
             document.getElementById("admin-section").style.display = "block";
-            
-            document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
-            document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
-            
-            document.getElementById("event-form").addEventListener("submit", function (e) {
-                e.preventDefault();
-                const date = document.getElementById("event-date").value;
-                const menu = document.getElementById("event-menu").value;
-                localStorage.setItem("eventDate", date);
-                localStorage.setItem("eventMenu", menu);
-                alert("Event details updated!");
-            });
-            
-            const rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            const rsvpList = document.getElementById("rsvp-list");
+            loadRSVPs();
+        }
+        
+        function loadRSVPs() {
+            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+            let rsvpList = document.getElementById("rsvp-list");
             rsvpList.innerHTML = "";
-            rsvps.forEach((rsvp) => {
-                const li = document.createElement("li");
+            rsvps.forEach(rsvp => {
+                let li = document.createElement("li");
                 li.textContent = `${rsvp.name} - ${rsvp.email} - Guests: ${rsvp.guests}`;
                 rsvpList.appendChild(li);
             });
         }
-
+        
+        function saveEventDetails() {
+            let date = document.getElementById("event-date").value;
+            let menu = document.getElementById("event-menu").value;
+            localStorage.setItem("eventDate", date);
+            localStorage.setItem("eventMenu", menu);
+            alert("Event details updated!");
+        }
+        
         function logout() {
             localStorage.removeItem("isAdmin");
-            alert("Logged out successfully!");
             location.reload();
         }
     </script>

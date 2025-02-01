@@ -65,12 +65,11 @@
                 
                 rsvps.push({ name, email, guests });
                 localStorage.setItem("rsvps", JSON.stringify(rsvps));
-                localStorage.setItem("rsvpSubmitted", "true"); // Mark RSVP as submitted
+                localStorage.setItem("rsvpSubmitted", "true");
                 alert("RSVP submitted successfully!");
                 location.reload();
             });
 
-            // Load event details
             const eventDate = localStorage.getItem("eventDate") || "TBD";
             const eventMenu = localStorage.getItem("eventMenu") || "TBD";
             document.getElementById("event-details").textContent = `Next Event: ${eventDate} - Menu: ${eventMenu}`;
@@ -92,7 +91,7 @@
             const password = document.getElementById("admin-password").value;
             
             if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
-                localStorage.setItem("isAdmin", "true");  // Store admin status
+                localStorage.setItem("isAdmin", "true");
                 window.location.href = "admin.html";
             } else {
                 alert("Login failed. Check your credentials.");
@@ -117,7 +116,6 @@
                 window.location.href = "index.html";
             }
 
-            // Load existing event details
             document.getElementById("event-date").value = localStorage.getItem("eventDate") || "";
             document.getElementById("event-menu").value = localStorage.getItem("eventMenu") || "";
 
@@ -134,9 +132,9 @@
         });
 
         function logout() {
-            localStorage.removeItem("isAdmin");  // Remove admin status
+            localStorage.removeItem("isAdmin");
             alert("Logged out successfully!");
-            window.location.href = "index.html";  // Redirect to login
+            window.location.href = "index.html";
         }
     </script>
 </body>

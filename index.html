@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - RSVP Management</title>
+    <title>RSVP - Home Party</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +11,11 @@
             margin: auto;
             padding: 20px;
             text-align: center;
+        }
+        form {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
         }
         input, button {
             display: block;
@@ -33,67 +38,40 @@
     </style>
 </head>
 <body>
-    <h1>Admin Panel - RSVP Management</h1>
+    <h1>RSVP for the Home Party</h1>
+
+    <h2 id="event-info"></h2>
     
-    <div id="login-section">
-        <h2>Admin Login</h2>
-        <input type="text" id="admin-username" placeholder="Username">
-        <input type="password" id="admin-password" placeholder="Password">
-        <button onclick="login()">Login</button>
-    </div>
-    
-    <div id="admin-section" style="display: none;">
-        <h2>Edit Event Details</h2>
-        <input type="text" id="event-date" placeholder="Event Date">
-        <input type="text" id="event-menu" placeholder="Menu">
-        <button onclick="saveEventDetails()">Save</button>
-        
-        <h2>RSVP List</h2>
-        <ul id="rsvp-list"></ul>
-        <button onclick="logout()">Logout</button>
-    </div>
-    
+    <form id="rsvp-form">
+        <input type="text" id="rsvp-name" placeholder="Your Name" required>
+        <input type="email" id="rsvp-email" placeholder="Your Email" required>
+        <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
+        <button type="submit">Submit RSVP</button>
+    </form>
+
     <script>
-        function login() {
-            const username = document.getElementById("admin-username").value;
-            const password = document.getElementById("admin-password").value;
-            if (username === "TheJAWsome1" && password === "N9JaW2010@Y()U") {
-                localStorage.setItem("isAdmin", "true");
-                showAdminPanel();
-            } else {
-                alert("Incorrect credentials");
-            }
-        }
-        
-        function showAdminPanel() {
-            document.getElementById("login-section").style.display = "none";
-            document.getElementById("admin-section").style.display = "block";
-            loadRSVPs();
-        }
-        
-        function loadRSVPs() {
-            let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            let rsvpList = document.getElementById("rsvp-list");
-            rsvpList.innerHTML = "";
-            rsvps.forEach(rsvp => {
-                let li = document.createElement("li");
-                li.textContent = `${rsvp.name} - ${rsvp.email} - Guests: ${rsvp.guests}`;
-                rsvpList.appendChild(li);
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load event details
+            const eventDate = localStorage.getItem("eventDate") || "TBA";
+            const eventMenu = localStorage.getItem("eventMenu") || "TBA";
+            document.getElementById("event-info").innerText = `📅 Date: ${eventDate} | 🍽️ Menu: ${eventMenu}`;
+
+            document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                const name = document.getElementById("rsvp-name").value;
+                const email = document.getElementById("rsvp-email").value;
+                const guests = document.getElementById("rsvp-guests").value;
+                
+                let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
+                if (!rsvps.some(rsvp => rsvp.email === email)) {
+                    rsvps.push({ name, email, guests });
+                    localStorage.setItem("rsvps", JSON.stringify(rsvps));
+                    alert("RSVP submitted successfully!");
+                } else {
+                    alert("You have already RSVP'd.");
+                }
             });
-        }
-        
-        function saveEventDetails() {
-            let date = document.getElementById("event-date").value;
-            let menu = document.getElementById("event-menu").value;
-            localStorage.setItem("eventDate", date);
-            localStorage.setItem("eventMenu", menu);
-            alert("Event details updated!");
-        }
-        
-        function logout() {
-            localStorage.removeItem("isAdmin");
-            location.reload();
-        }
+        });
     </script>
 </body>
 </html>

@@ -71,11 +71,17 @@
     </form>
 
     <script>
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
         function loadEventDetails() {
             let eventData = JSON.parse(localStorage.getItem("eventDetails"));
 
             if (eventData) {
-                document.getElementById("event-info").innerText = `Date: ${eventData.date || 'TBD'} Time: ${eventData.time || 'TBD'}`;
+                const formattedDate = eventData.date ? formatDate(eventData.date) : 'TBD';
+                document.getElementById("event-info").innerText = `Date: ${formattedDate} Time: ${eventData.time || 'TBD'}`;
                 document.getElementById("event-menu").innerText = "Menu: " + (eventData.menu || "TBD");
                 document.getElementById("event-extra").innerText = eventData.details || "";
                 

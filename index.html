@@ -58,8 +58,8 @@
 
     <form id="rsvp-form">
         <input type="text" id="rsvp-name" placeholder="Your Name" required>
-        <input type="email" id="rsvp-email" placeholder="Your Email Or Phone Number" required>
-        <input type="email" id="rsvp-email-confirm" placeholder="Confirm Your Email Or Phone Number" required>
+        <input type="text" id="rsvp-contact" placeholder="Your Email or Phone Number" required>
+        <input type="text" id="rsvp-contact-confirm" placeholder="Confirm Your Email or Phone Number" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
         
         <label>Select what you can bring (optional):</label>
@@ -102,11 +102,11 @@
 
         document.getElementById("rsvp-form").addEventListener("submit", function (e) {
             e.preventDefault();
-            const email = document.getElementById("rsvp-email").value;
-            const emailConfirm = document.getElementById("rsvp-email-confirm").value;
+            const contact = document.getElementById("rsvp-contact").value;
+            const contactConfirm = document.getElementById("rsvp-contact-confirm").value;
 
-            if (email !== emailConfirm) {
-                alert("Emails do not match. Please try again.");
+            if (contact !== contactConfirm) {
+                alert("Contact details do not match. Please try again.");
                 return;
             }
 
@@ -115,12 +115,12 @@
             const items = document.getElementById("rsvp-items").value;
 
             let rsvps = JSON.parse(localStorage.getItem("rsvps")) || [];
-            let existingRSVP = rsvps.find(rsvp => rsvp.email === email);
+            let existingRSVP = rsvps.find(rsvp => rsvp.contact === contact);
 
             if (existingRSVP) {
                 alert("You have already RSVP'd.");
             } else {
-                rsvps.push({ name, email, guests, items });
+                rsvps.push({ name, contact, guests, items });
                 localStorage.setItem("rsvps", JSON.stringify(rsvps));
                 alert("RSVP submitted successfully!");
             }

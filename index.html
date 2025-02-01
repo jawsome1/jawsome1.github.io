@@ -57,10 +57,25 @@
             }
 
             // Load event details
-            const eventDate = localStorage.getItem("eventDate") || "TBA";
-            const eventMenu = localStorage.getItem("eventMenu") || "TBA";
+            let eventDate = localStorage.getItem("eventDate") || "TBA";
+            let eventMenu = localStorage.getItem("eventMenu") || "TBA";
             document.getElementById("event-info").innerText = `📅 Date: ${eventDate} | 🍽️ Menu: ${eventMenu}`;
 
+            // Check if the event date has passed and clear RSVPs
+            if (eventDate !== "TBA") {
+                let eventDateObj = new Date(eventDate);
+                let today = new Date();
+                
+                if (today > eventDateObj) {
+                    localStorage.removeItem("rsvps"); // Clear RSVPs
+                    localStorage.setItem("eventDate", "TBA"); // Reset event date
+                    localStorage.setItem("eventMenu", "TBA"); // Reset event menu
+                    alert("The previous event has passed. RSVPs have been cleared.");
+                    location.reload(); // Refresh page to show cleared RSVPs
+                }
+            }
+
+            // Handle RSVP submission
             document.getElementById("rsvp-form").addEventListener("submit", function (e) {
                 e.preventDefault();
                 const name = document.getElementById("rsvp-name").value;

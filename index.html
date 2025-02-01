@@ -35,6 +35,18 @@
         button:hover {
             background-color: #0056b3;
         }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            input, button, select {
+                padding: 10px;
+                font-size: 14px;
+            }
+            button {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -47,6 +59,7 @@
     <form id="rsvp-form">
         <input type="text" id="rsvp-name" placeholder="Your Name" required>
         <input type="email" id="rsvp-email" placeholder="Your Email" required>
+        <input type="email" id="rsvp-email-confirm" placeholder="Confirm Your Email" required>
         <input type="number" id="rsvp-guests" placeholder="Number of Guests" required>
         
         <label>Select what you can bring (optional):</label>
@@ -83,8 +96,15 @@
 
         document.getElementById("rsvp-form").addEventListener("submit", function (e) {
             e.preventDefault();
-            const name = document.getElementById("rsvp-name").value;
             const email = document.getElementById("rsvp-email").value;
+            const emailConfirm = document.getElementById("rsvp-email-confirm").value;
+
+            if (email !== emailConfirm) {
+                alert("Emails do not match. Please try again.");
+                return;
+            }
+
+            const name = document.getElementById("rsvp-name").value;
             const guests = document.getElementById("rsvp-guests").value;
             const items = document.getElementById("rsvp-items").value;
 

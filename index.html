@@ -42,10 +42,23 @@
     .basic {
       border: 1px solid #ddd;
       background: #f9f9f9;
+      position: relative;
     }
     .pro {
       border: 1px solid #72a4f2;
       background: #f0f6ff;
+    }
+    .out-of-stock-banner {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ffeaea;
+      color: #c00;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1em;
+      z-index: 2;
     }
     .version {
       margin: 20px 0 10px 0;
@@ -106,6 +119,7 @@
     <h1>Ham Radio Starter Kits</h1>
     <div class="pricing">
       <div class="package basic">
+        <div class="out-of-stock-banner">OUT OF STOCK</div>
         <h3>🔧 Ham Radio Starter Kit – <span style="color:#888;">BASIC</span></h3>
         <strong>$35 – Self-Guided Edition (No Support)</strong>
         <p style="margin:8px 0 0 0;">Perfect for confident self-starters who want a preloaded, ready-to-go ham radio setup with everything they need to hit the ground running.</p>
@@ -180,17 +194,45 @@
   </div>
   <script>
     // Replace with your real order numbers
-    const unsupportedOrders = ['GGUILY-71497376', 'GGUILY-61325089', 'GGUILY-18652786'];
-    const supportedOrders = ['GGILY-29501657', 'GGUILY-17346874', 'GGUILY-19285936'];
+    const unsupportedOrders = ['U12345', 'U23456', 'U34567'];
+    const supportedOrders = ['S12345', 'S23456', 'S34567'];
 
     // Replace with your real download links
     const unsupportedLink = "https://your-download-link.com/usb-v2.5.0-unsupported.exe";
     const supportedLink = "https://your-download-link.com/usb-v2.5.0-supported.exe";
 
+    // Set to true if out of stock
+    const basicOutOfStock = true;
+    const proOutOfStock = false;
+
     function checkOrder() {
       const input = document.getElementById('orderNum').value.trim();
       const msg = document.getElementById('orderMsg');
       const btn = document.getElementById('installBtn');
+
+      // Out of stock logic
+      if (basicOutOfStock && unsupportedOrders.includes(input)) {
+        msg.textContent = "Sorry, the BASIC kit is currently out of stock.";
+        msg.className = "error";
+        btn.setAttribute('disabled', 'disabled');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.6';
+        btn.href = "#";
+        btn.textContent = "Out of Stock";
+        return;
+      }
+      if (proOutOfStock && supportedOrders.includes(input)) {
+        msg.textContent = "Sorry, the PRO kit is currently out of stock.";
+        msg.className = "error";
+        btn.setAttribute('disabled', 'disabled');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.6';
+        btn.href = "#";
+        btn.textContent = "Out of Stock";
+        return;
+      }
+
+      // Existing logic...
       if (unsupportedOrders.includes(input)) {
         msg.textContent = "Order number valid for UNSUPPORTED version. You can now install.";
         msg.className = "success";

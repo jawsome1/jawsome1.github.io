@@ -96,6 +96,9 @@
     .order-check {
       margin: 20px 0 10px 0;
     }
+    .coupon-check {
+      margin: 20px 0 10px 0;
+    }
     .error {
       color: #c00;
       font-size: 0.95em;
@@ -172,6 +175,11 @@
     <div class="version">
       <strong>Current USB Version:</strong> 2.5.0
     </div>
+    <div class="coupon-check">
+      <input type="text" id="couponCode" placeholder="Enter coupon code">
+      <button onclick="checkCoupon()" class="install-btn" style="padding: 8px 16px;">Apply Coupon</button>
+      <div id="couponMsg"></div>
+    </div>
     <div class="order-check">
       <input type="text" id="orderNum" placeholder="Enter your order number">
       <button onclick="checkOrder()" class="install-btn" style="padding: 8px 16px;">Check Order</button>
@@ -204,6 +212,25 @@
     // Set to true if out of stock
     const basicOutOfStock = true;
     const proOutOfStock = true;
+
+    // Coupon codes and messages
+    const coupons = {
+      "SAVE10": "🎉 Coupon applied! You get $10 off your order.",
+      "FREESHIP": "🚚 Coupon applied! Free shipping on your order.",
+      "N9JAW": "⭐ Special N9JAW supporter coupon applied!"
+    };
+
+    function checkCoupon() {
+      const code = document.getElementById('couponCode').value.trim().toUpperCase();
+      const msg = document.getElementById('couponMsg');
+      if (coupons[code]) {
+        msg.textContent = coupons[code];
+        msg.className = "success";
+      } else {
+        msg.textContent = "Invalid coupon code.";
+        msg.className = "error";
+      }
+    }
 
     function checkOrder() {
       const input = document.getElementById('orderNum').value.trim();

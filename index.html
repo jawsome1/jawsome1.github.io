@@ -16,16 +16,36 @@
       margin: 40px auto;
       padding: 30px 20px;
       border-radius: 8px;
-      max-width: 400px;
+      max-width: 900px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     h1 {
       color: #333;
     }
     .pricing {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      text-align: left;
       margin: 20px 0;
-      font-size: 1.2em;
-      color: #444;
+      font-size: 1.1em;
+    }
+    .package {
+      flex: 1 1 320px;
+      min-width: 280px;
+      max-width: 350px;
+      border-radius: 6px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .basic {
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+    .pro {
+      border: 1px solid #72a4f2;
+      background: #f0f6ff;
     }
     .version {
       margin: 20px 0 10px 0;
@@ -73,65 +93,68 @@
       font-size: 0.95em;
       margin-top: 5px;
     }
+    @media (max-width: 800px) {
+      .pricing {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Ham Radio Starter Kits</h1>
     <div class="pricing">
-  <h2>Packages & Pricing</h2>
-  <div style="text-align:left; margin: 0 auto; max-width: 350px;">
-    <div style="border:1px solid #ddd; border-radius:6px; padding:16px; margin-bottom:18px; background:#f9f9f9;">
-      <h3>🔧 Ham Radio Starter Kit – <span style="color:#888;">BASIC</span></h3>
-      <strong>$35 – Self-Guided Edition (No Support)</strong>
-      <p style="margin:8px 0 0 0;">Perfect for confident self-starters who want a preloaded, ready-to-go ham radio setup with everything they need to hit the ground running.</p>
-      <ul style="margin:10px 0 0 18px;">
-        <li>Baofeng UV-5R handheld radio</li>
-        <li>Pre-programmed with local repeaters, NOAA weather, and simplex channels</li>
-        <li>Charging dock and wall adapter</li>
-        <li>Preloaded USB flash drive containing:
-          <ul>
-            <li>What is Ham Radio? – Beginner-friendly license guide</li>
-            <li>Welcome to Ham Radio – Learn etiquette, nets, and more</li>
-            <li>What’s My Next Step in Ham Radio? – Growing your skills and license</li>
-            <li>What is GMRS, FRS, and MURS? – Alternatives and cross-use</li>
-            <li>Get to Know Your Radio – Visual diagram of the UV-5R</li>
-            <li>Radio Manual (PDF)</li>
-            <li>ARRL Band Plan chart (PDF)</li>
-            <li>Emergency Quick Reference Sheet</li>
-            <li>Antenna Builds & DIY ideas</li>
-            <li>Useful links guide</li>
-          </ul>
-        </li>
-        <li>Personalized programming (your name/callsign on the radio display – optional)</li>
-      </ul>
-      <p style="color:#c00; margin:10px 0 0 0;">❌ No included setup help, programming guidance, or Q&amp;A support.</p>
-      <p style="font-size:0.95em; color:#555;">If you’re comfortable reading the included guides and exploring solo, this is for you!</p>
+      <div class="package basic">
+        <h3>🔧 Ham Radio Starter Kit – <span style="color:#888;">BASIC</span></h3>
+        <strong>$35 – Self-Guided Edition (No Support)</strong>
+        <p style="margin:8px 0 0 0;">Perfect for confident self-starters who want a preloaded, ready-to-go ham radio setup with everything they need to hit the ground running.</p>
+        <ul style="margin:10px 0 0 18px;">
+          <li>Baofeng UV-5R handheld radio</li>
+          <li>Pre-programmed with local repeaters, NOAA weather, and simplex channels</li>
+          <li>Charging dock and wall adapter</li>
+          <li>Preloaded USB flash drive containing:
+            <ul>
+              <li>What is Ham Radio? – Beginner-friendly license guide</li>
+              <li>Welcome to Ham Radio – Learn etiquette, nets, and more</li>
+              <li>What’s My Next Step in Ham Radio? – Growing your skills and license</li>
+              <li>What is GMRS, FRS, and MURS? – Alternatives and cross-use</li>
+              <li>Get to Know Your Radio – Visual diagram of the UV-5R</li>
+              <li>Radio Manual (PDF)</li>
+              <li>ARRL Band Plan chart (PDF)</li>
+              <li>Emergency Quick Reference Sheet</li>
+              <li>Antenna Builds & DIY ideas</li>
+              <li>Useful links guide</li>
+            </ul>
+          </li>
+          <li>Personalized programming (your name/callsign on the radio display – optional)</li>
+        </ul>
+        <p style="color:#c00; margin:10px 0 0 0;">❌ No included setup help, programming guidance, or Q&amp;A support.</p>
+        <p style="font-size:0.95em; color:#555;">If you’re comfortable reading the included guides and exploring solo, this is for you!</p>
+      </div>
+      <div class="package pro">
+        <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
+        <strong>$45 – Full Support Edition</strong>
+        <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
+        <ul style="margin:10px 0 0 18px;">
+          <li><strong>Everything in the Basic kit, plus:</strong></li>
+          <li>💬 <strong>Direct Support from N9JAW:</strong>
+            <ul>
+              <li>Help getting your license</li>
+              <li>Programming advice or customization</li>
+              <li>Radio usage help (how to talk, how to listen, etc.)</li>
+              <li>Q&amp;A by email (and possibly local in-person support, depending on availability)</li>
+              <li>Net check-in coaching or walkthrough</li>
+              <li>Ongoing encouragement and community connection</li>
+            </ul>
+          </li>
+        </ul>
+        <p style="font-size:0.95em; color:#555; margin:10px 0 0 0;">
+          “Basically, I’ve got your back. You’re not alone on this radio journey.”<br>
+          <span style="color:#333;">– Jakob A. White (N9JAW)</span>
+        </p>
+      </div>
     </div>
-    <div style="border:1px solid #72a4f2; border-radius:6px; padding:16px; background:#f0f6ff;">
-      <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
-      <strong>$45 – Full Support Edition</strong>
-      <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
-      <ul style="margin:10px 0 0 18px;">
-        <li><strong>Everything in the Basic kit, plus:</strong></li>
-        <li>💬 <strong>Direct Support from N9JAW:</strong>
-          <ul>
-            <li>Help getting your license</li>
-            <li>Programming advice or customization</li>
-            <li>Radio usage help (how to talk, how to listen, etc.)</li>
-            <li>Q&amp;A by email (and possibly local in-person support, depending on availability)</li>
-            <li>Net check-in coaching or walkthrough</li>
-            <li>Ongoing encouragement and community connection</li>
-          </ul>
-        </li>
-      </ul>
-      <p style="font-size:0.95em; color:#555; margin:10px 0 0 0;">
-        “Basically, I’ve got your back. You’re not alone on this radio journey.”<br>
-        <span style="color:#333;">– Jakob A. White (N9JAW)</span>
-      </p>
-    </div>
-  </div>
-</div>
     <div class="version">
       <strong>Current USB Version:</strong> 2.5.0
     </div>
@@ -140,7 +163,7 @@
       <button onclick="checkOrder()" class="install-btn" style="padding: 8px 16px;">Check Order</button>
       <div id="orderMsg"></div>
     </div>
-    <a id="installBtn" class="install-btn" href="https://your-download-link.com/usb-v2.5.0.exe" download style="pointer-events:none;opacity:0.6;" disabled>
+    <a id="installBtn" class="install-btn" href="#" style="pointer-events:none;opacity:0.6;" disabled>
       Install Current Version
     </a>
     <div class="order">
@@ -156,25 +179,42 @@
     </div>
   </div>
   <script>
-    // Example valid order numbers (replace with your real list or server check)
-    const validOrders = ['GGUILY-71497376', 'GGUILY-71497375'];
+    // Replace with your real order numbers
+    const unsupportedOrders = ['U12345', 'U23456', 'U34567'];
+    const supportedOrders = ['S12345', 'S23456', 'S34567'];
+
+    // Replace with your real download links
+    const unsupportedLink = "https://your-download-link.com/usb-v2.5.0-unsupported.exe";
+    const supportedLink = "https://your-download-link.com/usb-v2.5.0-supported.exe";
 
     function checkOrder() {
       const input = document.getElementById('orderNum').value.trim();
       const msg = document.getElementById('orderMsg');
       const btn = document.getElementById('installBtn');
-      if (validOrders.includes(input)) {
-        msg.textContent = "Order number valid! You can now install.";
+      if (unsupportedOrders.includes(input)) {
+        msg.textContent = "Order number valid for UNSUPPORTED version. You can now install.";
         msg.className = "success";
         btn.removeAttribute('disabled');
         btn.style.pointerEvents = 'auto';
         btn.style.opacity = '1';
+        btn.href = unsupportedLink;
+        btn.textContent = "Install Unsuported Version";
+      } else if (supportedOrders.includes(input)) {
+        msg.textContent = "Order number valid for SUPPORTED version. You can now install.";
+        msg.className = "success";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        btn.href = supportedLink;
+        btn.textContent = "Install Suported Version";
       } else {
         msg.textContent = "Invalid order number. Please check and try again.";
         msg.className = "error";
         btn.setAttribute('disabled', 'disabled');
         btn.style.pointerEvents = 'none';
         btn.style.opacity = '0.6';
+        btn.href = "#";
+        btn.textContent = "Install Current Version";
       }
     }
   </script>

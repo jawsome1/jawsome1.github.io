@@ -38,11 +38,11 @@
       border-radius: 6px;
       padding: 16px;
       box-sizing: border-box;
+      position: relative;
     }
     .basic {
       border: 1px solid #ddd;
       background: #f9f9f9;
-      position: relative;
     }
     .pro {
       border: 1px solid #72a4f2;
@@ -96,9 +96,6 @@
     .order-check {
       margin: 20px 0 10px 0;
     }
-    .coupon-check {
-      margin: 20px 0 10px 0;
-    }
     .error {
       color: #c00;
       font-size: 0.95em;
@@ -122,7 +119,7 @@
     <h1>Ham Radio Starter Kits</h1>
     <div class="pricing">
       <div class="package basic">
-        <div class="out-of-stock-banner">OUT OF STOCK</div>
+        <div class="out-of-stock-banner" id="basicStockBanner" style="display:none;">OUT OF STOCK</div>
         <h3>🔧 Ham Radio Starter Kit – <span style="color:#888;">BASIC</span></h3>
         <strong>$35 – Self-Guided Edition (No Support)</strong>
         <p style="margin:8px 0 0 0;">Perfect for confident self-starters who want a preloaded, ready-to-go ham radio setup with everything they need to hit the ground running.</p>
@@ -150,6 +147,7 @@
         <p style="font-size:0.95em; color:#555;">If you’re comfortable reading the included guides and exploring solo, this is for you!</p>
       </div>
       <div class="package pro">
+        <div class="out-of-stock-banner" id="proStockBanner" style="display:none;">OUT OF STOCK</div>
         <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
         <strong>$45 – Full Support Edition</strong>
         <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
@@ -174,11 +172,6 @@
     </div>
     <div class="version">
       <strong>Current USB Version:</strong> 2.5.0
-    </div>
-    <div class="coupon-check">
-      <input type="text" id="couponCode" placeholder="Enter coupon code">
-      <button onclick="checkCoupon()" class="install-btn" style="padding: 8px 16px;">Apply Coupon</button>
-      <div id="couponMsg"></div>
     </div>
     <div class="order-check">
       <input type="text" id="orderNum" placeholder="Enter your order number">
@@ -210,27 +203,14 @@
     const supportedLink = "https://your-download-link.com/usb-v2.5.0-supported.exe";
 
     // Set to true if out of stock
-    const basicOutOfStock = true;
-    const proOutOfStock = true;
+    const basicOutOfStock = true;   // Set to true/false as needed
+    const proOutOfStock = false;    // Set to true/false as needed
 
-    // Coupon codes and messages
-    const coupons = {
-      "SAVE10": "🎉 Coupon applied! You get $10 off your order.",
-      "FREESHIP": "🚚 Coupon applied! Free shipping on your order.",
-      "N9JAW": "⭐ Special N9JAW supporter coupon applied!"
-    };
-
-    function checkCoupon() {
-      const code = document.getElementById('couponCode').value.trim().toUpperCase();
-      const msg = document.getElementById('couponMsg');
-      if (coupons[code]) {
-        msg.textContent = coupons[code];
-        msg.className = "success";
-      } else {
-        msg.textContent = "Invalid coupon code.";
-        msg.className = "error";
-      }
-    }
+    // Show out of stock banners
+    document.addEventListener("DOMContentLoaded", function() {
+      if (basicOutOfStock) document.getElementById('basicStockBanner').style.display = 'block';
+      if (proOutOfStock) document.getElementById('proStockBanner').style.display = 'block';
+    });
 
     function checkOrder() {
       const input = document.getElementById('orderNum').value.trim();
@@ -277,7 +257,7 @@
         btn.href = supportedLink;
         btn.textContent = "Install Suported Version";
       } else {
-        msg.textContent = "Invalid order number. Please check and try again. It might take a while for the order number to update.";
+        msg.textContent = "Invalid order number. Please check and try again.";
         msg.className = "error";
         btn.setAttribute('disabled', 'disabled');
         btn.style.pointerEvents = 'none';

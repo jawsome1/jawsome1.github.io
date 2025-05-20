@@ -16,7 +16,7 @@
       margin: 40px auto;
       padding: 30px 20px;
       border-radius: 8px;
-      max-width: 900px;
+      max-width: 1100px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     h1 {
@@ -32,13 +32,19 @@
       font-size: 1.1em;
     }
     .package {
-      flex: 1 1 320px;
-      min-width: 280px;
-      max-width: 350px;
+      flex: 1 1 280px;
+      min-width: 260px;
+      max-width: 340px;
       border-radius: 6px;
       padding: 16px;
       box-sizing: border-box;
       position: relative;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+    }
+    .guide {
+      border: 1px solid #aaa;
+      background: #f6f6f6;
     }
     .basic {
       border: 1px solid #ddd;
@@ -106,7 +112,17 @@
       font-size: 0.95em;
       margin-top: 5px;
     }
-    @media (max-width: 800px) {
+    .disclaimer {
+      margin: 30px auto 10px auto;
+      max-width: 700px;
+      color: #b00;
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      border-radius: 6px;
+      padding: 12px 18px;
+      font-size: 1em;
+    }
+    @media (max-width: 1100px) {
       .pricing {
         flex-direction: column;
         align-items: center;
@@ -118,8 +134,35 @@
   <div class="container">
     <h1>Ham Radio Starter Kits</h1>
     <div class="pricing">
+      <div class="package guide">
+        <h3>📦 Guide Content Package</h3>
+        <strong>$10 – Basic USB Content<br>$15 – Pro USB Content</strong>
+        <p style="margin:8px 0 0 0;">Get all the digital guides, manuals, and resources from the USB packages—no radio or hardware included.</p>
+        <ul style="margin:10px 0 0 18px;">
+          <li>All digital content from the BASIC or PRO USB (choose your version):</li>
+          <li>Beginner-friendly license guide</li>
+          <li>Welcome to Ham Radio – Learn etiquette, nets, and more</li>
+          <li>What’s My Next Step in Ham Radio?</li>
+          <li>What is GMRS, FRS, and MURS?</li>
+          <li>Get to Know Your Radio – Visual diagram</li>
+          <li>Radio Manual (PDF)</li>
+          <li>ARRL Band Plan chart (PDF)</li>
+          <li>Emergency Quick Reference Sheet</li>
+          <li>Antenna Builds & DIY ideas</li>
+          <li>Useful links guide</li>
+          <li><b>PRO version also includes:</b>
+            <ul>
+              <li>Direct support resources</li>
+              <li>Programming/customization tips</li>
+              <li>Net check-in coaching</li>
+              <li>Community connection info</li>
+            </ul>
+          </li>
+        </ul>
+        <p style="font-size:0.95em; color:#555;">Perfect if you just want the learning materials and reference content!</p>
+      </div>
       <div class="package basic">
-        <div class="out-of-stock-banner" id="basicStockBanner" style="display:none;">OUT OF STOCK</div>
+        <div class="out-of-stock-banner">OUT OF STOCK</div>
         <h3>🔧 Ham Radio Starter Kit – <span style="color:#888;">BASIC</span></h3>
         <strong>$35 – Self-Guided Edition (No Support)</strong>
         <p style="margin:8px 0 0 0;">Perfect for confident self-starters who want a preloaded, ready-to-go ham radio setup with everything they need to hit the ground running.</p>
@@ -147,7 +190,6 @@
         <p style="font-size:0.95em; color:#555;">If you’re comfortable reading the included guides and exploring solo, this is for you!</p>
       </div>
       <div class="package pro">
-        <div class="out-of-stock-banner" id="proStockBanner" style="display:none;">OUT OF STOCK</div>
         <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
         <strong>$45 – Full Support Edition</strong>
         <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
@@ -169,6 +211,9 @@
           <span style="color:#333;">– Jakob A. White (N9JAW)</span>
         </p>
       </div>
+    </div>
+    <div class="disclaimer">
+      <b>Disclaimer:</b> USB packages do <u>not</u> include a physical USB drive. Purchase grants you the right to download and install the latest USB contents for your package.
     </div>
     <div class="version">
       <strong>Current USB Version:</strong> 2.5.0
@@ -195,52 +240,68 @@
   </div>
   <script>
     // Replace with your real order numbers
-    const unsupportedOrders = ['U12345', 'U23456', 'U34567'];
-    const supportedOrders = ['S12345', 'S23456', 'S34567'];
+    const unsupportedOrders = ['U12345', 'U23456', 'U34567', 'BUSB1', 'BUSB2'];
+    const supportedOrders = ['S12345', 'S23456', 'S34567', 'PUSB1', 'PUSB2'];
+    const guideBasicOrders = ['GB10', 'GB11'];
+    const guideProOrders = ['GP15', 'GP16'];
 
     // Replace with your real download links
     const unsupportedLink = "https://your-download-link.com/usb-v2.5.0-unsupported.exe";
     const supportedLink = "https://your-download-link.com/usb-v2.5.0-supported.exe";
+    const guideBasicLink = "https://your-download-link.com/usb-v2.5.0-basic-content.zip";
+    const guideProLink = "https://your-download-link.com/usb-v2.5.0-pro-content.zip";
 
-    // Set to true if out of stock
-    const basicOutOfStock = true;   // Set to true/false as needed
-    const proOutOfStock = true;    // Set to true/false as needed
-
-    // Show out of stock banners
-    document.addEventListener("DOMContentLoaded", function() {
-      if (basicOutOfStock) document.getElementById('basicStockBanner').style.display = 'block';
-      if (proOutOfStock) document.getElementById('proStockBanner').style.display = 'block';
-    });
+    // Set to true if out of stock (kits only, not USB content)
+    const basicOutOfStock = true;
+    const proOutOfStock = true;
 
     function checkOrder() {
       const input = document.getElementById('orderNum').value.trim();
       const msg = document.getElementById('orderMsg');
       const btn = document.getElementById('installBtn');
 
-      // Out of stock logic
+      // Out of stock logic for physical kits only
       if (basicOutOfStock && unsupportedOrders.includes(input)) {
-        msg.textContent = "Sorry, the BASIC kit is currently out of stock.";
+        msg.textContent = "The BASIC kit is currently out of stock. You can still install/download the USB contents below.";
         msg.className = "error";
-        btn.setAttribute('disabled', 'disabled');
-        btn.style.pointerEvents = 'none';
-        btn.style.opacity = '0.6';
-        btn.href = "#";
-        btn.textContent = "Out of Stock";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        btn.href = unsupportedLink;
+        btn.textContent = "Install Unsuported Version";
         return;
       }
       if (proOutOfStock && supportedOrders.includes(input)) {
-        msg.textContent = "Sorry, the PRO kit is currently out of stock.";
+        msg.textContent = "The PRO kit is currently out of stock. You can still install/download the USB contents below.";
         msg.className = "error";
-        btn.setAttribute('disabled', 'disabled');
-        btn.style.pointerEvents = 'none';
-        btn.style.opacity = '0.6';
-        btn.href = "#";
-        btn.textContent = "Out of Stock";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        btn.href = supportedLink;
+        btn.textContent = "Install Suported Version";
         return;
       }
 
-      // Existing logic...
-      if (unsupportedOrders.includes(input)) {
+      // Guide content package logic
+      if (guideBasicOrders.includes(input)) {
+        msg.textContent = "Order number valid for BASIC USB Content. You can now download.";
+        msg.className = "success";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        btn.href = guideBasicLink;
+        btn.textContent = "Download Basic USB Content";
+      } else if (guideProOrders.includes(input)) {
+        msg.textContent = "Order number valid for PRO USB Content. You can now download.";
+        msg.className = "success";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+        btn.href = guideProLink;
+        btn.textContent = "Download Pro USB Content";
+      }
+      // Full kit logic
+      else if (unsupportedOrders.includes(input)) {
         msg.textContent = "Order number valid for UNSUPPORTED version. You can now install.";
         msg.className = "success";
         btn.removeAttribute('disabled');
@@ -257,7 +318,7 @@
         btn.href = supportedLink;
         btn.textContent = "Install Suported Version";
       } else {
-        msg.textContent = "Invalid order number. Please check and try again. It might take a while for the order number to update.";
+        msg.textContent = "Invalid order number. Please check and try again.";
         msg.className = "error";
         btn.setAttribute('disabled', 'disabled');
         btn.style.pointerEvents = 'none';

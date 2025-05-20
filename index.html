@@ -45,7 +45,11 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .install-btn:hover {
+    .install-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .install-btn:hover:enabled {
       background: #4a7bb7;
     }
     .order {
@@ -55,6 +59,19 @@
     }
     .kofi {
       margin-top: 30px;
+    }
+    .order-check {
+      margin: 20px 0 10px 0;
+    }
+    .error {
+      color: #c00;
+      font-size: 0.95em;
+      margin-top: 5px;
+    }
+    .success {
+      color: #090;
+      font-size: 0.95em;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -68,7 +85,12 @@
     <div class="version">
       <strong>Current USB Version:</strong> 2.5.0
     </div>
-    <a class="install-btn" href="https://github.com/jawsome1/USB-Ham-Radio-Starter-kit/archive/refs/heads/main.zip" download>
+    <div class="order-check">
+      <input type="text" id="orderNum" placeholder="Enter your order number">
+      <button onclick="checkOrder()" class="install-btn" style="padding: 8px 16px;">Check Order</button>
+      <div id="orderMsg"></div>
+    </div>
+    <a id="installBtn" class="install-btn" href="https://your-download-link.com/usb-v2.5.0.exe" download style="pointer-events:none;opacity:0.6;" disabled>
       Install Current Version
     </a>
     <div class="order">
@@ -83,5 +105,28 @@
       </script>
     </div>
   </div>
+  <script>
+    // Example valid order numbers (replace with your real list or server check)
+    const validOrders = ['12345', 'ABCDE', 'N9JAW2024', 'HAMKIT001'];
+
+    function checkOrder() {
+      const input = document.getElementById('orderNum').value.trim();
+      const msg = document.getElementById('orderMsg');
+      const btn = document.getElementById('installBtn');
+      if (validOrders.includes(input)) {
+        msg.textContent = "Order number valid! You can now install.";
+        msg.className = "success";
+        btn.removeAttribute('disabled');
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+      } else {
+        msg.textContent = "Invalid order number. Please check and try again.";
+        msg.className = "error";
+        btn.setAttribute('disabled', 'disabled');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.6';
+      }
+    }
+  </script>
 </body>
 </html>

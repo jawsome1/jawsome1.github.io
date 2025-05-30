@@ -266,6 +266,10 @@
     If you would like to donate to N9JAW, please do so on <a href="https://ko-fi.com/n9jaw" target="_blank" style="color:#72a4f2;">Ko-fi</a>.
   </footer>
   <script>
+    // GLOBAL TOGGLE: Set these to true/false as needed
+    const allOutOfStock = false; // Set true to mark ALL as OUT OF STOCK
+    const allPreOrder = false;   // Set true to mark ALL as Pre-Order
+
     // Replace with your real order numbers
     const usbBasicOrders = ['XJQW-9382', 'LZMT-4721', 'PVND-8156', 'CKYR-2604', 'TQVL-5837'];
     const usbProOrders = ['FJXN-6219', 'RWYZ-2746', 'MKTP-8342', 'VLDC-4921', 'ZQBN-7158'];
@@ -278,18 +282,37 @@
     const unsupportedLink = "https://your-download-link.com/usb-v2.5.0-unsupported.exe";
     const supportedLink = "https://github.com/jawsome1/USB-Ham-Radio-Starter-kit/archive/refs/heads/main.zip";
 
-    // Set to true if out of stock
+    // Individual item toggles (used only if both above are false)
     const usbBasicOutOfStock = true;    // Set to true to mark Basic USB as out of stock
-    const usbProOutOfStock = false;      // Set to true to mark Pro USB as out of stock
-    const basicOutOfStock = true;        // Set to true to mark Basic Kit as out of stock
+    const usbProOutOfStock = false;     // Set to true to mark Pro USB as out of stock
+    const basicOutOfStock = true;       // Set to true to mark Basic Kit as out of stock
     const proOutOfStock = true;         // Set to true to mark Pro Kit as out of stock
 
-    // Show out of stock banners
+    // Show out of stock or pre-order banners
     document.addEventListener("DOMContentLoaded", function() {
-      if (usbBasicOutOfStock) document.getElementById('usbBasicStockBanner').style.display = 'block';
-      if (usbProOutOfStock) document.getElementById('usbProStockBanner').style.display = 'block';
-      if (basicOutOfStock) document.getElementById('basicStockBanner').style.display = 'block';
-      if (proOutOfStock) document.getElementById('proStockBanner').style.display = 'block';
+      let bannerText = "";
+      let display = "block";
+      if (allOutOfStock) {
+        bannerText = "OUT OF STOCK";
+      } else if (allPreOrder) {
+        bannerText = "Pre-Order";
+      }
+
+      if (allOutOfStock || allPreOrder) {
+        document.getElementById('usbBasicStockBanner').textContent = bannerText;
+        document.getElementById('usbBasicStockBanner').style.display = display;
+        document.getElementById('usbProStockBanner').textContent = bannerText;
+        document.getElementById('usbProStockBanner').style.display = display;
+        document.getElementById('basicStockBanner').textContent = bannerText;
+        document.getElementById('basicStockBanner').style.display = display;
+        document.getElementById('proStockBanner').textContent = bannerText;
+        document.getElementById('proStockBanner').style.display = display;
+      } else {
+        if (usbBasicOutOfStock) document.getElementById('usbBasicStockBanner').style.display = 'block';
+        if (usbProOutOfStock) document.getElementById('usbProStockBanner').style.display = 'block';
+        if (basicOutOfStock) document.getElementById('basicStockBanner').style.display = 'block';
+        if (proOutOfStock) document.getElementById('proStockBanner').style.display = 'block';
+      }
     });
 
     function checkOrder() {
@@ -297,16 +320,22 @@
       const msg = document.getElementById('orderMsg');
       const btn = document.getElementById('installBtn');
 
+      // Determine global state for disabling downloads
+      let globalOutOfStock = allOutOfStock;
+      let globalPreOrder = allPreOrder;
+
       // USB Basic Content
       if (usbBasicOrders.includes(input)) {
-        if (usbBasicOutOfStock) {
-          msg.textContent = "Sorry, the Basic USB Content package is currently out of stock.";
+        if (globalOutOfStock || usbBasicOutOfStock && !globalPreOrder && !globalOutOfStock) {
+          msg.textContent = globalPreOrder
+            ? "The Basic USB Content package is available for pre-order only."
+            : "Sorry, the Basic USB Content package is currently out of stock.";
           msg.className = "error";
           btn.setAttribute('disabled', 'disabled');
           btn.style.pointerEvents = 'none';
           btn.style.opacity = '0.6';
           btn.href = "#";
-          btn.textContent = "Out of Stock";
+          btn.textContent = globalPreOrder ? "Pre-Order" : "Out of Stock";
         } else {
           msg.textContent = "Order number valid for BASIC USB Content. You can now download.";
           msg.className = "success";
@@ -320,14 +349,16 @@
       }
       // USB Pro Content
       if (usbProOrders.includes(input)) {
-        if (usbProOutOfStock) {
-          msg.textContent = "Sorry, the Pro USB Content package is currently out of stock.";
+        if (globalOutOfStock || usbProOutOfStock && !globalPreOrder && !globalOutOfStock) {
+          msg.textContent = globalPreOrder
+            ? "The Pro USB Content package is available for pre-order only."
+            : "Sorry, the Pro USB Content package is currently out of stock.";
           msg.className = "error";
           btn.setAttribute('disabled', 'disabled');
           btn.style.pointerEvents = 'none';
           btn.style.opacity = '0.6';
           btn.href = "#";
-          btn.textContent = "Out of Stock";
+          btn.textContent = globalPreOrder ? "Pre-Order" : "Out of Stock";
         } else {
           msg.textContent = "Order number valid for PRO USB Content. You can now download.";
           msg.className = "success";
@@ -341,8 +372,10 @@
       }
       // BASIC Kit
       if (unsupportedOrders.includes(input)) {
-        if (basicOutOfStock) {
-          msg.textContent = "The BASIC kit is currently out of stock. You can still install/download the USB contents below.";
+        if (globalOutOfStock || basicOutOfStock && !globalPreOrder && !globalOutOfStock) {
+          msg.textContent = globalPreOrder
+            ? "The BASIC kit is available for pre-order only. You can still install/download the USB contents below."
+            : "The BASIC kit is currently out of stock. You can still install/download the USB contents below.";
           msg.className = "error";
         } else {
           msg.textContent = "Order number valid for UNSUPPORTED version. You can now install.";
@@ -357,8 +390,10 @@
       }
       // PRO Kit
       if (supportedOrders.includes(input)) {
-        if (proOutOfStock) {
-          msg.textContent = "The PRO kit is currently out of stock. You can still install/download the USB contents below.";
+        if (globalOutOfStock || proOutOfStock && !globalPreOrder && !globalOutOfStock) {
+          msg.textContent = globalPreOrder
+            ? "The PRO kit is available for pre-order only. You can still install/download the USB contents below."
+            : "The PRO kit is currently out of stock. You can still install/download the USB contents below.";
           msg.className = "error";
         } else {
           msg.textContent = "Order number valid for SUPPORTED version. You can now install.";

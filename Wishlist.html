@@ -2,170 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script>
-        // Example: Auto-fill logic for Amazon links (demo only)
-        async function autofillFromLink(link) {
-            // Hardcoded wishlist items
-            const wishlistItems = [
-                {
-                    link: 'https://example.com/medkit',
-                    name: 'Medkit',
-                    priority: 'High',
-                    price: '190.00',
-                    note: 'I want the SWAT-T opptain'
-                },
-                // Add more items here as needed
-            ];
-
-            // Render hardcoded items as cards
-            const wishlistDiv = document.getElementById('wishlist');
-            wishlistDiv.innerHTML = '';
-            wishlistItems.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.tabIndex = 0;
-                itemDiv.style.cursor = 'pointer';
-                itemDiv.innerHTML = `
-                    <h3>${item.name}</h3>
-                    <p>Price: $${item.price}</p>
-                    <p>Priority: ${item.priority}</p>
-                    <p>Note: ${item.note}</p>
-                `;
-                itemDiv.addEventListener('click', () => {
-                    window.open(item.link, '_blank');
-                });
-                wishlistDiv.appendChild(itemDiv);
-            });
-            }
-        window.addEventListener('DOMContentLoaded', function() {
-            const linkInput = document.getElementById('itemLink');
-            linkInput.addEventListener('change', function() {
-                autofillFromLink(linkInput.value);
-            });
-        });
-    </script>
-    <title>Wishlist Website</title>
+    <title>Minimalist Wishlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .item { border: 1px solid #ccc; padding: 16px; margin-bottom: 16px; border-radius: 8px; }
-        .item img { max-width: 150px; max-height: 150px; display: block; margin-bottom: 8px; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; margin-bottom: 4px; }
-        input[type="text"], input[type="number"], input[type="url"], select { width: 100%; padding: 6px; }
+        body {
+            background: #f7f7f7;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        .wishlist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.04);
+            padding: 1.5rem 2rem;
+            min-width: 260px;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: transform 0.15s, box-shadow 0.15s;
+            cursor: pointer;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.06);
+        }
+        .card .name {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+        .card .price {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .card .priority {
+            font-size: 0.95rem;
+            color: #0078d4;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .card .notes {
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 1rem;
+        }
+        .card .buy-btn {
+            background: #0078d4;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            align-self: flex-end;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+        .card .buy-btn:hover {
+            background: #005fa3;
+        }
     </style>
 </head>
 <body>
-    <h1>Wishlist</h1>
-    <form id="wishlistForm">
-        <div class="form-group">
-            <label for="itemName">Item Name</label>
-            <input type="text" id="itemName" required>
-        </div>
-        <div class="form-group">
-            <label for="itemImage">Image</label>
-            <input type="file" id="itemImage" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label for="itemLink">Website Link</label>
-            <input type="url" id="itemLink" required>
-        </div>
-        <div class="form-group">
-            <label for="itemPrice">Price (auto-updates if possible)</label>
-            <input type="number" id="itemPrice" step="0.01" required>
-        </div>
-        <div class="form-group">
-            <label for="itemPriority">Priority</label>
-            <select id="itemPriority">
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="itemAccount">Account (for login or purchase)</label>
-            <input type="text" id="itemAccount">
-        </div>
-        <div class="form-group">
-            <label for="itemBuild">Part of Build?</label>
-            <input type="checkbox" id="itemBuild">
-            <input type="text" id="buildName" placeholder="Build name (e.g. Gaming PC)">
-        </div>
-        <button type="submit">Add to Wishlist</button>
-    </form>
-    <hr>
-    <div id="wishlist"></div>
-
+    <h1>My Wishlist</h1>
+    <div class="wishlist" id="wishlist"></div>
     <script>
-        const form = document.getElementById('wishlistForm');
+        // Hardcoded gift ideas
+        const gifts = [
+            {
+                name: "Noise Cancelling Headphones",
+                price: "$199",
+                priority: "High",
+                notes: "For focus and travel.",
+                link: "https://example.com/headphones"
+            },
+            {
+                name: "Kindle Paperwhite",
+                price: "$139",
+                priority: "Medium",
+                notes: "To read more books.",
+                link: "https://example.com/kindle"
+            },
+            {
+                name: "Reusable Water Bottle",
+                price: "$25",
+                priority: "Low",
+                notes: "Eco-friendly and handy.",
+                link: "https://example.com/bottle"
+            },
+            {
+                name: "Desk Lamp",
+                price: "$45",
+                priority: "Medium",
+                notes: "Better lighting for work.",
+                link: "https://example.com/lamp"
+            }
+        ];
+
         const wishlist = document.getElementById('wishlist');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('itemName').value;
-            const link = document.getElementById('itemLink').value;
-            const price = document.getElementById('itemPrice').value;
-            const priority = document.getElementById('itemPriority').value;
-            const account = document.getElementById('itemAccount').value;
-            const build = document.getElementById('itemBuild').checked;
-            const buildName = document.getElementById('buildName').value;
-
-            const imageInput = document.getElementById('itemImage');
-            let imageURL = '';
-            if (imageInput.files && imageInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageURL = e.target.result;
-                    addItem();
-                };
-                reader.readAsDataURL(imageInput.files[0]);
-            } else {
-                addItem();
-            }
-
-            function addItem() {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-
-                if (imageURL) {
-                    const img = document.createElement('img');
-                    img.src = imageURL;
-                    itemDiv.appendChild(img);
-                }
-
-                const nameEl = document.createElement('h3');
-                nameEl.textContent = name;
-                itemDiv.appendChild(nameEl);
-
-                const linkEl = document.createElement('a');
-                linkEl.href = link;
-                linkEl.textContent = 'View on Website';
-                linkEl.target = '_blank';
-                itemDiv.appendChild(linkEl);
-
-                const priceEl = document.createElement('p');
-                priceEl.textContent = `Price: $${price}`;
-                itemDiv.appendChild(priceEl);
-
-                const priorityEl = document.createElement('p');
-                priorityEl.textContent = `Priority: ${priority}`;
-                itemDiv.appendChild(priorityEl);
-
-                if (account) {
-                    const accountEl = document.createElement('p');
-                    accountEl.textContent = `Account: ${account}`;
-                    itemDiv.appendChild(accountEl);
-                }
-
-                if (build) {
-                    const buildEl = document.createElement('p');
-                    buildEl.textContent = `Part of Build: ${buildName || 'Unnamed Build'}`;
-                    itemDiv.appendChild(buildEl);
-                }
-
-                wishlist.appendChild(itemDiv);
-                form.reset();
-            }
+        gifts.forEach(gift => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="name">${gift.name}</div>
+                <div class="price">${gift.price}</div>
+                <div class="priority">Priority: ${gift.priority}</div>
+                <div class="notes">${gift.notes}</div>
+                <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">Buy</a>
+            `;
+            card.onclick = () => window.open(gift.link, '_blank');
+            wishlist.appendChild(card);
         });
     </script>
 </body>

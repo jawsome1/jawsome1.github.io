@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- Declares the document type as HTML5 -->
+
+<html lang="en">
+<!-- Sets the language of the document to English -->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Sets character encoding for proper text display -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Makes the site responsive on mobile devices -->
+
+    <title>Jakob's Site</title>
+    <!-- The title shown in the browser tab; edit as needed -->
+
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+    <!-- Loads the Inter font from Google Fonts; change or add fonts here -->
+
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg: #f5f6fa;      /* Background color (light) */
+            --fg: #222;         /* Foreground/text color (light) */
+            --accent: #4f8cff;  /* Accent color */
+            --card: #fff;       /* Card background (light) */
+        }
+        [data-theme="dark"] {
+            --bg: #181a20;      /* Background color (dark) */
+            --fg: #eee;         /* Foreground/text color (dark) */
+            --accent: #4f8cff;  /* Accent color (same) */
+            --card: #23262f;    /* Card background (dark) */
+        }
+
+        /* Body styling */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif; /* Uses Inter font */
+            background: var(--bg);            /* Uses theme variable */
+            color: var(--fg);                 /* Uses theme variable */
+            transition: background 0.2s, color 0.2s; /* Smooth theme change */
+        }
+
+        /* Container for page content */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header section styling */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Profile image styling */
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%; /* Makes image circular */
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 2px solid var(--accent); /* Accent border */
+        }
+
+        /* Main heading */
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Tagline styling */
+        .tagline {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Section card styling */
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        /* Links container */
+        .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Link button styling */
+        .link-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .link-btn:hover {
+            background: #3466c2; /* Darker accent on hover */
+        }
+
+        /* Projects grid */
+        .projects {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 1rem;
+        }
+
+        /* Individual project card */
+        .project-card {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* Project title styling */
+        .project-title {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Blog section styling */
+        .blog {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Individual blog entry */
+        .blog-entry {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Media section styling */
+        .media {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .media img, .media iframe {
+            border-radius: 8px;
+            max-width: 200px;
+            max-height: 120px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+
+        /* Theme toggle button styling */
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--card);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: background 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme toggle button; click to switch between light/dark modes -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+
+    <div class="container">
+        <!-- Header section: profile image, name, tagline -->
+        <header>
+            <!-- Change src to your profile image URL -->
+            <img src="https://avatars.githubusercontent.com/u/000000?v=4" alt="Profile" class="profile-img">
+            <h1>Jakob</h1> <!-- Edit your name here -->
+            <div class="tagline">"Building cool things, learning every day."</div> <!-- Edit tagline here -->
+        </header>
+
+        <!-- About Me section: edit your intro here -->
+        <section>
+            <h2>About Me</h2>
+            <p>
+                Hi, I'm Jakob! I'm a builder, coder, and explorer. I love working on creative projects, learning new tech, and sharing what I discover. Welcome to my corner of the internet!
+            </p>
+        </section>
+
+        <!-- Links section: add/remove/edit your links here -->
+        <section>
+            <h2>Links</h2>
+            <div class="links">
+                <a class="link-btn" href="https://discord.gg/mf9qNMf2bb" target="_blank">Discord server</a>
+                <a class="link-btn" href="https://discord.com/users/724343542259908608" target="_blank">Discord</a>
+                <a class="link-btn" href="https://discord.gg/7Nh92AcAwz" target="_blank">ERLC Discord server</a>
+                <a class="link-btn" href="https://jawsome1.github.io/wishlist.html" target="_blank">Wishlist</a>
+                <a class="link-btn" href="https://N/A" target="_blank">N/A</a>
+                <!-- To add a new link, copy an <a> line and update href/text -->
+            </div>
+        </section>
+
+        <!-- Projects section: add/edit your projects here -->
+        <section>
+            <h2>What I'm Building</h2>
+            <div class="projects">
+                <!-- Each project-card is a project; edit or add more as needed -->
+                <div class="project-card">
+                    <div class="project-title">StormCore</div>
+                    <div>Making blueprint for ResQ-9.</div>
+                    <a href="https://github.com/jakob/stormcore" target="_blank">Docs & Code</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">ERLC</div>
+                    <div>Worked on Staff trailers!</div>
+                    <a href="N/A" target="_blank">Docs & Code</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">Scout</div>
+                    <div>A life...</div>
+                    <a href="https://github.com/jakob/scout" target="_blank">Docs & Code</a>
+                </div>
+                <!-- Add more projects by copying a project-card block -->
+            </div>
+        </section>
+
+        <!-- Blog section: add/edit your log entries here -->
+        <section>
+            <h2>Log / Blog</h2>
+            <div class="blog">
+                <div class="blog-entry">
+                    <strong>2025-07-23:</strong> Created this site! Excited to share my projects and ideas.
+                </div>
+                <div class="blog-entry">
+                    <strong>2024-05-28:</strong> N/A
+                </div>
+                <div class="blog-entry">
+                    <strong>2024-05-20:</strong> N/A
+                </div>
+                <!-- Add new entries by copying a blog-entry block -->
+            </div>
+        </section>
+
+        <!-- Photos & Media section: add/edit images and videos here -->
+        <section>
+            <h2>Photos & Media</h2>
+            <div class="media">
+                <!-- Change src to your own image or add more <img> tags -->
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Project photo">
+                <!-- Embed YouTube or other videos with <iframe> -->
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video" frameborder="0" allowfullscreen></iframe>
+                <!-- Add more media by copying <img> or <iframe> tags -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme toggle logic
+        const themeToggle = document.getElementById('themeToggle');
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme); // Sets theme attribute
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';   // Changes icon
+            localStorage.setItem('theme', theme);                      // Saves preference
+        }
+        themeToggle.onclick = () => {
+            // Toggles between 'dark' and 'light'
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            setTheme(current);
+        };
+        // Loads theme from localStorage or defaults to dark
+        setTheme(localStorage.getItem('theme') || 'dark');
+    </script>
+</body>
+</html></div>

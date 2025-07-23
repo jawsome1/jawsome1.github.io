@@ -1,4 +1,21 @@
 <!DOCTYPE html>
+<button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+<script>
+    // Theme toggle logic
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme); // Sets theme attribute
+        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';   // Changes icon
+        localStorage.setItem('theme', theme);                      // Saves preference
+    }
+    themeToggle.onclick = () => {
+        // Toggles between 'dark' and 'light'
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(current);
+    };
+    // Loads theme from localStorage or defaults to dark
+    setTheme(localStorage.getItem('theme') || 'dark');
+</script>
 <div style="background:#fff3cd;color:#856404;border-radius:0.5rem;padding:1rem 1.5rem;margin-bottom:2rem;border:1px solid #ffeeba;max-width:700px;margin-left:auto;margin-right:auto;font-size:1rem;">
     <strong>WARNING: Work In Progress</strong><br>
     This wishlist is still under construction!<br>

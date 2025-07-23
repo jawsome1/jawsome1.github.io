@@ -1,160 +1,221 @@
 <!DOCTYPE html>
-<button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
-<script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minimalist Wishlist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #f5f6fa;
+      --fg: #222;
+      --accent: #0078d4;
+      --card: #ffffff;
+      --warning-bg: #fff3cd;
+      --warning-fg: #856404;
+      --shadow: rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #181a20;
+      --fg: #eee;
+      --accent: #4f8cff;
+      --card: #23262f;
+      --warning-bg: #2c2f36;
+      --warning-fg: #ffe98c;
+      --shadow: rgba(0,0,0,0.2);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--accent);
+      transition: background 0.2s;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      color: var(--fg);
+    }
+
+    .wishlist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px var(--shadow), 0 1.5px 4px rgba(0,0,0,0.04);
+      padding: 1.5rem 2rem;
+      min-width: 260px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.06);
+    }
+
+    .card .name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--fg);
+    }
+
+    .card .price {
+      font-size: 1rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .card .priority {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .card .notes {
+      font-size: 0.95rem;
+      color: var(--fg);
+      margin-bottom: 1rem;
+    }
+
+    .card .buy-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      align-self: flex-end;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .card .buy-btn:hover {
+      background: #005fa3;
+    }
+
+    .warning {
+      background: var(--warning-bg);
+      color: var(--warning-fg);
+      border-radius: 0.5rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #ffeeba;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+
+  <div class="warning">
+    <strong>⚠️ WARNING: Work In Progress</strong><br>
+    This wishlist is still under construction!<br>
+    If you decide to buy me something from it, please note that <strong>my shipping info won't be auto-filled</strong> — you'll need to ask me or send it manually. Thanks!
+  </div>
+
+  <h1>My Wishlist</h1>
+  <div class="wishlist" id="wishlist"></div>
+
+  <script>
     // Theme toggle logic
     const themeToggle = document.getElementById('themeToggle');
     function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme); // Sets theme attribute
-        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';   // Changes icon
-        localStorage.setItem('theme', theme);                      // Saves preference
+      document.documentElement.setAttribute('data-theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', theme);
     }
     themeToggle.onclick = () => {
-        // Toggles between 'dark' and 'light'
-        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        setTheme(current);
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(current);
     };
-    // Loads theme from localStorage or defaults to dark
     setTheme(localStorage.getItem('theme') || 'dark');
-</script>
-<div style="background:#fff3cd;color:#856404;border-radius:0.5rem;padding:1rem 1.5rem;margin-bottom:2rem;border:1px solid #ffeeba;max-width:700px;margin-left:auto;margin-right:auto;font-size:1rem;">
-    <strong>WARNING: Work In Progress</strong><br>
-    This wishlist is still under construction!<br>
-    If you decide to buy me something from it, please note that my shipping info won't be automatically filled in — you'll need to ask me directly or handle shipping yourself. Thanks!
-</div>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Minimalist Wishlist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #f7f7f7;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-        h1 {
-            text-align: center;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-        .wishlist {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-        .card {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 1.5px 4px rgba(0,0,0,0.04);
-            padding: 1.5rem 2rem;
-            min-width: 260px;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transition: transform 0.15s, box-shadow 0.15s;
-            cursor: pointer;
-            position: relative;
-        }
-        .card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.06);
-        }
-        .card .name {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #222;
-        }
-        .card .price {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-        .card .priority {
-            font-size: 0.95rem;
-            color: #0078d4;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .card .notes {
-            font-size: 0.95rem;
-            color: #444;
-            margin-bottom: 1rem;
-        }
-        .card .buy-btn {
-            background: #0078d4;
-            color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            align-self: flex-end;
-            text-decoration: none;
-            transition: background 0.15s;
-        }
-        .card .buy-btn:hover {
-            background: #005fa3;
-        }
-    </style>
-</head>
-<body>
-    <h1>My Wishlist</h1>
-    <div class="wishlist" id="wishlist"></div>
-    <script>
-        // Hardcoded gift ideas
-        const gifts = [
-            {
-                name: "Noise Cancelling Headphones",
-                price: "$199",
-                priority: "High",
-                notes: "For focus and travel.",
-                link: "https://example.com/headphones"
-            },
-            {
-                name: "Kindle Paperwhite",
-                price: "$139",
-                priority: "Medium",
-                notes: "To read more books.",
-                link: "https://example.com/kindle"
-            },
-            {
-                name: "Reusable Water Bottle",
-                price: "$25",
-                priority: "Low",
-                notes: "Eco-friendly and handy.",
-                link: "https://example.com/bottle"
-            },
-            {
-                name: "Desk Lamp",
-                price: "$45",
-                priority: "Medium",
-                notes: "Better lighting for work.",
-                link: "https://example.com/lamp"
-            }
-        ];
 
-        const wishlist = document.getElementById('wishlist');
+    // Wishlist items
+    const gifts = [
+      {
+        name: "Noise Cancelling Headphones",
+        price: "$199",
+        priority: "High",
+        notes: "For focus and travel.",
+        link: "https://example.com/headphones"
+      },
+      {
+        name: "Kindle Paperwhite",
+        price: "$139",
+        priority: "Medium",
+        notes: "To read more books.",
+        link: "https://example.com/kindle"
+      },
+      {
+        name: "Reusable Water Bottle",
+        price: "$25",
+        priority: "Low",
+        notes: "Eco-friendly and handy.",
+        link: "https://example.com/bottle"
+      },
+      {
+        name: "Desk Lamp",
+        price: "$45",
+        priority: "Medium",
+        notes: "Better lighting for work.",
+        link: "https://example.com/lamp"
+      }
+    ];
 
-        gifts.forEach(gift => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="name">${gift.name}</div>
-                <div class="price">${gift.price}</div>
-                <div class="priority">Priority: ${gift.priority}</div>
-                <div class="notes">${gift.notes}</div>
-                <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">Buy</a>
-            `;
-            card.onclick = () => window.open(gift.link, '_blank');
-            wishlist.appendChild(card);
-        });
-    </script>
+    const wishlist = document.getElementById('wishlist');
+    gifts.forEach(gift => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="name">${gift.name}</div>
+        <div class="price">${gift.price}</div>
+        <div class="priority">Priority: ${gift.priority}</div>
+        <div class="notes">${gift.notes}</div>
+        <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">Buy</a>
+      `;
+      card.onclick = () => window.open(gift.link, '_blank');
+      wishlist.appendChild(card);
+    });
+  </script>
 </body>
 </html>

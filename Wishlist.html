@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Example: Auto-fill logic for Amazon links (demo only)
+        async function autofillFromLink(link) {
+            // Hardcoded wishlist items
+            const wishlistItems = [
+                {
+                    link: 'https://example.com/medkit',
+                    name: 'Medkit',
+                    priority: 'High',
+                    price: '190.00',
+                    note: 'I want the SWAT-T opptain'
+                },
+                // Add more items here as needed
+            ];
+
+            // Render hardcoded items as cards
+            const wishlistDiv = document.getElementById('wishlist');
+            wishlistDiv.innerHTML = '';
+            wishlistItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.tabIndex = 0;
+                itemDiv.style.cursor = 'pointer';
+                itemDiv.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p>Price: $${item.price}</p>
+                    <p>Priority: ${item.priority}</p>
+                    <p>Note: ${item.note}</p>
+                `;
+                itemDiv.addEventListener('click', () => {
+                    window.open(item.link, '_blank');
+                });
+                wishlistDiv.appendChild(itemDiv);
+            });
+            }
+        window.addEventListener('DOMContentLoaded', function() {
+            const linkInput = document.getElementById('itemLink');
+            linkInput.addEventListener('change', function() {
+                autofillFromLink(linkInput.value);
+            });
+        });
+    </script>
+    <title>Wishlist Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .item { border: 1px solid #ccc; padding: 16px; margin-bottom: 16px; border-radius: 8px; }
+        .item img { max-width: 150px; max-height: 150px; display: block; margin-bottom: 8px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; }
+        input[type="text"], input[type="number"], input[type="url"], select { width: 100%; padding: 6px; }
+    </style>
+</head>
+<body>
+    <h1>Wishlist</h1>
+    <form id="wishlistForm">
+        <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" required>
+        </div>
+        <div class="form-group">
+            <label for="itemImage">Image</label>
+            <input type="file" id="itemImage" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label for="itemLink">Website Link</label>
+            <input type="url" id="itemLink" required>
+        </div>
+        <div class="form-group">
+            <label for="itemPrice">Price (auto-updates if possible)</label>
+            <input type="number" id="itemPrice" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="itemPriority">Priority</label>
+            <select id="itemPriority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="itemAccount">Account (for login or purchase)</label>
+            <input type="text" id="itemAccount">
+        </div>
+        <div class="form-group">
+            <label for="itemBuild">Part of Build?</label>
+            <input type="checkbox" id="itemBuild">
+            <input type="text" id="buildName" placeholder="Build name (e.g. Gaming PC)">
+        </div>
+        <button type="submit">Add to Wishlist</button>
+    </form>
+    <hr>
+    <div id="wishlist"></div>
+
+    <script>
+        const form = document.getElementById('wishlistForm');
+        const wishlist = document.getElementById('wishlist');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('itemName').value;
+            const link = document.getElementById('itemLink').value;
+            const price = document.getElementById('itemPrice').value;
+            const priority = document.getElementById('itemPriority').value;
+            const account = document.getElementById('itemAccount').value;
+            const build = document.getElementById('itemBuild').checked;
+            const buildName = document.getElementById('buildName').value;
+
+            const imageInput = document.getElementById('itemImage');
+            let imageURL = '';
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageURL = e.target.result;
+                    addItem();
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                addItem();
+            }
+
+            function addItem() {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+
+                if (imageURL) {
+                    const img = document.createElement('img');
+                    img.src = imageURL;
+                    itemDiv.appendChild(img);
+                }
+
+                const nameEl = document.createElement('h3');
+                nameEl.textContent = name;
+                itemDiv.appendChild(nameEl);
+
+                const linkEl = document.createElement('a');
+                linkEl.href = link;
+                linkEl.textContent = 'View on Website';
+                linkEl.target = '_blank';
+                itemDiv.appendChild(linkEl);
+
+                const priceEl = document.createElement('p');
+                priceEl.textContent = `Price: $${price}`;
+                itemDiv.appendChild(priceEl);
+
+                const priorityEl = document.createElement('p');
+                priorityEl.textContent = `Priority: ${priority}`;
+                itemDiv.appendChild(priorityEl);
+
+                if (account) {
+                    const accountEl = document.createElement('p');
+                    accountEl.textContent = `Account: ${account}`;
+                    itemDiv.appendChild(accountEl);
+                }
+
+                if (build) {
+                    const buildEl = document.createElement('p');
+                    buildEl.textContent = `Part of Build: ${buildName || 'Unnamed Build'}`;
+                    itemDiv.appendChild(buildEl);
+                }
+
+                wishlist.appendChild(itemDiv);
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>

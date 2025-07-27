@@ -1,189 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PSC:RP Staff Handbook</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    header, footer {
-      background: #1c1c1c;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-    }
-    main {
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 0.5rem;
-    }
-    ul {
-      padding-left: 1.5rem;
-    }
-    .card {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 1rem;
-    }
-    .infraction, .role {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #eee;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Staff Handbook</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #222;
+            --card: #fff;
+            --accent: #0078d4;
+            --border: #e0e0e0;
+            --code: #f4f4f4;
+        }
+        [data-theme="dark"] {
+            --bg: #181a1b;
+            --text: #f1f1f1;
+            --card: #23272a;
+            --accent: #60aaff;
+            --border: #333;
+            --code: #23272a;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+        }
+        header {
+            background: var(--accent);
+            color: #fff;
+            padding: 1.5rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        h1, h2, h3 {
+            color: var(--accent);
+            margin-top: 2rem;
+        }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.5rem; }
+        h3 { font-size: 1.15rem; }
+        ul, ol { margin-left: 1.5rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--card);
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: var(--accent);
+            color: #fff;
+        }
+        code, pre {
+            background: var(--code);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+        .toggle-theme {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            background: var(--card);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+        .toggle-theme:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .note {
+            background: #fffbe6;
+            color: #856404;
+            border-left: 4px solid #ffe066;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+        [data-theme="dark"] .note {
+            background: #2a2a1a;
+            color: #ffe066;
+            border-left: 4px solid #ffe066;
+        }
+        .credits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1rem 0 2rem 0;
+            font-size: 1.1rem;
+        }
+        .credits-list span {
+            background: var(--code);
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
+            margin-right: 0.5rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0.7rem; }
+            .toggle-theme { right: 0.7rem; top: 1rem; }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>PSC:RP Staff Handbook</h1>
-  </header>
-  <main>
-    <section>
-      <h2>Welcome</h2>
-      <p>Welcome to our team! This handbook is designed to guide you through our workplace, culture, and policies to ensure a smooth transition and experience.</p>
-    </section>
+    <header>
+        <h1>Welcome to the Staff Handbook</h1>
+        <button class="toggle-theme" id="themeBtn">🌙 Dark Mode</button>
+        <p>This handbook guides you through our workplace, culture, and policies. We hope this serves as a valuable resource for you.</p>
+    </header>
+    <main class="container">
+        <section class="section">
+            <h2>Credits</h2>
+            <div class="credits-list">
+                <span>@ANTON_SPELAR80/CHR</span>
+                <span>Yeetstem_104/COO</span>
+                <span>TheJAWsome1/OWN</span>
+                <span>notthesalt/DOD</span>
+                <span>ChatGPT/AI</span>
+            </div>
+        </section>
 
-    <section>
-      <h2>Credits</h2>
-      <ul>
-        <li>@ANTON_SPELAR80 / CHR</li>
-        <li>Yeetstem_104 / COO</li>
-        <li>TheJAWsome1 / OWN</li>
-        <li>notthesalt / DOD</li>
-        <li>ChatGPT / AI</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Confidentiality Agreement</h2>
+            <div class="note">
+                This handbook contains sensitive information for current staff only. Unauthorized sharing will result in immediate termination.
+            </div>
+        </section>
 
-    <section>
-      <h2>Confidentiality Agreement</h2>
-      <p>This handbook contains sensitive information intended only for current staff members. Unauthorized distribution will result in immediate termination.</p>
-    </section>
+        <section class="section">
+            <h2>Punishment Guide</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Offense</th>
+                        <th>Punishment</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Incorrect Uniform</td><td>Warning</td><td>If done twice, kick</td></tr>
+                    <tr><td>VIP Vehicle Usage</td><td>Warning</td><td>If done twice, kick</td></tr>
+                    <tr><td>Unrealistic Avatar</td><td>Warning</td><td>If done twice, kick</td></tr>
+                    <tr><td>Using Whitelisted Items</td><td>Warning</td><td>If guns used twice, kick</td></tr>
+                    <tr><td>Cuff Rush</td><td>Warning</td><td>Moderate to discretion</td></tr>
+                    <tr><td>New Life Rule</td><td>Warning</td><td>Moderate to discretion</td></tr>
+                    <tr><td>Cop Baiting</td><td>Warning</td><td>May fall under VDM, FRP, GTA Driving</td></tr>
+                    <tr><td>RDM x1</td><td>Kick</td><td>2x = 3 Day Ban, 4x+ = Perma Ban</td></tr>
+                    <tr><td>VDM x1</td><td>Warning</td><td>2x = Kick, 4x+ = Ban</td></tr>
+                    <tr><td>GTA Driving</td><td>Warning/Kick/Ban</td><td>Depends on severity</td></tr>
+                    <tr><td>Mod Scene Interruption</td><td>Warning/Kick</td><td>Moderate to discretion</td></tr>
+                    <tr><td>Fail Roleplay</td><td>Warning/Kick</td><td>Depends on severity</td></tr>
+                    <tr><td>Autojail x1</td><td>Kick</td><td>2x = 3 Day Ban, 3x+ = Ban</td></tr>
+                    <tr><td>Staff Disrespect</td><td>Kick/Ban</td><td>Depends on severity</td></tr>
+                    <tr><td>Staff Evasion</td><td>Kick/Ban</td><td>Depends on severity</td></tr>
+                    <tr><td>Tool/Object Abuse</td><td>Ban</td><td>N/A</td></tr>
+                    <tr><td>Staff RDM</td><td>Ban</td><td>2 bullet/punch = warn, 1 death = ban</td></tr>
+                    <tr><td>Staff VDM</td><td>Ban</td><td>Depends on severity</td></tr>
+                    <tr><td>LTAP</td><td>Ban</td><td>Leaving to Avoid Punishment</td></tr>
+                    <tr><td>Rejoining after Kick</td><td>Ban</td><td>Within 1 hour</td></tr>
+                    <tr><td>Trolling/NITRP</td><td>Ban</td><td>Non-Intent to Roleplay</td></tr>
+                    <tr><td>Roblox ToS Breach</td><td>Ban</td><td>Banned roleplays, racism, bypassing, etc</td></tr>
+                    <tr><td>Raiding</td><td>Ban</td><td>Hackers, raiders, suspicious accounts</td></tr>
+                    <tr><td>Special Roleplay</td><td>Permission</td><td>Call !mod for approval</td></tr>
+                    <tr><td>Special RP w/o Permission</td><td>Warning/Kick</td><td>Depends on severity</td></tr>
+                </tbody>
+            </table>
+        </section>
 
-    <section>
-      <h2>Punishment Guide</h2>
-      <div class="card">
-        <p>Examples of Punishments:</p>
-        <ul>
-          <li>Incorrect Uniform → Warning → Kick</li>
-          <li>RDM x1 → Kick | x2 → 3 Day Ban | x4+ → Perma Ban</li>
-          <li>VDM x1 → Warning | x2 → Kick | x4+ → Ban</li>
-          <li>Staff RDM / VDM → Ban</li>
-          <li>LTAP, Trolling, ToS Breach, Raiding → Ban</li>
-          <li>Special RP Without Permission → Warning/Kick</li>
-        </ul>
-      </div>
-    </section>
+        <section class="section">
+            <h2>Staff Regulations</h2>
+            <ul>
+                <li><b>Minimum Player Count:</b> Staff may only go on duty with 15+ players, unless witnessing a bannable offense or with valid proof.</li>
+                <li><b>Uniform & Livery:</b> Staff must wear designated uniform/livery. No custom avatars, VIP skins, or unapproved mods.</li>
+                <li><b>Recording:</b> Staff and players are encouraged to record interactions (.mp4 recommended).</li>
+                <li><b>Call Response:</b> Use standard greeting from Scripts section when responding to calls.</li>
+                <li><b>Kicks & Bans:</b> Clearly state rule broken, punishment length, and appeal/report info.</li>
+                <li><b>Pursuit Policy:</b> Staff only join pursuits for active offenses (VDM, RDM, FRP, etc).</li>
+                <li><b>On-Duty Roleplay:</b> Allowed if not witnessing offenses, not breaking rules, and not using on-duty commands for RP.</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Staff Regulations</h2>
-      <ul>
-        <li>Minimum 15 players required to go on duty (unless offense is witnessed or has proof)</li>
-        <li>Proper uniform/livery required at all times</li>
-        <li>Record staff-player interactions when possible</li>
-        <li>Follow kick/ban protocol: State rule, duration, and appeal process</li>
-        <li>Roleplay allowed while on duty if not interfering with staff responsibilities</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Commands</h2>
+            <h3>All Players</h3>
+            <ul>
+                <li><code>!help</code> / <code>!mod</code> — Request staff assistance</li>
+                <li><code>:fixcar</code> — Fix car glitch</li>
+                <li><code>:commands</code> / <code>:cmds</code> — Show all commands</li>
+            </ul>
+            <h3>🛡️ Moderator</h3>
+            <ul>
+                <li><code>:kill [player]</code> / <code>:down [player]</code> — Kill/down player</li>
+                <li><code>:killlogs</code> — View kill logs</li>
+                <li><code>:tp [p1] [p2]</code> — Teleport player</li>
+                <li><code>:bring [player]</code> — Teleport player to you</li>
+                <li><code>:refresh [player]</code> — Respawn player</li>
+                <li><code>:heal [player]</code> — Heal player</li>
+                <li><code>:startnearfire [type]</code> — Start fire near you</li>
+                <li><code>:startfire [type]</code> — Start fire randomly</li>
+                <li><code>:stopfire</code> — End all fires</li>
+                <li><code>:view [player]</code> — Spectate player</li>
+                <li><code>:unwanted [player]</code> — Clear wanted level</li>
+                <li><code>:wanted [player]</code> — Set wanted status</li>
+                <li><code>:time [hour]</code> — Set time</li>
+                <li><code>:tocar</code> / <code>:toatv</code> — Teleport to car/ATV</li>
+                <li><code>:to [player]</code> — Teleport to player</li>
+                <li><code>:jail [player]</code> — Jail player</li>
+                <li><code>:bans</code> — View bans</li>
+                <li><code>:logs</code> — View logs</li>
+                <li><code>:admins</code> / <code>:mods</code> — Show staff list</li>
+                <li><code>:h [msg]</code> — Display hint</li>
+                <li><code>:prty [sec]</code> — Priority cooldown (Premium)</li>
+                <li><code>:pt [sec]</code> — Disable PVP (Premium)</li>
+                <li><code>:load [player]</code> — Respawn player</li>
+                <li><code>:kick [player] [reason]</code> — Kick player</li>
+            </ul>
+            <h3>🧰 Admin</h3>
+            <ul>
+                <li>All Moderator commands, plus:</li>
+                <li><code>:weather [type]</code> — Change weather (Premium)</li>
+                <li><code>:ban [player]</code> — Ban player</li>
+                <li><code>:m [msg]</code> — Fix car glitch</li>
+            </ul>
+            <h3>👑 Owner / Co-Owner</h3>
+            <ul>
+                <li>All Admin & Mod commands, plus:</li>
+                <li><code>:mod [player]</code> — Grant mod powers</li>
+                <li><code>:admin [player]</code> — Grant admin powers</li>
+                <li><code>:unadmin [player]</code> — Revoke admin powers</li>
+                <li><code>:unban [player]</code> — Unban player</li>
+                <li><code>:unmod [player]</code> — Remove mod permissions</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Commands by Role</h2>
-      <div class="card">
-        <h3>All Players</h3>
-        <ul><li>:help / !mod, :fixcar, :commands</li></ul>
-        <h3>Moderator</h3>
-        <ul><li>:kill, :bring, :jail, :refresh, :view, :logs</li></ul>
-        <h3>Admin</h3>
-        <ul><li>All Mod commands + :ban, :weather</li></ul>
-        <h3>Owner</h3>
-        <ul><li>All Admin commands + :unban, :admin, :mod</li></ul>
-      </div>
-    </section>
+        <section class="section">
+            <h2>Quota Requirements</h2>
+            <table>
+                <thead>
+                    <tr><th>Role</th><th>Quota</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Owner</td><td>6</td></tr>
+                    <tr><td>Co-owner</td><td>1</td></tr>
+                    <tr><td>Director of Development</td><td>1.5</td></tr>
+                    <tr><td>Developer</td><td>2</td></tr>
+                    <tr><td>Lead Human Resources</td><td>1</td></tr>
+                    <tr><td>Junior Human Resources</td><td>1.5</td></tr>
+                    <tr><td>Supervisor</td><td>2.5</td></tr>
+                    <tr><td>Instructor</td><td>4</td></tr>
+                    <tr><td>Admin</td><td>3</td></tr>
+                    <tr><td>Moderator</td><td>3</td></tr>
+                    <tr><td>Trainee</td><td>3.5</td></tr>
+                </tbody>
+            </table>
+        </section>
 
-    <section>
-      <h2>Quota Requirements</h2>
-      <ul>
-        <li>Owner: 6 | Co-owner: 1 | DOD: 1.5 | Dev: 2 | Admin/Mod: 3 | Trainee: 3.5</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Outfits/Vehicles</h2>
+            <ul>
+                <li>Marked On-Duty in Melonly staff system</li>
+                <li>Wear correct staff uniform and drive approved staff vehicle</li>
+                <li>Correct STG (ELS) pattern active</li>
+                <li>Join On-Duty Staff VC (unless exempt)</li>
+                <li>Patrol when not on a call (unless exempt)</li>
+                <li>Follow chain of command</li>
+            </ul>
+            <h3>🚨 ELS / STG Pattern Rules</h3>
+            <table>
+                <thead>
+                    <tr><th>STG / ELS Level</th><th>Usage Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>OFF</td><td>On break or AFK</td></tr>
+                    <tr><td>STG 1</td><td>On-duty, patrolling, handling/waiting for calls</td></tr>
+                    <tr><td>STG 2</td><td>Monitoring scene, observing, issuing warning</td></tr>
+                    <tr><td>STG 3</td><td>Serious action (pulling over for kick/ban offense)</td></tr>
+                </tbody>
+            </table>
+        </section>
 
-    <section>
-      <h2>Outfits/Vehicles</h2>
-      <ul>
-        <li>Marked On-Duty in Melonly</li>
-        <li>In uniform with approved vehicle</li>
-        <li>Correct ELS/STG pattern must be active</li>
-        <li>Join On-Duty VC (unless exempt)</li>
-        <li>Patrol if no mod call in last 2 minutes</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Scripts</h2>
+            <ul>
+                <li><b>Greeting:</b> Hello! My name is (Username), a (Rank) with PSC:RP. How may I assist you today? If you have a concern about my interaction with you, you're welcome to report it to HR</li>
+                <li><b>Apply msg:</b> You can apply on our Comms server in #applications. Join our Roblox group and comms</li>
+                <li><b>Report to HR:</b> If you have a concern about my interaction with you, you're welcome to report it to IA</li>
+                <li><b>Comms:</b> Need to Apply or Ask a Question? You can join our Comms Server using the invite code: (_______________)</li>
+                <li><b>Goodbye!:</b> Have a good day/night. If you have a concern about my interaction with you, you're welcome to report it to HR</li>
+                <li><b>Give me feedback:</b> Give feedback if you liked your mod experience! Use /feedback give in the Comms server.</li>
+                <li><b>Warning:</b> Official Warning from PSC:RP Staff. You’ve violated one or more server rules. Continued behavior may lead to a kick or ban. Please review the rules. Thank you.</li>
+                <li><b>Kick:</b> You are being kicked from PSC:RP. For complaints, contact human resources. Do not rejoin for 1 hour or it may result in a ban. Thank you.</li>
+                <li><b>Ban BOLO:</b> A ban BOLO was filed for serious or repeated rule violations. You may appeal via the Comms server. Concerns about my actions can be reported to Internal Affairs.</li>
+                <li><b>Ban:</b> A ban was filed for serious or repeated rule violations. You may appeal via the Comms server. Concerns about my actions can be reported to Internal Affairs.</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Scripts</h2>
-      <ul>
-        <li>Greeting: Hello! My name is (Username), a (Rank)...</li>
-        <li>Apply: Join our Comms server in #applications</li>
-        <li>Kick Msg: You are being kicked... do not rejoin for 1 hour</li>
-        <li>Ban Msg: A ban was filed... you may appeal via Comms</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>:h or Hint's</h2>
+            <ul>
+                <li>:h Hello! Having a good time? Join our server to experience more realistic roleplay! Code: SACR</li>
+                <li>:h Hello! Welcome to SAC:RP, come join our server to support us! Code: SACR</li>
+                <li>:h Hello! Want to become staff for our server? Join our server! Code: SACR</li>
+                <li>:h Hello! Want to gain access to Exotics or join a Whitelisted Department? Join our server to support us! Code: SACR</li>
+                <li>:h Please balance the teams to provide a better roleplay experience. Thank you!</li>
+                <li>:h A peacetimer has been set for xx minutes.</li>
+                <li>:h (Business name) is now open!</li>
+                <li>:h Leave (Street name). Now failure to do so will lead to being respawned.</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Hints</h2>
-      <ul>
-        <li>:h Join our server! Code: SACR</li>
-        <li>:h Want to become staff? Code: SACR</li>
-        <li>:h (Business name) is now open!</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Chain of Command</h2>
+            <ul>
+                <li><b>Executive Tier:</b> Founder, Chief Operating Officer, Director of Development, Chief Human Resources</li>
+                <li><b>Development Tier:</b> Developer, Community Director, Community Developer</li>
+                <li><b>Management & HR Tier:</b> Lead Human Resources, Human Resources, Junior Human Resources</li>
+                <li><b>Operational Tier:</b> Community Manager, Lead Supervisor, Supervisor</li>
+                <li><b>Training & Instruction Tier:</b> Lead Instructor, Instructor, Driving Instructor, Driving Evaluator, Driving Instructor Assistant</li>
+                <li><b>Administration Tier:</b> Head Admin, Admin, Junior Admin, Trainee Admin</li>
+                <li><b>Moderation Tier:</b> Senior Mod, Mod, Junior Mod</li>
+                <li><b>Duty Status Roles:</b> On-Shift, On-Break, LOA (Leave of Absence)</li>
+                <li><b>Entry-Level Staff Tier:</b> New Staff, Trainee Mod</li>
+            </ul>
+            <div class="note">
+                All lower roles must respect and follow instructions from those ranked above them, unless the instruction breaks a rule or policy.
+            </div>
+        </section>
 
-    <section>
-      <h2>Chain of Command</h2>
-      <div class="card">
-        <p><strong>Executive Tier:</strong> OWN, COO, DOD, CHR</p>
-        <p><strong>Development Tier:</strong> DEV, CD</p>
-        <p><strong>HR/Management:</strong> LHR, HR, JHR</p>
-        <p><strong>Operational:</strong> CM, SP</p>
-        <p><strong>Instruction:</strong> LINS, INS, DI, DE, DIA</p>
-        <p><strong>Admin:</strong> HA, ADM, JA, TADM</p>
-        <p><strong>Moderation:</strong> SM, MOD, JM</p>
-        <p><strong>Entry-Level:</strong> NSTF, TM</p>
-        <p><strong>Status Roles:</strong> ⏱ On-Shift, ☕ On-Break, 📋 LOA</p>
-      </div>
-    </section>
+        <section class="section">
+            <h2>Nameplates</h2>
+            <ul>
+                <li><b>Executive Tier:</b> OWN | TheJAWsome1 (Founder), COO | [Name] (Chief Operating Officer), DOD | [Name] (Director of Development), CHR | Anton (Chief Human Resources)</li>
+                <li><b>Development Tier:</b> DEV | [Name] (Developer), CD | [Name] (Community Director/Developer)</li>
+                <li><b>Management & HR Tier:</b> LHR | [Name] (Lead Human Resources), HR | [Name] (Human Resources), JHR | [Name] (Junior Human Resources)</li>
+                <li><b>Operational Tier:</b> CM | [Name] (Community Manager), LSP | [Name] (Lead Supervisor), SP | [Name] (Supervisor)</li>
+                <li><b>Training & Instruction Tier:</b> LINS | [Name] (Lead Instructor), INS | [Name] (Instructor), DI | [Name] (Driving Instructor), DE | [Name] (Driving Evaluator), DIA | [Name] (Driving Instructor Assistant)</li>
+                <li><b>Administration Tier:</b> HA | [Name] (Head Admin), ADM | [Name] (Admin), JA | [Name] (Junior Admin), TADM | [Name] (Trainee Admin)</li>
+                <li><b>Moderation Tier:</b> SM | [Name] (Senior Mod), MOD | [Name] (Mod), JM | [Name] (Junior Mod)</li>
+                <li><b>Duty Status Roles:</b> ⏱ | On-Shift, ☕ | On-Break, 📋 | LOA</li>
+                <li><b>Entry-Level Staff Tier:</b> NSTF | [Name] (New Staff), TM | [Name] (Trainee Mod)</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Promotions & Infractions</h2>
-      <ul>
-        <li>Weekly promotions based on activity, behavior, and community feedback</li>
-        <li>No hinting or asking for promotions</li>
-        <li>Infractions = Point System</li>
-        <li>6 points = Termination risk</li>
-        <li>Minor violations add up over time</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2>Promotions</h2>
+            <ul>
+                <li>Staff promotions happen weekly.</li>
+                <li>How to get promoted: Be active, professional, follow rules, and receive positive feedback from staff/community.</li>
+                <li>Hinting/asking for promotion will result in an infraction.</li>
+            </ul>
+        </section>
 
-    <section>
-      <h2>Retirement</h2>
-      <p>Staff may retire any time. Admin+ with 5+ quotas can retire officially. Retired staff keep chat access. Open HR ticket to resign or retire.</p>
-    </section>
-  </main>
-  <footer>
-    PSC:RP Staff Handbook &copy; 2025 | Internal Use Only
-  </footer>
+        <section class="section">
+            <h2>Infractions</h2>
+            <table>
+                <thead>
+                    <tr><th>Infraction</th><th>Points</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Be Professional, Always</td><td>1</td><td>Maintain maturity, clarity, and respect</td></tr>
+                    <tr><td>Inactivity (3+ days)</td><td>1</td><td>Without notice or reason. 7+ days = Strike</td></tr>
+                    <tr><td>Unprofessionalism</td><td>1–2</td><td>No greeting, sloppy messages, improper conduct</td></tr>
+                    <tr><td>Member Disrespect</td><td>1–2</td><td>Rudeness, mocking, bias</td></tr>
+                    <tr><td>Less Than 4-Letter Commands</td><td>2</td><td>Short/mod abuse (e.g. :k J)</td></tr>
+                    <tr><td>Wrong Punishment</td><td>2</td><td>Kicking/banning/warning without correct grounds</td></tr>
+                    <tr><td>Shift Farming</td><td>2</td><td>Logging in for quota but not working</td></tr>
+                    <tr><td>Failure to Meet Shift Quota</td><td>2</td><td>Missed hours without approval</td></tr>
+                    <tr><td>Using :### all Commands</td><td>3–6</td><td>Serious abuse</td></tr>
+                    <tr><td>Breaking Guidelines During ZTP</td><td>6</td><td>Any infraction during Zero Tolerance Phase</td></tr>
+                    <tr><td>Roblox/Discord ToS Violation</td><td>6</td><td>Bypassing, exploiting, racism, NSFW</td></tr>
+                    <tr><td>Multiple Valid Reports</td><td>6</td><td>Confirms ongoing issues</td></tr>
+                    <tr><td>Promoting Without Approval</td><td>6</td><td>Giving staff roles without HR+ authorization</td></tr>
+                    <tr><td>Deliberate Infraction Farming</td><td>6</td><td>Trying to get warned/struck on purpose</td></tr>
+                </tbody>
+            </table>
+            <ul>
+                <li>Warnings = 1 Point</li>
+                <li>Suspension = 3 Points</li>
+                <li>Termination = 6 Points</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Retirement</h2>
+            <ul>
+                <li>Staff may resign or retire at any time.</li>
+                <li>To retire: Must be Admin, have 5+ quotas, and receive approval. Retired staff keep staff chat access.</li>
+                <li>To quit: Inform HR by opening a ticket.</li>
+            </ul>
+        </section>
+    </main>
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        const html = document.documentElement;
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            themeBtn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('theme', theme);
+        }
+        themeBtn.onclick = () => {
+            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        };
+        // Auto-load theme
+        (() => {
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved);
+        })();
+    </script>
 </body>
 </html>

@@ -2,128 +2,137 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Staff Handbook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        :root {
-            --bg: #f8f9fa;
-            --text: #222;
-            --card: #fff;
-            --accent: #0078d4;
-            --border: #e0e0e0;
-            --code: #f4f4f4;
-        }
-        [data-theme="dark"] {
-            --bg: #181a1b;
-            --text: #f1f1f1;
-            --card: #23272a;
-            --accent: #60aaff;
-            --border: #333;
-            --code: #23272a;
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            min-height: 100vh;
-        }
-        header {
-            background: var(--accent);
-            color: #fff;
-            padding: 1.5rem 1rem 1rem 1rem;
-            text-align: center;
-        }
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 1.5rem;
-            background: var(--card);
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-        }
-        h1, h2, h3 {
-            color: var(--accent);
-            margin-top: 2rem;
-        }
-        h1 { font-size: 2.2rem; }
-        h2 { font-size: 1.5rem; }
-        h3 { font-size: 1.15rem; }
-        ul, ol { margin-left: 1.5rem; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            background: var(--card);
-        }
-        th, td {
-            border: 1px solid var(--border);
-            padding: 0.5rem 0.75rem;
-            text-align: left;
-        }
-        th {
-            background: var(--accent);
-            color: #fff;
-        }
-        code, pre {
-            background: var(--code);
-            color: var(--accent);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.95em;
-        }
-        .toggle-theme {
-            position: absolute;
-            right: 1.5rem;
-            top: 1.5rem;
-            background: var(--card);
-            color: var(--accent);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 0.4rem 1rem;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.2s;
-        }
-        .toggle-theme:hover {
-            background: var(--accent);
-            color: #fff;
-        }
-        .section {
-            margin-bottom: 2.5rem;
-        }
-        .note {
-            background: #fffbe6;
-            color: #856404;
-            border-left: 4px solid #ffe066;
-            padding: 0.75rem 1rem;
-            margin: 1rem 0;
-            border-radius: 6px;
-        }
-        [data-theme="dark"] .note {
-            background: #2a2a1a;
-            color: #ffe066;
-            border-left: 4px solid #ffe066;
-        }
-        .credits-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin: 1rem 0 2rem 0;
-            font-size: 1.1rem;
-        }
-        .credits-list span {
-            background: var(--code);
-            border-radius: 4px;
-            padding: 0.3rem 0.7rem;
-            margin-right: 0.5rem;
-        }
-        @media (max-width: 600px) {
-            .container { padding: 0.7rem; }
-            .toggle-theme { right: 0.7rem; top: 1rem; }
-        }
+    :root {
+        --bg: #f8f9fa;
+        --text: #222;
+        --card: #fff;
+        --accent: #0078d4;
+        --border: #e0e0e0;
+        --code: #f4f4f4;
+    }
+    [data-theme="dark"] {
+        --bg: #181a1b;
+        --text: #f1f1f1;
+        --card: #23272a;
+        --accent: #60aaff;
+        --border: #333;
+        --code: #23272a;
+    }
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        min-height: 100vh;
+    }
+    header {
+        background: var(--accent);
+        color: #fff;
+        padding: 1.5rem 1rem 1rem 1rem;
+        text-align: center;
+    }
+    .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        background: var(--card);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
+    }
+    h1, h2, h3 {
+        color: var(--accent);
+        margin-top: 2rem;
+    }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.15rem; }
+    ul, ol { margin-left: 1.5rem; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        background: var(--card);
+    }
+    th, td {
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+    }
+    th {
+        background: var(--accent);
+        color: #fff;
+    }
+    code, pre {
+        background: var(--code);
+        color: var(--accent);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.95em;
+    }
+    .toggle-theme {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        background: var(--card);
+        color: var(--accent);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 0.4rem 1rem;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    .toggle-theme:hover {
+        background: var(--accent);
+        color: #fff;
+    }
+    .section {
+        margin-bottom: 2.5rem;
+    }
+    .note {
+        background: #fffbe6;
+        color: #856404;
+        border-left: 4px solid #ffe066;
+        padding: 0.75rem 1rem;
+        margin: 1rem 0;
+        border-radius: 6px;
+    }
+    [data-theme="dark"] .note {
+        background: #2a2a1a;
+        color: #ffe066;
+        border-left: 4px solid #ffe066;
+    }
+    .credits-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: 1rem 0 2rem 0;
+        font-size: 1.1rem;
+    }
+    .credit-link {
+        text-decoration: none;
+    }
+    .credit-link span {
+        background: var(--code);
+        border-radius: 4px;
+        padding: 0.3rem 0.7rem;
+        margin-right: 0.5rem;
+        color: var(--accent);
+        transition: background 0.2s,color 0.2s;
+    }
+    .credit-link:hover span {
+        background: var(--accent);
+        color: #fff;
+    }
+    @media (max-width: 600px) {
+        .container { padding: 0.7rem; }
+        .toggle-theme { right: 0.7rem; top: 1rem; }
+    }
     </style>
 </head>
 <body>
@@ -136,13 +145,37 @@
         <section class="section">
             <h2>Credits</h2>
             <div class="credits-list">
-                <span>@ANTON_SPELAR80/CHR</span>
-                <span>Yeetstem_104/COO</span>
-                <span>TheJAWsome1/OWN</span>
-                <span>notthesalt/DOD</span>
-                <span>ChatGPT/AI</span>
+                <a href="#" class="credit-link"><span>@ANTON_SPELAR80/CHR</span></a>
+                <a href="#" class="credit-link"><span>Yeetstem_104/COO</span></a>
+                <a href="#" class="credit-link"><span>TheJAWsome1/OWN</span></a>
+                <a href="#" class="credit-link"><span>notthesalt/DOD</span></a>
+                <a href="#" class="credit-link"><span>ChatGPT/AI</span></a>
             </div>
         </section>
+        <!-- ...rest of your content remains unchanged... -->
+        <!-- (keep all other sections as in your original code) -->
+        <!-- ... -->
+    </main>
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        const html = document.documentElement;
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            themeBtn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('theme', theme);
+        }
+        themeBtn.onclick = () => {
+            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        };
+        // Auto-load theme
+        (() => {
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved);
+        })();
+    </script>
+</body>
+</html>
+
 
         <section class="section">
             <h2>Confidentiality Agreement</h2>

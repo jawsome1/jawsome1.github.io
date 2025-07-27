@@ -2,137 +2,128 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Staff Handbook</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-    :root {
-        --bg: #f8f9fa;
-        --text: #222;
-        --card: #fff;
-        --accent: #0078d4;
-        --border: #e0e0e0;
-        --code: #f4f4f4;
-    }
-    [data-theme="dark"] {
-        --bg: #181a1b;
-        --text: #f1f1f1;
-        --card: #23272a;
-        --accent: #60aaff;
-        --border: #333;
-        --code: #23272a;
-    }
-    html, body {
-        margin: 0;
-        padding: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family: 'Segoe UI', Arial, sans-serif;
-        min-height: 100vh;
-    }
-    header {
-        background: var(--accent);
-        color: #fff;
-        padding: 1.5rem 1rem 1rem 1rem;
-        text-align: center;
-    }
-    .container {
-        max-width: 900px;
-        margin: 2rem auto;
-        padding: 1.5rem;
-        background: var(--card);
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border: 1px solid var(--border);
-    }
-    h1, h2, h3 {
-        color: var(--accent);
-        margin-top: 2rem;
-    }
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.15rem; }
-    ul, ol { margin-left: 1.5rem; }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-        background: var(--card);
-    }
-    th, td {
-        border: 1px solid var(--border);
-        padding: 0.5rem 0.75rem;
-        text-align: left;
-    }
-    th {
-        background: var(--accent);
-        color: #fff;
-    }
-    code, pre {
-        background: var(--code);
-        color: var(--accent);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 0.95em;
-    }
-    .toggle-theme {
-        position: absolute;
-        right: 1.5rem;
-        top: 1.5rem;
-        background: var(--card);
-        color: var(--accent);
-        border: 1px solid var(--border);
-        border-radius: 5px;
-        padding: 0.4rem 1rem;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.2s;
-    }
-    .toggle-theme:hover {
-        background: var(--accent);
-        color: #fff;
-    }
-    .section {
-        margin-bottom: 2.5rem;
-    }
-    .note {
-        background: #fffbe6;
-        color: #856404;
-        border-left: 4px solid #ffe066;
-        padding: 0.75rem 1rem;
-        margin: 1rem 0;
-        border-radius: 6px;
-    }
-    [data-theme="dark"] .note {
-        background: #2a2a1a;
-        color: #ffe066;
-        border-left: 4px solid #ffe066;
-    }
-    .credits-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.5rem;
-        margin: 1rem 0 2rem 0;
-        font-size: 1.1rem;
-    }
-    .credit-link {
-        text-decoration: none;
-    }
-    .credit-link span {
-        background: var(--code);
-        border-radius: 4px;
-        padding: 0.3rem 0.7rem;
-        margin-right: 0.5rem;
-        color: var(--accent);
-        transition: background 0.2s,color 0.2s;
-    }
-    .credit-link:hover span {
-        background: var(--accent);
-        color: #fff;
-    }
-    @media (max-width: 600px) {
-        .container { padding: 0.7rem; }
-        .toggle-theme { right: 0.7rem; top: 1rem; }
-    }
+        :root {
+            --bg: #f8f9fa;
+            --text: #222;
+            --card: #fff;
+            --accent: #0078d4;
+            --border: #e0e0e0;
+            --code: #f4f4f4;
+        }
+        [data-theme="dark"] {
+            --bg: #181a1b;
+            --text: #f1f1f1;
+            --card: #23272a;
+            --accent: #60aaff;
+            --border: #333;
+            --code: #23272a;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+        }
+        header {
+            background: var(--accent);
+            color: #fff;
+            padding: 1.5rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        h1, h2, h3 {
+            color: var(--accent);
+            margin-top: 2rem;
+        }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.5rem; }
+        h3 { font-size: 1.15rem; }
+        ul, ol { margin-left: 1.5rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--card);
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: var(--accent);
+            color: #fff;
+        }
+        code, pre {
+            background: var(--code);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+        .toggle-theme {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            background: var(--card);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+        .toggle-theme:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .note {
+            background: #fffbe6;
+            color: #856404;
+            border-left: 4px solid #ffe066;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+        [data-theme="dark"] .note {
+            background: #2a2a1a;
+            color: #ffe066;
+            border-left: 4px solid #ffe066;
+        }
+        .credits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1rem 0 2rem 0;
+            font-size: 1.1rem;
+        }
+        .credits-list span {
+            background: var(--code);
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
+            margin-right: 0.5rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0.7rem; }
+            .toggle-theme { right: 0.7rem; top: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -145,37 +136,13 @@
         <section class="section">
             <h2>Credits</h2>
             <div class="credits-list">
-                <a href="#" class="credit-link"><span>@ANTON_SPELAR80/CHR</span></a>
-                <a href="#" class="credit-link"><span>Yeetstem_104/COO</span></a>
-                <a href="#" class="credit-link"><span>TheJAWsome1/OWN</span></a>
-                <a href="#" class="credit-link"><span>notthesalt/DOD</span></a>
-                <a href="#" class="credit-link"><span>ChatGPT/AI</span></a>
+                <span>@ANTON_SPELAR80/CHR</span>
+                <span>Yeetstem_104/COO</span>
+                <span>TheJAWsome1/OWN</span>
+                <span>notthesalt/DOD</span>
+                <span>ChatGPT/AI</span>
             </div>
         </section>
-        <!-- ...rest of your content remains unchanged... -->
-        <!-- (keep all other sections as in your original code) -->
-        <!-- ... -->
-    </main>
-    <script>
-        const themeBtn = document.getElementById('themeBtn');
-        const html = document.documentElement;
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            themeBtn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-            localStorage.setItem('theme', theme);
-        }
-        themeBtn.onclick = () => {
-            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        };
-        // Auto-load theme
-        (() => {
-            const saved = localStorage.getItem('theme');
-            if (saved) setTheme(saved);
-        })();
-    </script>
-</body>
-</html>
-
 
         <section class="section">
             <h2>Confidentiality Agreement</h2>
@@ -224,17 +191,79 @@
             </table>
         </section>
 
-        <section class="section">
-            <h2>Staff Regulations</h2>
-            <ul>
-                <li><b>Minimum Player Count:</b> Staff may only go on duty with 15+ players, unless witnessing a bannable offense or with valid proof.</li>
-                <li><b>Uniform & Livery:</b> Staff must wear designated uniform/livery. No custom avatars, VIP skins, or unapproved mods.</li>
-                <li><b>Recording:</b> Staff and players are encouraged to record interactions (.mp4 recommended).</li>
-                <li><b>Call Response:</b> Use standard greeting from Scripts section when responding to calls.</li>
-                <li><b>Kicks & Bans:</b> Clearly state rule broken, punishment length, and appeal/report info.</li>
-                <li><b>Pursuit Policy:</b> Staff only join pursuits for active offenses (VDM, RDM, FRP, etc).</li>
-                <li><b>On-Duty Roleplay:</b> Allowed if not witnessing offenses, not breaking rules, and not using on-duty commands for RP.</li>
-            </ul>
+  <section class="section">
+            <h2>🔒 Staff Regulations</h2>
+            <ol>
+                <li>
+                    <b>Minimum Player Count for Staff Duty</b><br>
+                    Staff may only go on duty when there are at least 15 players online, unless:
+                    <ul>
+                        <li>You witness a bannable offense in real time</li>
+                        <li>You have valid proof (e.g., clip, screenshot, or logs)</li>
+                    </ul>
+                    If you go on duty under this exception, you must return off duty immediately after resolving the issue.
+                </li>
+                <li>
+                    <b>Uniform & Livery Requirements</b><br>
+                    Staff must wear the designated staff uniform and livery while on duty.
+                    <ul>
+                        <li>No custom avatars, VIP skins, or unapproved mods</li>
+                        <li>No mixing staff liveries with department liveries</li>
+                    </ul>
+                    Failure to comply may result in a warning or removal from duty.
+                </li>
+                <li>
+                    <b>Recording & Interaction Expectations</b><br>
+                    We highly recommend that both players and staff record all interactions involving other staff members or players. This helps protect everyone, supports fair moderation, and provides proof when needed.<br>
+                    <b>Recommended Format:</b> Please record in .mp4 format for compatibility.
+                </li>
+                <li>
+                    <b>Call Response Protocol</b><br>
+                    When responding to calls, staff must greet themselves using the standard format provided in the Scripts section. This ensures clarity and professionalism in all interactions.
+                </li>
+                <li>
+                    <b>Kicks & Bans</b><br>
+                    When issuing a kick or ban, staff must clearly communicate:
+                    <ul>
+                        <li>What rule was broken</li>
+                        <li>How long the punishment lasts</li>
+                        <li>Where the player can appeal or provide feedback</li>
+                        <li>Where to report the staff member, if necessary (e.g., HR ticket or Supervisor contact)</li>
+                    </ul>
+                    Failure to follow these procedures can result in disciplinary action.
+                </li>
+                <li>
+                    <b>Staff Roleplay & Pursuit Policy</b>
+                    <ul>
+                        <li>
+                            <b>❌ Pursuit Involvement:</b> Staff will never join player pursuits unless an offense is actively occurring.<br>
+                            <b>Valid reasons to intervene include:</b>
+                            <ul>
+                                <li>VDM (Vehicle Deathmatch)</li>
+                                <li>RDM (Random Deathmatch)</li>
+                                <li>FRP (Fail Roleplay)</li>
+                                <li>Other severe behavior</li>
+                            </ul>
+                            🚫 Note: Standard GTA-style driving alone does not qualify as a valid reason to join a pursuit.<br>
+                            Staff may roleplay being pulled over during a pursuit if:
+                            <ul>
+                                <li>They are not interfering with moderation</li>
+                                <li>They are not encouraging rule-breaking</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <b>🎭 On-Duty Roleplay Guidelines:</b> Staff with this role are allowed to roleplay while on duty, as long as all of the following conditions are met:
+                            <ul>
+                                <li>🔍 You are not witnessing any offense</li>
+                                <li>📜 Your actions do not break server rules</li>
+                                <li>🚫 You do not use on-duty commands (e.g., teleport, jail, spectate) for roleplay purposes</li>
+                                <li>👁️ You remain aware of your surroundings and ready to respond to incidents</li>
+                            </ul>
+                            Violating any of these conditions may result in removal from on-duty roleplay privileges.
+                        </li>
+                    </ul>
+                </li>
+            </ol>
         </section>
 
         <section class="section">
@@ -312,28 +341,69 @@
             </table>
         </section>
 
-        <section class="section">
+              <section class="section">
             <h2>Outfits/Vehicles</h2>
+            <h3>Minimum Requirements While On-Duty:</h3>
             <ul>
-                <li>Marked On-Duty in Melonly staff system</li>
-                <li>Wear correct staff uniform and drive approved staff vehicle</li>
-                <li>Correct STG (ELS) pattern active</li>
-                <li>Join On-Duty Staff VC (unless exempt)</li>
-                <li>Patrol when not on a call (unless exempt)</li>
-                <li>Follow chain of command</li>
+                <li>
+                    <strong>Marked On-Duty in Melonly</strong><br>
+                    You must be actively listed as on-duty in the Melonly staff system.
+                </li>
+                <li>
+                    <strong>In Staff Uniform & Vehicle</strong><br>
+                    Always wear the correct staff uniform and drive an approved staff vehicle.
+                </li>
+                <li>
+                    <strong>Correct STG (ELS) Pattern Active</strong><br>
+                    Your ELS lights must reflect your duty status—see chart below.
+                </li>
+                <li>
+                    <strong>Join the On-Duty Staff VC</strong><br>
+                    If you're on-duty, you must be in the On-Duty Staff VC, unless you have a VC Exempt role.
+                </li>
+                <li>
+                    <strong>Actively Patrolling When Not on a Call</strong><br>
+                    If no mod calls have come in within the past 2 minutes, and you're not on a call, you are expected to patrol.<br>
+                    This applies unless you hold the Patrol Exempt role or have been directed otherwise by higher command.
+                </li>
+                <li>
+                    <strong>Follow the Chain of Command</strong><br>
+                    You must follow the directions of staff ranked above you unless those directions clearly break:
+                    <ul>
+                        <li>PSC:RP rules</li>
+                        <li>Server policies or staff handbook</li>
+                        <li>Law or common sense (report violations through proper channels)</li>
+                    </ul>
+                </li>
             </ul>
-            <h3>🚨 ELS / STG Pattern Rules</h3>
+            <h3>🚨 ELS / STG Pattern Rules:</h3>
             <table>
                 <thead>
-                    <tr><th>STG / ELS Level</th><th>Usage Description</th></tr>
+                    <tr>
+                        <th>STG / ELS Level</th>
+                        <th>Usage Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr><td>OFF</td><td>On break or AFK</td></tr>
-                    <tr><td>STG 1</td><td>On-duty, patrolling, handling/waiting for calls</td></tr>
-                    <tr><td>STG 2</td><td>Monitoring scene, observing, issuing warning</td></tr>
-                    <tr><td>STG 3</td><td>Serious action (pulling over for kick/ban offense)</td></tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>On break or AFK — not actively staffing.</td>
+                    </tr>
+                    <tr>
+                        <td>STG 1</td>
+                        <td>On-duty, patrolling, actively handling or waiting for mod calls, or parked.</td>
+                    </tr>
+                    <tr>
+                        <td>STG 2</td>
+                        <td>Monitoring a scene, observing players, issuing a verbal warning or soft stop.</td>
+                    </tr>
+                    <tr>
+                        <td>STG 3</td>
+                        <td>Pulling someone over for a kickable or bannable offense — serious action.</td>
+                    </tr>
                 </tbody>
             </table>
+            <p><em>Incorrect use of STG levels may result in a warning or strike.</em></p>
         </section>
 
         <section class="section">
@@ -366,38 +436,154 @@
             </ul>
         </section>
 
-        <section class="section">
-            <h2>Chain of Command</h2>
+<section class="section">
+    <h2>Chain of Command (COC)</h2>
+    <ul>
+        <li><b>Executive Tier</b>
             <ul>
-                <li><b>Executive Tier:</b> Founder, Chief Operating Officer, Director of Development, Chief Human Resources</li>
-                <li><b>Development Tier:</b> Developer, Community Director, Community Developer</li>
-                <li><b>Management & HR Tier:</b> Lead Human Resources, Human Resources, Junior Human Resources</li>
-                <li><b>Operational Tier:</b> Community Manager, Lead Supervisor, Supervisor</li>
-                <li><b>Training & Instruction Tier:</b> Lead Instructor, Instructor, Driving Instructor, Driving Evaluator, Driving Instructor Assistant</li>
-                <li><b>Administration Tier:</b> Head Admin, Admin, Junior Admin, Trainee Admin</li>
-                <li><b>Moderation Tier:</b> Senior Mod, Mod, Junior Mod</li>
-                <li><b>Duty Status Roles:</b> On-Shift, On-Break, LOA (Leave of Absence)</li>
-                <li><b>Entry-Level Staff Tier:</b> New Staff, Trainee Mod</li>
+                <li>Founder</li>
+                <li>Chief Operating Officer</li>
+                <li>Director of Development</li>
+                <li>Chief Human Resources</li>
             </ul>
-            <div class="note">
-                All lower roles must respect and follow instructions from those ranked above them, unless the instruction breaks a rule or policy.
-            </div>
-        </section>
+        </li>
+        <li><b>Development Tier</b>
+            <ul>
+                <li>Developer</li>
+                <li>Community Director</li>
+                <li>Community Developer</li>
+            </ul>
+        </li>
+        <li><b>Management &amp; HR Tier</b>
+            <ul>
+                <li>Lead Human Resources</li>
+                <li>Human Resources</li>
+                <li>Junior Human Resources</li>
+            </ul>
+        </li>
+        <li><b>Operational Tier</b>
+            <ul>
+                <li>Community Manager</li>
+                <li>Lead Supervisor</li>
+                <li>Supervisor</li>
+            </ul>
+        </li>
+        <li><b>Training &amp; Instruction Tier</b>
+            <ul>
+                <li>Lead Instructor</li>
+                <li>Instructor</li>
+                <li>Driving Instructor</li>
+                <li>Driving Evaluator</li>
+                <li>Driving Instructor Assistant</li>
+            </ul>
+        </li>
+        <li><b>Administration Tier</b>
+            <ul>
+                <li>Head Admin</li>
+                <li>Admin</li>
+                <li>Junior Admin</li>
+                <li>Trainee Admin</li>
+            </ul>
+        </li>
+        <li><b>Moderation Tier</b>
+            <ul>
+                <li>Senior Mod</li>
+                <li>Mod</li>
+                <li>Junior Mod</li>
+            </ul>
+        </li>
+        <li><b>Duty Status Roles</b>
+            <ul>
+                <li>On-Shift</li>
+                <li>On-Break</li>
+                <li>LOA (Leave of Absence)</li>
+            </ul>
+        </li>
+        <li><b>Entry-Level Staff Tier</b>
+            <ul>
+                <li>New Staff</li>
+                <li>Trainee Mod</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="note">
+        <p>⚠️ All lower roles must respect and follow instructions from those ranked above them, unless the instruction breaks a rule or policy.</p>
+        <p>Staff are expected to escalate issues up the chain, starting with the nearest higher role in their department.</p>
+        <p>On-duty requirements must be met at all times while representing the team in-game or in VC (see Staff Handbook section).</p>
+    </div>
+</section>
 
-        <section class="section">
-            <h2>Nameplates</h2>
+       <section class="section">
+    <h2>Nameplates</h2>
+    <ul>
+        <li><b>Executive Tier:</b>
             <ul>
-                <li><b>Executive Tier:</b> OWN | TheJAWsome1 (Founder), COO | [Name] (Chief Operating Officer), DOD | [Name] (Director of Development), CHR | Anton (Chief Human Resources)</li>
-                <li><b>Development Tier:</b> DEV | [Name] (Developer), CD | [Name] (Community Director/Developer)</li>
-                <li><b>Management & HR Tier:</b> LHR | [Name] (Lead Human Resources), HR | [Name] (Human Resources), JHR | [Name] (Junior Human Resources)</li>
-                <li><b>Operational Tier:</b> CM | [Name] (Community Manager), LSP | [Name] (Lead Supervisor), SP | [Name] (Supervisor)</li>
-                <li><b>Training & Instruction Tier:</b> LINS | [Name] (Lead Instructor), INS | [Name] (Instructor), DI | [Name] (Driving Instructor), DE | [Name] (Driving Evaluator), DIA | [Name] (Driving Instructor Assistant)</li>
-                <li><b>Administration Tier:</b> HA | [Name] (Head Admin), ADM | [Name] (Admin), JA | [Name] (Junior Admin), TADM | [Name] (Trainee Admin)</li>
-                <li><b>Moderation Tier:</b> SM | [Name] (Senior Mod), MOD | [Name] (Mod), JM | [Name] (Junior Mod)</li>
-                <li><b>Duty Status Roles:</b> ⏱ | On-Shift, ☕ | On-Break, 📋 | LOA</li>
-                <li><b>Entry-Level Staff Tier:</b> NSTF | [Name] (New Staff), TM | [Name] (Trainee Mod)</li>
+                <li>OWN | TheJAWsome1 (Founder)</li>
+                <li>COO | [Name] (Chief Operating Officer)</li>
+                <li>DOD | [Name] (Director of Development)</li>
+                <li>CHR | Anton (Chief Human Resources)</li>
             </ul>
-        </section>
+        </li>
+        <li><b>Development Tier:</b>
+            <ul>
+                <li>DEV | [Name] (Developer)</li>
+                <li>CD | [Name] (Community Director)</li>
+                <li>CD | [Name] (Community Developer)</li>
+            </ul>
+        </li>
+        <li><b>Management & HR Tier:</b>
+            <ul>
+                <li>LHR | [Name] (Lead Human Resources)</li>
+                <li>HR | [Name] (Human Resources)</li>
+                <li>JHR | [Name] (Junior Human Resources)</li>
+            </ul>
+        </li>
+        <li><b>Operational Tier:</b>
+            <ul>
+                <li>CM | [Name] (Community Manager)</li>
+                <li>LSP | [Name] (Lead Supervisor)</li>
+                <li>SP | [Name] (Supervisor)</li>
+            </ul>
+        </li>
+        <li><b>Training & Instruction Tier:</b>
+            <ul>
+                <li>LINS | [Name] (Lead Instructor)</li>
+                <li>INS | [Name] (Instructor)</li>
+                <li>DI | [Name] (Driving Instructor)</li>
+                <li>DE | [Name] (Driving Evaluator)</li>
+                <li>DIA | [Name] (Driving Instructor Assistant)</li>
+            </ul>
+        </li>
+        <li><b>Administration Tier:</b>
+            <ul>
+                <li>HA | [Name] (Head Admin)</li>
+                <li>ADM | [Name] (Admin)</li>
+                <li>JA | [Name] (Junior Admin)</li>
+                <li>TADM | [Name] (Trainee Admin)</li>
+            </ul>
+        </li>
+        <li><b>Moderation Tier:</b>
+            <ul>
+                <li>SM | [Name] (Senior Mod)</li>
+                <li>MOD | [Name] (Mod)</li>
+                <li>JM | [Name] (Junior Mod)</li>
+            </ul>
+        </li>
+        <li><b>Duty Status Roles (Automatically added):</b>
+            <ul>
+                <li>⏱ | On-Shift</li>
+                <li>☕ | On-Break</li>
+                <li>📋 | LOA</li>
+            </ul>
+        </li>
+        <li><b>🟢 Entry-Level Staff Tier:</b>
+            <ul>
+                <li>NSTF | [Name] (New Staff)</li>
+                <li>TM | [Name] (Trainee Mod)</li>
+            </ul>
+        </li>
+    </ul>
+</section>
 
         <section class="section">
             <h2>Promotions</h2>

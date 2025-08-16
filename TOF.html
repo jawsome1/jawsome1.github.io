@@ -29,9 +29,67 @@
         <div id="result"></div>
         <button onclick="nextQuestion()" style="display:none;" id="nextBtn">Next</button>
     </div>
-    <div id="version">Version 0.4</div>
+    <div id="version">Version 1.0</div>
     <script>
         const questions = [
+  { q: "Venus is hotter than Mercury.", a: true },
+  { q: "Electrons are larger than atoms.", a: false },
+  { q: "Sound travels faster in air than in water.", a: false },
+  { q: "A light-year is a measure of distance.", a: true },
+  { q: "Humans have 206 bones.", a: true },
+  { q: "Sharks are older than trees.", a: true },
+  { q: "A full-grown elephant can jump.", a: false },
+  { q: "Butterflies taste with their feet.", a: true },
+  { q: "Gold is magnetic.", a: false },
+  { q: "Whales sleep with one eye open.", a: true },
+
+  // Math & Logic
+  { q: "1 is a prime number.", a: false },
+  { q: "The square root of 64 is 8.", a: true },
+  { q: "Infinity is a number.", a: false },
+  { q: "A pentagon has five sides.", a: true },
+  { q: "Zero is positive.", a: false },
+  { q: "The sum of angles in a triangle is 180°.", a: true },
+  { q: "12 x 12 = 144.", a: true },
+  { q: "Pi is a rational number.", a: false },
+  { q: "Negative x negative = positive.", a: true },
+  { q: "A hexagon has seven sides.", a: false },
+
+  // Technology & Computers
+  { q: "The first Apple computer was released in 1976.", a: true },
+  { q: "Linux is a type of virus.", a: false },
+  { q: "Bluetooth is named after a king.", a: true },
+  { q: "Python uses curly braces {} for code blocks.", a: false },
+  { q: "HTTP stands for HyperText Transfer Protocol.", a: true },
+  { q: "Google was founded in 1998.", a: true },
+  { q: "RAM is volatile memory.", a: true },
+  { q: "CSS is used to style websites.", a: true },
+  { q: "QR codes store data in a binary format.", a: true },
+  { q: "Email was invented before the Internet.", a: true },
+
+  // Geography & History
+  { q: "The Amazon River flows through Brazil.", a: true },
+  { q: "Mount Kilimanjaro is in Kenya.", a: false },
+  { q: "The Cold War ended in 1991.", a: true },
+  { q: "Australia has more kangaroos than people.", a: true },
+  { q: "The Great Fire of London occurred in 1666.", a: true },
+  { q: "Vatican City is the smallest country in the world.", a: true },
+  { q: "The Eiffel Tower is in Rome.", a: false },
+  { q: "Russia spans two continents.", a: true },
+  { q: "The Pacific Ocean is the largest ocean.", a: true },
+  { q: "The first Olympic Games were held in Athens.", a: true },
+
+  // Fun / Weird
+  { q: "Cats have fewer bones than humans.", a: false },
+  { q: "A snail can sleep for three years.", a: true },
+  { q: "Strawberries are technically seeds.", a: false },
+  { q: "Sloths move faster than cheetahs.", a: false },
+  { q: "Sharks can smell a drop of blood in the ocean.", a: true },
+  { q: "Penguins can fly.", a: false },
+  { q: "A newborn kangaroo is smaller than a jellybean.", a: true },
+  { q: "Avocados are vegetables.", a: false },
+  { q: "Rainbows are circular.", a: true },
+  { q: "You can hear a blue whale's heartbeat from over a mile away.", a: true },
   { q: "The Earth is flat.", a: false },
   { q: "Lightning never strikes the same place twice.", a: false },
   { q: "Water boils at 100°C at sea level.", a: true },
@@ -90,6 +148,7 @@
   { q: "Sharks can live for over 500 years.", a: false },
   { q: "Octopuses can taste with their arms.", a: true },
   { q: "The tongue has separate taste zones.", a: false }
+  
         ];
 
         let current = 0;

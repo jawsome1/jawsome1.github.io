@@ -8,7 +8,17 @@
         #game { background: #fff; display: inline-block; padding: 30px 50px; border-radius: 10px; box-shadow: 0 2px 10px #ccc; }
         button { font-size: 1.2em; margin: 10px; padding: 10px 30px; }
         #result { font-size: 1.3em; margin-top: 20px; }
+        #version { color: #888; font-size: 0.9em; margin-top: 40px; }
     </style>
+    <script>
+        // Fisher-Yates shuffle
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+    </script>
 </head>
 <body>
     <div id="game">

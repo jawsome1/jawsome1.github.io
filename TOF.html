@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stupid True or False Game</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f0f0; text-align: center; padding: 40px; }
+        #game { background: #fff; display: inline-block; padding: 30px 50px; border-radius: 10px; box-shadow: 0 2px 10px #ccc; }
+        button { font-size: 1.2em; margin: 10px; padding: 10px 30px; }
+        #result { font-size: 1.3em; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>Stupid True or False</h1>
+        <div id="question"></div>
+        <button onclick="answer(true)">True</button>
+        <button onclick="answer(false)">False</button>
+        <div id="result"></div>
+        <button onclick="nextQuestion()" style="display:none;" id="nextBtn">Next</button>
+    </div>
+    <script>
+        const questions = [
+            { q: "Is the sky made of cheese?", a: false },
+            { q: "Can a fish ride a bicycle?", a: false },
+            { q: "Is water wet?", a: true },
+            { q: "Do cats bark?", a: false },
+            { q: "Is 2+2 equal to 4?", a: true },
+            { q: "Can you eat soup with a fork?", a: false },
+            { q: "Is the moon a giant disco ball?", a: false },
+            { q: "Do bananas grow on trees?", a: false }, // They grow on plants!
+            { q: "Is fire cold?", a: false },
+            { q: "Can you sneeze with your eyes open?", a: false }
+        ];
+
+        let current = 0;
+
+        function showQuestion() {
+            document.getElementById('question').textContent = questions[current].q;
+            document.getElementById('result').textContent = '';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function answer(userAnswer) {
+            const correct = questions[current].a;
+            if (userAnswer === correct) {
+                document.getElementById('result').textContent = "Correct!";
+            } else {
+                document.getElementById('result').textContent = "Wrong!";
+            }
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            current++;
+            if (current >= questions.length) {
+                document.getElementById('question').textContent = "Game Over! Thanks for playing.";
+                document.getElementById('result').textContent = '';
+                document.querySelectorAll('button').forEach(btn => btn.style.display = 'none');
+            } else {
+                showQuestion();
+            }
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>

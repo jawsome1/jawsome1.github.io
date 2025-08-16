@@ -8,6 +8,7 @@
         #game { background: #fff; display: inline-block; padding: 30px 50px; border-radius: 10px; box-shadow: 0 2px 10px #ccc; }
         button { font-size: 1.2em; margin: 10px; padding: 10px 30px; }
         #result { font-size: 1.3em; margin-top: 20px; }
+        #score { font-size: 1.1em; margin-bottom: 10px; color: #333; }
         #version { color: #888; font-size: 0.9em; margin-top: 40px; }
     </style>
     <script>
@@ -23,15 +24,17 @@
 <body>
     <div id="game">
         <h1>Stupid True or False</h1>
+        <div id="score"></div>
         <div id="question"></div>
-        <button onclick="answer(true)">True</button>
-        <button onclick="answer(false)">False</button>
+        <button onclick="answer(true)" id="trueBtn">True</button>
+        <button onclick="answer(false)" id="falseBtn">False</button>
         <div id="result"></div>
         <button onclick="nextQuestion()" style="display:none;" id="nextBtn">Next</button>
     </div>
-    <div id="version">Version 0.5</div>
+    <div id="version">Version 0.6</div>
     <script>
         const questions = [
+// Science & Nature
   { q: "Venus is hotter than Mercury.", a: true },
   { q: "Electrons are larger than atoms.", a: false },
   { q: "Sound travels faster in air than in water.", a: false },
@@ -89,95 +92,45 @@
   { q: "A newborn kangaroo is smaller than a jellybean.", a: true },
   { q: "Avocados are vegetables.", a: false },
   { q: "Rainbows are circular.", a: true },
-  { q: "You can hear a blue whale's heartbeat from over a mile away.", a: true },
-  { q: "The Earth is flat.", a: false },
-  { q: "Lightning never strikes the same place twice.", a: false },
-  { q: "Water boils at 100°C at sea level.", a: true },
-  { q: "Bats are blind.", a: false },
-  { q: "Sharks are mammals.", a: false },
-  { q: "An octopus has three hearts.", a: true },
-  { q: "Humans have four lungs.", a: false },
-  { q: "Whales are fish.", a: false },
-  { q: "The Sun is a star.", a: true },
-  { q: "Plants make their food through photosynthesis.", a: true },
-
-  // Math & Logic
-  { q: "0 is an even number.", a: true },
-  { q: "Pi is exactly 3.", a: false },
-  { q: "5 + 7 = 12.", a: true },
-  { q: "All prime numbers are odd.", a: false },
-  { q: "2 is the only even prime number.", a: true },
-  { q: "100 divided by 10 is 11.", a: false },
-  { q: "A triangle has four sides.", a: false },
-  { q: "A square has four equal sides.", a: true },
-  { q: "Zero multiplied by any number is zero.", a: true },
-  { q: "Negative numbers are smaller than zero.", a: true },
-
-  // Technology & Computers
-  { q: "HTML is a programming language.", a: false },
-  { q: "The first computer virus was created in the 1980s.", a: true },
-  { q: "Python is named after the snake.", a: false },
-  { q: "RAM stands for Random Access Memory.", a: true },
-  { q: "The Internet and the World Wide Web are the same thing.", a: false },
-  { q: "Bitcoin is a type of cryptocurrency.", a: true },
-  { q: "A byte has 8 bits.", a: true },
-  { q: "USB stands for Universal Serial Bus.", a: true },
-  { q: "Java and JavaScript are the same language.", a: false },
-  { q: "Wi-Fi uses radio waves to transmit data.", a: true },
-
-  // Geography & History
-  { q: "Mount Everest is the tallest mountain on Earth.", a: true },
-  { q: "The Nile is the longest river in the world.", a: true },
-  { q: "Australia is both a country and a continent.", a: true },
-  { q: "The Great Wall of China is visible from the Moon.", a: false },
-  { q: "Rome was the capital of the Roman Empire.", a: true },
-  { q: "The Titanic sank in 1912.", a: true },
-  { q: "The Sahara is the largest desert on Earth.", a: true },
-  { q: "Tokyo is the capital of China.", a: false },
-  { q: "Canada is the largest country by land area.", a: false }, // Russia is
-  { q: "The USA declared independence in 1776.", a: true },
-
-  // Fun / Weird
-  { q: "Pigs can fly.", a: false },
-  { q: "Dogs can see in color.", a: true },
-  { q: "Sloths can hold their breath longer than dolphins.", a: false },
-  { q: "Honey never spoils.", a: true },
-  { q: "A group of crows is called a murder.", a: true },
-  { q: "Bananas are berries.", a: true },
-  { q: "Peanuts grow on trees.", a: false },
-  { q: "Sharks can live for over 500 years.", a: false },
-  { q: "Octopuses can taste with their arms.", a: true },
-  { q: "The tongue has separate taste zones.", a: false }
-  
+  { q: "You can hear a blue whale's heartbeat from over a mile away.", a: true }
         ];
 
         let current = 0;
+        let score = 0;
 
-        // Shuffle questions at the start
         shuffle(questions);
 
         function showQuestion() {
             document.getElementById('question').textContent = questions[current].q;
             document.getElementById('result').textContent = '';
             document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('trueBtn').disabled = false;
+            document.getElementById('falseBtn').disabled = false;
+            document.getElementById('score').textContent = `Score: ${score} / ${questions.length}`;
         }
 
         function answer(userAnswer) {
             const correct = questions[current].a;
             if (userAnswer === correct) {
                 document.getElementById('result').textContent = "Correct!";
+                score++;
             } else {
                 document.getElementById('result').textContent = "Wrong!";
             }
             document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('trueBtn').disabled = true;
+            document.getElementById('falseBtn').disabled = true;
+            document.getElementById('score').textContent = `Score: ${score} / ${questions.length}`;
         }
 
         function nextQuestion() {
             current++;
             if (current >= questions.length) {
                 document.getElementById('question').textContent = "Game Over! Thanks for playing.";
-                document.getElementById('result').textContent = '';
-                document.querySelectorAll('button').forEach(btn => btn.style.display = 'none');
+                document.getElementById('result').textContent = `Final Score: ${score} / ${questions.length}`;
+                document.getElementById('trueBtn').style.display = 'none';
+                document.getElementById('falseBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
             } else {
                 showQuestion();
             }

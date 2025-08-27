@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CW Practice — Paddle Typing Essay</title>
+  <style>
+    :root{--bg:#071026;--card:#0b1220;--accent:#16a34a;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,system-ui,-apple-system,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#071026 0%,#061223 60%);color:#e6eef8;padding:20px;box-sizing:border-box}
+    .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    h1{margin:0 0 6px;font-weight:600}
+    .small{font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=range]{width:140px}
+    button{background:var(--accent);border:none;color:#052018;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .promptBox{background:var(--glass);padding:12px;border-radius:8px;min-height:120px;font-size:18px;line-height:1.45}
+    .essayArea{height:240px;overflow:auto;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .paddleRow{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .paddle{flex:1;padding:18px;border-radius:12px;text-align:center;font-weight:700;user-select:none;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .paddle.active{box-shadow:0 8px 30px rgba(0,0,0,0.6) inset,0 6px 20px rgba(0,0,0,0.6);transform:translateY(2px);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))}
+    .controlsCol{display:flex;flex-direction:column;gap:10px}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#62d38e);width:0%}
+    .currentSeq{font-family:monospace;font-size:18px;margin-top:10px;color:#dff1ea}
+    .paddleHint{font-size:13px;color:var(--muted);margin-top:6px}
+    .statRow{display:flex;gap:10px;margin-top:8px}
+    .stat{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;min-width:90px;text-align:center}
+    svg.nodeText{pointer-events:none}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr;}.essayArea{height:180px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>CW Paddle Essay Practice</h1>
+      <div class="small">Generate a random short essay, then use the paddles (Q = dot, E = dash) to type it in Morse. When your paddle sequence matches the next expected character's Morse, the page advances for you ("follows along").</div>
+
+      <div class="controls">
+        <div class="controlsCol">
+          <div><label for="wpm">WPM</label> <input id="wpm" type="range" min="5" max="40" value="18" /><span id="wpmVal" class="small">18</span></div>
+          <div><label for="farn">Farnsworth (ms)</label> <input id="farn" type="range" min="0" max="1000" step="25" value="0" /><span id="farnVal" class="small">0</span></div>
+        </div>
+        <div style="flex:1"></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button id="gen">Generate Essay</button>
+          <div style="display:flex;gap:8px"><button id="playRef">Play Ref (current char)</button><button id="playAll" class="secondary">Play Entire Essay</button></div>
+        </div>
+      </div>
+
+      <div class="promptBox">
+        <div class="small">Essay (highlighted letter is next):</div>
+        <div class="essayArea" id="essayArea"></div>
+
+        <div class="paddleRow">
+          <div id="paddleDot" class="paddle">Q<br><span class="small">DOT</span></div>
+          <div id="paddleDash" class="paddle">E<br><span class="small">DASH</span></div>
+        </div>
+
+        <div class="currentSeq">Current sequence: <span id="currentSeq">(none)</span></div>
+        <div class="paddleHint">Tip: press Q for dot, E for dash. When your sequence matches the Morse for the next character, it will be accepted and the essay cursor will move forward automatically.</div>
+
+        <div class="statRow">
+          <div class="stat"><div class="small">Accepted</div><strong id="accepted">0</strong></div>
+          <div class="stat"><div class="small">Remaining</div><strong id="remaining">0</strong></div>
+          <div class="stat"><div class="small">Progress</div><strong id="progressPct">0%</strong></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Morse Map & Controls</h3>
+      <div class="small">You can also click nodes to hear a character. Use the "Play Ref" button to hear the morse for the next character while you copy.</div>
+      <div style="height:12px"></div>
+      <div class="small">Keybindings:</div>
+      <ul class="small">
+        <li>Q — Dot (·)</li>
+        <li>E — Dash (−)</li>
+        <li>Backspace — Clear current sequence</li>
+      </ul>
+      <div style="height:12px"></div>
+      <div class="small">Morse Tree (click nodes):</div>
+      <div style="height:12px"></div>
+      <div style="height:420px;overflow:auto;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:8px">
+        <svg id="tree" width="100%" height="400" viewBox="0 0 1200 440" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Morse maps
+    const MORSE = {
+      'A':'.-', 'B':'-...', 'C':'-.-.', 'D':'-..', 'E':'.', 'F':'..-.', 'G':'--.', 'H':'....',
+      'I':'..', 'J':'.---', 'K':'-.-', 'L':'.-..', 'M':'--', 'N':'-.', 'O':'---', 'P':'.--.',
+      'Q':'--.-', 'R':'.-.', 'S':'...', 'T':'-', 'U':'..-', 'V':'...-', 'W':'.--', 'X':'-..-',
+      'Y':'-.--', 'Z':'--..',
+      '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.'
+    };
+    const REVERSE = Object.fromEntries(Object.entries(MORSE).map(([k,v])=>[v,k]));
+
+    // UI refs
+    const genBtn = document.getElementById('gen');
+    const essayArea = document.getElementById('essayArea');
+    const paddleDot = document.getElementById('paddleDot');
+    const paddleDash = document.getElementById('paddleDash');
+    const currentSeqEl = document.getElementById('currentSeq');
+    const acceptedEl = document.getElementById('accepted');
+    const remainingEl = document.getElementById('remaining');
+    const progressPctEl = document.getElementById('progressPct');
+    const wpmRange = document.getElementById('wpm');
+    const playRefBtn = document.getElementById('playRef');
+    const playAllBtn = document.getElementById('playAll');
+    const farn = document.getElementById('farn');
+
+    // small word bank to assemble pseudo-essay
+    const WORDS = ("the quick brown fox jumps over the lazy dog rescue stormcore resq nine harper jakob radio signal beacon practice learn code morse paddle copy").split(' ');
+
+    function generateEssay(wordCount=60){
+      const words = [];
+      for(let i=0;i<wordCount;i++) words.push(WORDS[Math.floor(Math.random()*WORDS.length)]);
+      // make some punctuation and sentence breaks
+      for(let i=10;i<words.length;i+=Math.floor(6+Math.random()*12)) words[i] = words[i] + '.';
+      // capitalize first letter of first word
+      let text = words.join(' ');
+      text = text.charAt(0).toUpperCase() + text.slice(1);
+      return text;
+    }
+
+    let essayText = '';
+    let cursor = 0; // index in essayText
+    let currentSeq = '';
+    let acceptedCount = 0;
+
+    function renderEssay(){
+      // show essay with next char highlighted
+      let out = '';
+      for(let i=0;i<essayText.length;i++){
+        const ch = essayText[i];
+        if(i===cursor) out += `<mark style="background:rgba(22,163,74,0.12);padding:2px 4px;border-radius:4px;color:#9ee7bf">${escapeHtml(ch)}</mark>`;
+        else out += escapeHtml(ch);
+      }
+      essayArea.innerHTML = out;
+      remainingEl.textContent = Math.max(0, essayText.length - cursor - 1);
+      acceptedEl.textContent = acceptedCount;
+      const pct = Math.round((acceptedCount / (essayText.length||1))*100);
+      progressPctEl.textContent = pct + '%';
+    }
+
+    function escapeHtml(s){ return s.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;'); }
+
+    function resetPractice(){ currentSeq=''; currentSeqEl.textContent='(none)'; acceptedCount=0; cursor=0; renderEssay(); }
+
+    genBtn.addEventListener('click', ()=>{
+      essayText = generateEssay(50);
+      cursor = 0; acceptedCount = 0; currentSeq=''; currentSeqEl.textContent='(none)';
+      renderEssay();
+    });
+
+    // initial generate
+    essayText = generateEssay(50);
+    renderEssay();
+
+    // audio helpers
+    let audioCtx = null;
+    function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
+    function playTone(durationMs){ ensureAudio(); const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const g = audioCtx.createGain(); osc.type='sine'; osc.frequency.value=600; osc.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(0.9, now+0.005); g.gain.setValueAtTime(0.9, now+durationMs/1000-0.005); g.gain.linearRampToValueAtTime(0, now+durationMs/1000); osc.start(now); osc.stop(now + durationMs/1000 + 0.02); }
+
+    function dotMs(wpm){ return 1200 / wpm; }
+
+    function playMorseForChar(ch){ ch = ch.toUpperCase(); const code = MORSE[ch]; if(!code) return; ensureAudio(); let t = audioCtx.currentTime + 0.02; const unit = dotMs(+wpmRange.value); const farnMs = +farn.value; for(let i=0;i<code.length;i++){
+      const token = code[i]; if(token==='.') { playScheduledTone(t, unit); t += unit/1000; }
+      else if(token==='-') { playScheduledTone(t, unit*3); t += unit*3/1000; }
+      if(i<code.length-1) t += unit/1000; // element gap
+    }
+    // after letter, include letter gap and farnsworth to mimic spacing
+    function playScheduledTone(startSec, durationMs){ const osc = audioCtx.createOscillator(); const g = audioCtx.createGain(); osc.type='sine'; osc.frequency.value=600; osc.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0, startSec); g.gain.linearRampToValueAtTime(0.9, startSec+0.005); g.gain.setValueAtTime(0.9, startSec+durationMs/1000-0.005); g.gain.linearRampToValueAtTime(0, startSec+durationMs/1000); osc.start(startSec); osc.stop(startSec + durationMs/1000 + 0.02); }
+    }
+
+    playRefBtn.addEventListener('click', ()=>{ const next = essayText[cursor]||' '; playMorseForChar(next); });
+    playAllBtn.addEventListener('click', ()=>{ playMorseForCharSequence(essayText); });
+
+    function playMorseForCharSequence(text){ ensureAudio(); let t = audioCtx.currentTime + 0.04; const unit = dotMs(+wpmRange.value); for(let idx=0; idx<text.length; idx++){
+      const ch = text[idx].toUpperCase(); const code = MORSE[ch]; if(!code){ t += (unit*7 + (+farn))/1000; continue; }
+      for(let i=0;i<code.length;i++){ const token = code[i]; if(token==='.'){ scheduleTone(t, unit); t += unit/1000; } else { scheduleTone(t, unit*3); t += unit*3/1000; } if(i<code.length-1) t += unit/1000; }
+      t += (unit*3 + (+farn))/1000;
+    }
+    function scheduleTone(start, durMs){ const osc = audioCtx.createOscillator(); const g = audioCtx.createGain(); osc.type='sine'; osc.frequency.value=600; osc.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0, start); g.gain.linearRampToValueAtTime(0.9, start+0.005); g.gain.setValueAtTime(0.9, start+durMs/1000-0.005); g.gain.linearRampToValueAtTime(0, start+durMs/1000); osc.start(start); osc.stop(start + durMs/1000 + 0.02); }
+    }
+
+    // paddle input handling
+    function addSymbol(sym){ // sym is '.' or '-'
+      // animate
+      if(sym==='.'){ paddleDot.classList.add('active'); setTimeout(()=>paddleDot.classList.remove('active'),120); }
+      else { paddleDash.classList.add('active'); setTimeout(()=>paddleDash.classList.remove('active'),120); }
+      // play small tone
+      playTone(sym==='.'? dotMs(+wpmRange.value) : dotMs(+wpmRange.value)*3);
+      currentSeq += sym;
+      currentSeqEl.textContent = currentSeq;
+      // try to match to next expected char
+      const nextChar = (essayText[cursor]||' ').toUpperCase();
+      const expectedCode = MORSE[nextChar];
+      if(expectedCode){
+        if(currentSeq === expectedCode){
+          // accept
+          cursor++;
+          acceptedCount++;
+          currentSeq = '';
+          currentSeqEl.textContent = '(none)';
+          renderEssay();
+          // small feedback tone
+          playTone(60);
+        } else if(!expectedCode.startsWith(currentSeq)){
+          // if current sequence cannot be prefix of expected, then give gentle error and reset
+          currentSeq = '';
+          currentSeqEl.textContent = '(none)';
+          // error click
+          playTone(90);
+        }
+      } else {
+        // expected is whitespace or punctuation - skip over until a mappable char
+        cursor++; renderEssay(); currentSeq=''; currentSeqEl.textContent='(none)';
+      }
+    }
+
+    // keybindings
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase()==='q'){ e.preventDefault(); addSymbol('.'); }
+      else if(e.key.toLowerCase()==='e'){ e.preventDefault(); addSymbol('-'); }
+      else if(e.key==='Backspace'){ e.preventDefault(); currentSeq=''; currentSeqEl.textContent='(none)'; }
+    });
+
+    paddleDot.addEventListener('click', ()=>addSymbol('.'));
+    paddleDash.addEventListener('click', ()=>addSymbol('-'));
+
+    // Build morse tree (same as previous file)
+    const svg = document.getElementById('tree');
+    function buildTree(){
+      const nodes = { '': {id:'', label:''} };
+      Object.entries(MORSE).forEach(([ch,code])=>{
+        let path='';
+        for(let i=0;i<code.length;i++){
+          const step = code[i];
+          path += step;
+          if(!nodes[path]) nodes[path] = {id:path, children:[], label:null};
+        }
+        nodes[path].label = ch;
+      });
+      const nodeArr = Object.values(nodes);
+      const groups = {};
+      nodeArr.forEach(n=>{ const depth = n.id.length; if(!groups[depth]) groups[depth]=[]; groups[depth].push(n); });
+      const depthKeys = Object.keys(groups).map(x=>+x).sort((a,b)=>a-b);
+      const width = 1100; const height = 420; const left = 50; const top = 20;
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+      const positions = {};
+      depthKeys.forEach(depth=>{
+        const arr = groups[depth];
+        const y = top + depth * 72;
+        arr.forEach((n,idx)=>{
+          let bins = n.id.split('').map(c=> c==='-'?1:0).join('');
+          let order = 0;
+          if(bins.length) order = parseInt(bins,2);
+          const x = left + ( (order + 0.5) / (Math.pow(2, depth)) ) * (width - left*2);
+          positions[n.id] = {x,y};
+        });
+      });
+      Object.keys(positions).forEach(id=>{
+        if(id==='') return;
+        const parent = id.slice(0,-1);
+        const p = positions[parent];
+        const c = positions[id];
+        if(p && c){
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1',p.x); line.setAttribute('y1',p.y+12);
+          line.setAttribute('x2',c.x); line.setAttribute('y2',c.y-12);
+          line.setAttribute('stroke','rgba(255,255,255,0.06)'); line.setAttribute('stroke-width','1.5');
+          svg.appendChild(line);
+        }
+      });
+      Object.entries(positions).forEach(([id,pos])=>{
+        const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+        g.setAttribute('transform',`translate(${pos.x},${pos.y})`);
+        const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        circle.setAttribute('r',18); circle.setAttribute('fill','rgba(255,255,255,0.02)'); circle.setAttribute('stroke','rgba(255,255,255,0.06)');
+        g.appendChild(circle);
+        const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+        label.setAttribute('y',6); label.setAttribute('text-anchor','middle'); label.setAttribute('font-size','12'); label.setAttribute('fill','#cfeee0');
+        const nodeLabel = (function(){
+          for(const [ch,code] of Object.entries(MORSE)) if(code===id) return ch;
+          return id===''? '•' : id.split('.').join('·').split('-').join('−');
+        })();
+        label.textContent = nodeLabel;
+        g.appendChild(label);
+        g.style.cursor='pointer';
+        g.addEventListener('click', ()=>{ const found = Object.entries(MORSE).find(([k,v])=>v===id); if(found) playMorseForChar(found[0]); });
+        svg.appendChild(g);
+      });
+    }
+    buildTree(); window.addEventListener('resize', buildTree);
+
+    // small helpers to make mobile tapping less awkward
+    paddleDot.addEventListener('touchstart', (e)=>{ e.preventDefault(); addSymbol('.'); });
+    paddleDash.addEventListener('touchstart', (e)=>{ e.preventDefault(); addSymbol('-'); });
+
+  </script>
+</body>
+</html>

@@ -95,23 +95,23 @@
     ];
 
     // Users and access rights
-const users = {
-  "Jakob": { 
-    password: "N9J@W", 
-    hype: true, 
-    student: true 
-  },
-  "Donovan": { 
-    password: "Eh@me", 
-    hype: true, 
-    student: true 
-  },
-  "Tempie": { 
-    password: "Tem!es", 
-    hype: true, 
-    student: true 
-  }
-};
+    const users = {
+      "Jakob": { 
+        password: "N9J@W", 
+        hype: true, 
+        student: true 
+      },
+      "Donovan": { 
+        password: "Eh@me", 
+        hype: true, 
+        student: true 
+      },
+      "Tempie": { 
+        password: "Tem!es", 
+        hype: true, 
+        student: true 
+      }
+    };
 
     const verseBox = document.getElementById("verseText");
     const dashboard = document.getElementById("dashboard");
@@ -120,10 +120,11 @@ const users = {
 
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const password = document.getElementById("password").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
       const errorDiv = document.getElementById("error");
 
-      if (users[password]) {
+      if (users[username] && users[username].password === password) {
         // Hide login, show dashboard
         loginContainer.classList.add("hidden");
         dashboard.classList.remove("hidden");
@@ -134,23 +135,22 @@ const users = {
 
         // Generate access buttons
         linksDiv.innerHTML = "";
-        if (users[password].hype) {
+        if (users[username].hype) {
           let btn = document.createElement("button");
           btn.textContent = "Hype Team";
           btn.onclick = () => window.location.href = "Student-Leadership/Hype-Team";
           linksDiv.appendChild(btn);
         }
-        if (users[password].student) {
+        if (users[username].student) {
           let btn = document.createElement("button");
           btn.textContent = "Student Leadership";
           btn.onclick = () => window.location.href = "Student-Leadership/Student-Leadership";
           linksDiv.appendChild(btn);
         }
       } else {
-        errorDiv.textContent = "Invalid login.";
+        errorDiv.textContent = "Invalid username or password.";
       }
     });
   </script>
 </body>
 </html>
-

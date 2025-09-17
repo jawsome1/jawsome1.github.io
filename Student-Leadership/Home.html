@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Leadership Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: background 0.3s, color 0.3s;
+        }
+        h2 { text-align: center; margin-bottom: 24px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #222;
+            transition: background 0.3s, color 0.3s, border 0.3s;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+        .error { color: #d8000c; margin-bottom: 12px; text-align: center; }
 
+        /* Dark mode styles */
+        body.dark-mode {
+            background: #181a1b;
+            color: #e4e6eb;
+        }
+        .container.dark-mode {
+            background: #23272a;
+            color: #e4e6eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+        body.dark-mode input[type="text"],
+        body.dark-mode input[type="password"] {
+            background: #2c2f33;
+            color: #e4e6eb;
+            border: 1px solid #444;
+        }
+        body.dark-mode button {
+            background: #444;
+            color: #fff;
+        }
+        body.dark-mode .error {
+            color: #ff6f6f;
+        }
+        /* Toggle switch */
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+        .toggle-switch label {
+            margin-left: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <div class="toggle-switch">
+            <input type="checkbox" id="modeToggle">
+            <label for="modeToggle" id="modeLabel">Dark Mode</label>
+        </div>
+        <h2>Student Leadership Portal</h2>
+        <div id="error" class="error"></div>
+        <form id="loginForm" autocomplete="off">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label>Access:</label>
+                <input type="checkbox" id="hype" name="hype"> Hype Team
+                <input type="checkbox" id="student" name="student"> Student Leadership
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        // Passwords and access combos
+        const passwords = {
+            "X": { hype: true, student: false, redirect: "Student-Leadership/Hype Team" },
+            "Y": { hype: false, student: true, redirect: "Student-Leadership/Student-Leadership" },
+            "Z": { hype: true, student: true, redirect: "Student-Leadership/Hype Team" } // example combo
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const hypeChecked = document.getElementById('hype').checked;
+            const studentChecked = document.getElementById('student').checked;
+            const errorDiv = document.getElementById('error');
+
+            if (passwords[password] &&
+                passwords[password].hype === hypeChecked &&
+                passwords[password].student === studentChecked) {
+                window.location.href = passwords[password].redirect;
+            } else {
+                errorDiv.textContent = "Invalid password or access selection.";
+            }
+        });
+
+        // Dark/Light mode toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const modeLabel = document.getElementById('modeLabel');
+        const mainContainer = document.getElementById('mainContainer');
+
+        modeToggle.addEventListener('change', function() {
+            if (modeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                mainContainer.classList.add('dark-mode');
+                modeLabel.textContent = "Light Mode";
+            } else {
+                document.body.classList.remove('dark-mode');
+                mainContainer.classList.remove('dark-mode');
+                modeLabel.textContent = "Dark Mode";
+            }
+        });
+
+        // Optional: Set mode based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            modeToggle.checked = true;
+            document.body.classList.add('dark-mode');
+            mainContainer.classList.add('dark-mode');
+            modeLabel.textContent = "Light Mode";
+        }
+    </script>
+</body>
+</html>

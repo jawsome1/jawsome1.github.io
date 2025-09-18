@@ -9,7 +9,6 @@
       background: #f4f4f4;
       margin: 0;
       padding: 0;
-      transition: background 0.3s, color 0.3s;
     }
     .container {
       max-width: 500px;
@@ -18,17 +17,8 @@
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s, color 0.3s;
     }
     h2, h3 { text-align: center; margin-bottom: 20px; }
-    .form-group { margin-bottom: 18px; }
-    label { display: block; margin-bottom: 6px; }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
     button {
       width: 100%;
       padding: 10px;
@@ -40,15 +30,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .error { color: #d8000c; margin-bottom: 12px; text-align: center; }
-    .hidden { display: none; }
-
-    /* Dark mode */
-    body.dark-mode { background: #181a1b; color: #e4e6eb; }
-    .container.dark-mode { background: #23272a; color: #e4e6eb; }
-    body.dark-mode input, body.dark-mode button { background: #2c2f33; color: #fff; border: 1px solid #444; }
-    body.dark-mode .error { color: #ff6f6f; }
-
     /* Verse box */
     .verse-box {
       background: #f0f8ff;
@@ -60,24 +41,8 @@
   </style>
 </head>
 <body>
-  <div class="container" id="loginContainer">
-    <h2>Student Leadership Portal</h2>
-    <div id="error" class="error"></div>
-    <form id="loginForm" autocomplete="off">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-
   <!-- Dashboard -->
-  <div class="container hidden" id="dashboard">
+  <div class="container" id="dashboard">
     <h2>Welcome!</h2>
     <div class="verse-box" id="verseBox">
       <h3>Verse of the Day</h3>
@@ -88,70 +53,38 @@
 
   <script>
     // Example static verse list (could be pulled from API later)
-    const verses = [
-      "Philippians 4:13 - I can do all things through Christ who strengthens me.",
-      "Jeremiah 29:11 - For I know the plans I have for you, declares the Lord...",
-      "Proverbs 3:5 - Trust in the Lord with all your heart..."
-    ];
-
-    // Users and access rights
-    const users = {
-        "Kallie": { password: "Kallie!Admin", hype: true, student: true },
-        "Kayleen Greenwell": { password: "Kayleen@SLP2024", hype: true, student: true },
-        "Jakob": { password: "N9J@W", hype: true, student: true },
-        "Tempie": { password: "Tempie$Team2024", hype: true, student: true },
-        "Brooklyn W": { password: "BrooklynW*2024!", hype: true, student: true },
-        "Collins Roepke": { password: "CollinsR!Hype24", hype: true, student: true },
-        "Donovan Hays": { password: "DonovanH@2024", hype: true, student: true },
-        "Hayden": { password: "Hayden#SLP24", hype: true, student: true },
-        "Kelsey Jackson": { password: "KelseyJ$2024", hype: true, student: true },
-        "Jack Leber": { password: "JackL!Hype2024", hype: true, student: true },
-        "Madalyn Reed": { password: "MadalynR@2024", hype: true, student: true },
-        "Resse Roepke": { password: "ResseR#Hype24", hype: true, student: true },
-        "Selena Greenwell": { password: "SelenaG$2024", hype: true, student: true },
-        "Abigail": { password: "Abigail!SLP24", hype: true, student: true },
-        "Patton": { password: "Patton@Hype2024", hype: true, student: true },
-        "Unknown": { password: "Unknown#2024", hype: true, student: true }
-    };
-
+// Example static verse list (could be pulled from API later)
+const verses = [
+  "Philippians 4:13 - I can do all things through Christ who strengthens me.",
+  "Jeremiah 29:11 - For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
+  "Proverbs 3:5-6 - Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+  "Isaiah 40:31 - But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
+  "Psalm 23:1 - The Lord is my shepherd; I shall not want.",
+  "Romans 8:28 - And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+  "Matthew 5:16 - Let your light shine before others, that they may see your good deeds and glorify your Father in heaven.",
+  "Joshua 1:9 - Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
+  "Psalm 119:105 - Your word is a lamp to my feet and a light to my path.",
+  "1 Timothy 4:12 - Don’t let anyone look down on you because you are young, but set an example for the believers in speech, in conduct, in love, in faith and in purity.",
+  "Colossians 3:23 - Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.",
+  "2 Corinthians 5:7 - For we live by faith, not by sight."
+];
+    // Show random verse
     const verseBox = document.getElementById("verseText");
-    const dashboard = document.getElementById("dashboard");
-    const loginContainer = document.getElementById("loginContainer");
+    const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+    verseBox.textContent = randomVerse;
+
+    // Show buttons (always visible since no login now)
     const linksDiv = document.getElementById("links");
+    
+    let hypeBtn = document.createElement("button");
+    hypeBtn.textContent = "Hype Team";
+    hypeBtn.onclick = () => window.location.href = "Hype-Team.html";
+    linksDiv.appendChild(hypeBtn);
 
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorDiv = document.getElementById("error");
-
-      if (users[username] && users[username].password === password) {
-        // Hide login, show dashboard
-        loginContainer.classList.add("hidden");
-        dashboard.classList.remove("hidden");
-
-        // Random verse of the day
-        const randomVerse = verses[Math.floor(Math.random() * verses.length)];
-        verseBox.textContent = randomVerse;
-
-        // Generate access buttons
-        linksDiv.innerHTML = "";
-        if (users[username].hype) {
-          let btn = document.createElement("button");
-          btn.textContent = "Hype Team";
-          btn.onclick = () => window.location.href = "Hype-Team.html";
-          linksDiv.appendChild(btn);
-        }
-        if (users[username].student) {
-          let btn = document.createElement("button");
-          btn.textContent = "Student Leadership";
-          btn.onclick = () => window.location.href = "Student-Leadership.html";
-          linksDiv.appendChild(btn);
-        }
-      } else {
-        errorDiv.textContent = "Invalid username or password.";
-      }
-    });
+    let studentBtn = document.createElement("button");
+    studentBtn.textContent = "Student Leadership";
+    studentBtn.onclick = () => window.location.href = "Student-Leadership.html";
+    linksDiv.appendChild(studentBtn);
   </script>
 </body>
 </html>

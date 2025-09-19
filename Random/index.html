@@ -296,9 +296,9 @@
         “Basically, I’ve got your back. You’re not alone on this radio journey.”<br>
         <span style="color:#333;">– Jakob A. White (N9JAW)</span>
     </p>
-</div>
-        </div>
-        <div class="disclaimer"></div>
+    </div> <!-- end .package.pro (make sure your PRO content is inside this) -->
+        </div> <!-- end .pricing -->
+        <div class="disclaimer">
             <b>Disclaimer:</b> USB packages do <u>not</u> include a physical USB drive. Purchase grants you the right to download and install the latest USB contents for your package.
         </div>
         <div class="version">
@@ -317,13 +317,21 @@
         </div>
         <div class="kofi">
             <!-- Ko-fi Button -->
-            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
-            <script type='text/javascript'></script>
-                kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'J3J31E4OR9');
-                kofiwidget2.draw();
+            <script type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+            <script type="text/javascript">
+                // init the widget after the script loads
+                function initKofi() {
+                    if (typeof kofiwidget2 !== 'undefined' && kofiwidget2.init) {
+                        kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'J3J31E4OR9');
+                        kofiwidget2.draw();
+                    }
+                }
+                // try immediate, otherwise wait for load
+                if (document.readyState === 'complete') initKofi();
+                else window.addEventListener('load', initKofi);
             </script>
         </div>
-    </div>
+    </div> 
     <footer>
         All kits are made with hard work and love, and with new hams in mind.<br>
         If you would like to donate to N9JAW, please do so on <a href="https://ko-fi.com/n9jaw" target="_blank" style="color:var(--accent);">Ko-fi</a>.

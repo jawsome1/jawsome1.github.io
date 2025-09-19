@@ -64,21 +64,10 @@
             color: var(--fg);
             transition: background 0.2s, color 0.2s;
         }
-        .usb {
-            border: 1px solid #aaa;
-            background: var(--card);
-        }
-        .basic {
-            border: 1px solid #ddd;
-            background: var(--card);
-        }
-        .pro {
-            border: 1px solid var(--accent);
-            background: #f0f6ff;
-        }
-        [data-theme="dark"] .pro {
-            background: #23262f;
-        }
+        .usb { border: 1px solid #aaa; background: var(--card); }
+        .basic { border: 1px solid #ddd; background: var(--card); }
+        .pro { border: 1px solid var(--accent); background: #f0f6ff; }
+        [data-theme="dark"] .pro { background: #23262f; }
         .out-of-stock-banner {
             position: absolute;
             top: 12px;
@@ -105,11 +94,7 @@
             z-index: 2;
             display: none;
         }
-        .version {
-            margin: 20px 0 10px 0;
-            font-size: 1em;
-            color: #555;
-        }
+        .version { margin: 20px 0 10px 0; font-size: 1em; color: #555; }
         .install-btn {
             display: inline-block;
             margin: 10px 0 20px 0;
@@ -123,34 +108,13 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .install-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .install-btn:hover:enabled {
-            background: #4a7bb7;
-        }
-        .order {
-            margin-top: 15px;
-            font-size: 1em;
-            color: var(--fg);
-        }
-        .kofi {
-            margin-top: 30px;
-        }
-        .order-check {
-            margin: 20px 0 10px 0;
-        }
-        .error {
-            color: #c00;
-            font-size: 0.95em;
-            margin-top: 5px;
-        }
-        .success {
-            color: #090;
-            font-size: 0.95em;
-            margin-top: 5px;
-        }
+        .install-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .install-btn:hover:enabled { background: #4a7bb7; }
+        .order { margin-top: 15px; font-size: 1em; color: var(--fg); }
+        .kofi { margin-top: 30px; }
+        .order-check { margin: 20px 0 10px 0; }
+        .error { color: #c00; font-size: 0.95em; margin-top: 5px; }
+        .success { color: #090; font-size: 0.95em; margin-top: 5px; }
         .disclaimer {
             margin: 30px auto 10px auto;
             max-width: 700px;
@@ -175,10 +139,7 @@
             transition: background 0.2s, color 0.2s;
         }
         @media (max-width: 1200px) {
-            .pricing {
-                flex-direction: column;
-                align-items: center;
-            }
+            .pricing { flex-direction: column; align-items: center; }
         }
         .theme-toggle {
             position: fixed;
@@ -199,16 +160,23 @@
             transition: background 0.2s;
             z-index: 100;
         }
+        /* signature visibility fixes */
+        .signature { color: #333; }
+        [data-theme="dark"] .signature { color: #bbb; }
     </style>
 </head>
 <body>
     <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+
     <div class="container">
         <h1>Ham Radio Starter Kits</h1>
+
         <div class="tulsa-note">
             <span>Note: All packages and USBs are geared heavily towards users in the Tulsa, Oklahoma area.</span>
         </div>
+
         <div class="pricing">
+            <!-- USB Basic -->
             <div class="package usb">
                 <div class="out-of-stock-banner" id="usbBasicStockBanner">OUT OF STOCK</div>
                 <div class="preorder-banner" id="usbBasicPreOrderBanner">Pre-Order</div>
@@ -229,6 +197,8 @@
                 </ul>
                 <p style="font-size:0.95em; color:#555;">Perfect if you just want the learning materials and reference content!</p>
             </div>
+
+            <!-- USB Pro -->
             <div class="package usb">
                 <div class="out-of-stock-banner" id="usbProStockBanner">OUT OF STOCK</div>
                 <div class="preorder-banner" id="usbProPreOrderBanner">Pre-Order</div>
@@ -244,6 +214,8 @@
                 </ul>
                 <p style="font-size:0.95em; color:#555;">Great for those who want the full digital experience and extra support content!</p>
             </div>
+
+            <!-- BASIC KIT -->
             <div class="package basic">
                 <div class="out-of-stock-banner" id="basicStockBanner">OUT OF STOCK</div>
                 <div class="preorder-banner" id="basicPreOrderBanner">Pre-Order</div>
@@ -273,81 +245,91 @@
                 <p style="color:#c00; margin:10px 0 0 0;">❌ No included setup help, programming guidance, or Q&amp;A support.</p>
                 <p style="font-size:0.95em; color:#555;">If you’re comfortable reading the included guides and exploring solo, this is for you!</p>
             </div>
-           <div class="package pro">
-    <div class="out-of-stock-banner" id="proStockBanner">OUT OF STOCK</div>
-    <div class="preorder-banner" id="proPreOrderBanner">Pre-Order</div>
-    <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
-    <strong>$45 – Full Support Edition</strong>
-    <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
-    <ul style="margin:10px 0 0 18px;">
-        <li><strong>Everything in the Basic kit, plus:</strong></li>
-        <li>💬 <strong>Direct Support from N9JAW:</strong>
-            <ul>
-                <li>Help getting your license</li>
-                <li>Programming advice or customization</li>
-                <li>Radio usage help (how to talk, how to listen, etc.)</li>
-                <li>Q&amp;A by email (and possibly local in-person support, depending on availability)</li>
-                <li>Net check-in coaching or walkthrough</li>
-                <li>Ongoing encouragement and community connection</li>
-            </ul>
-        </li>
-    </ul>
-    <p style="font-size:0.95em; color:#555; margin:10px 0 0 0;">
-        “Basically, I’ve got your back. You’re not alone on this radio journey.”<br>
-        <span style="color:#333;">– Jakob A. White (N9JAW)</span>
-    </p>
-    </div> <!-- end .package.pro (make sure your PRO content is inside this) -->
+
+            <!-- PRO KIT -->
+            <div class="package pro">
+                <div class="out-of-stock-banner" id="proStockBanner">OUT OF STOCK</div>
+                <div class="preorder-banner" id="proPreOrderBanner">Pre-Order</div>
+
+                <h3>🚀 Ham Radio Starter Kit – <span style="color:#72a4f2;">PRO</span></h3>
+                <strong>$45 – Full Support Edition</strong>
+                <p style="margin:8px 0 0 0;">Ideal for beginners who want not just the gear, but a mentor in their corner. Includes everything from the Basic kit plus direct access to help and guidance.</p>
+
+                <ul style="margin:10px 0 0 18px;">
+                    <li><strong>Everything in the Basic kit, plus:</strong></li>
+                    <li>💬 <strong>Direct Support from N9JAW:</strong>
+                        <ul>
+                            <li>Help getting your license</li>
+                            <li>Programming advice or customization</li>
+                            <li>Radio usage help (how to talk, how to listen, etc.)</li>
+                            <li>Q&amp;A by email (and possibly local in-person support, depending on availability)</li>
+                            <li>Net check-in coaching or walkthrough</li>
+                            <li>Ongoing encouragement and community connection</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p style="font-size:0.95em; color:#555; margin:10px 0 0 0;">
+                    “Basically, I’ve got your back. You’re not alone on this radio journey.”<br>
+                    <span class="signature">– Jakob A. White (N9JAW)</span>
+                </p>
+            </div>
         </div> <!-- end .pricing -->
+
         <div class="disclaimer">
             <b>Disclaimer:</b> USB packages do <u>not</u> include a physical USB drive. Purchase grants you the right to download and install the latest USB contents for your package.
         </div>
+
         <div class="version">
             <strong>Current USB Version:</strong> 2.5.1
         </div>
+
         <div class="order-check">
             <input type="text" id="orderNum" placeholder="Enter your order number">
             <button onclick="checkOrder()" class="install-btn" style="padding: 8px 16px;">Check Order</button>
             <div id="orderMsg"></div>
         </div>
-        <a id="installBtn" class="install-btn" href="#" style="pointer-events:none;opacity:0.6;" disabled>
+
+        <a id="installBtn" class="install-btn" href="#" style="pointer-events:none;opacity:0.6;" aria-disabled="true">
             Install Current Version
         </a>
+
         <div class="order">
             To place an order, please <a href="mailto:N9JAW@outlook.com">email me</a>.
         </div>
+
         <div class="kofi">
-            <!-- Ko-fi Button -->
+            <!-- Ko-fi Button (external script + init) -->
             <script type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
             <script type="text/javascript">
-                // init the widget after the script loads
                 function initKofi() {
                     if (typeof kofiwidget2 !== 'undefined' && kofiwidget2.init) {
                         kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'J3J31E4OR9');
                         kofiwidget2.draw();
                     }
                 }
-                // try immediate, otherwise wait for load
                 if (document.readyState === 'complete') initKofi();
                 else window.addEventListener('load', initKofi);
             </script>
         </div>
-    </div> 
+    </div> <!-- end .container -->
+
     <footer>
         All kits are made with hard work and love, and with new hams in mind.<br>
         If you would like to donate to N9JAW, please do so on <a href="https://ko-fi.com/n9jaw" target="_blank" style="color:var(--accent);">Ko-fi</a>.
     </footer>
+
     <script>
         // Individual item toggles (set only one true per item)
-        const usbBasicOutOfStock = true;    // Set to true to mark Basic USB as out of stock
-        const usbBasicPreOrder = false;     // Set to true to mark Basic USB as pre-order
-        const usbProOutOfStock = false;     // Set to true to mark Pro USB as out of stock
-        const usbProPreOrder = false;        // Set to true to mark Pro USB as pre-order
-        const basicOutOfStock = true;       // Set to true to mark Basic Kit as out of stock
-        const basicPreOrder = false;        // Set to true to mark Basic Kit as pre-order
-        const proOutOfStock = false;        // Set to true to mark Pro Kit as out of stock
-        const proPreOrder = true;           // Set to true to mark Pro Kit as pre-order
+        const usbBasicOutOfStock = true;
+        const usbBasicPreOrder = false;
+        const usbProOutOfStock = false;
+        const usbProPreOrder = false;
+        const basicOutOfStock = true;
+        const basicPreOrder = false;
+        const proOutOfStock = false;
+        const proPreOrder = true;
 
-        // Show banners based on toggles
         document.addEventListener("DOMContentLoaded", function() {
             // USB Basic
             if (usbBasicPreOrder) {
@@ -395,14 +377,11 @@
             }
         });
 
-        // --- The rest of your code remains unchanged ---
-        // Replace with your real order numbers
+        // Order-checking logic (keeps your original behavior)
         const usbBasicOrders = [];
         const usbProOrders = ['SCG-118', 'RWYZ-2746', 'MKTP-8342', 'VLDC-4921', 'ZQBN-7158'];
         const unsupportedOrders = [];
         const supportedOrders = [];
-        
-        // Replace with your real download links
         const usbBasicLink = "https://your-download-link.com/usb-v2.5.0-basic-content.zip";
         const usbProLink = "https://github.com/jawsome1/USB-Ham-Radio-Starter-kit/archive/refs/heads/main.zip";
         const unsupportedLink = "https://your-download-link.com/usb-v2.5.0-unsupported.exe";
@@ -413,130 +392,92 @@
             const msg = document.getElementById('orderMsg');
             const btn = document.getElementById('installBtn');
 
-            // USB Basic Content
+            function disableInstall(text) {
+                msg.textContent = text;
+                msg.className = "error";
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.6';
+                btn.setAttribute('aria-disabled', 'true');
+                btn.href = "#";
+            }
+
             if (usbBasicOrders.includes(input)) {
-                if (usbBasicPreOrder) {
-                    msg.textContent = "The Basic USB Content package is available for pre-order only.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Pre-Order";
-                } else if (usbBasicOutOfStock) {
-                    msg.textContent = "Sorry, the Basic USB Content package is currently out of stock.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Out of Stock";
-                } else {
+                if (usbBasicPreOrder) disableInstall("The Basic USB Content package is available for pre-order only.");
+                else if (usbBasicOutOfStock) disableInstall("Sorry, the Basic USB Content package is currently out of stock.");
+                else {
                     msg.textContent = "Order number valid for BASIC USB Content. You can now download.";
                     msg.className = "success";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
+                    btn.removeAttribute('aria-disabled');
                     btn.href = usbBasicLink;
                     btn.textContent = "Download Basic USB Content";
                 }
                 return;
             }
-            // USB Pro Content
+
             if (usbProOrders.includes(input)) {
-                if (usbProPreOrder) {
-                    msg.textContent = "The Pro USB Content package is available for pre-order only.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Pre-Order";
-                } else if (usbProOutOfStock) {
-                    msg.textContent = "Sorry, the Pro USB Content package is currently out of stock.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Out of Stock";
-                } else {
+                if (usbProPreOrder) disableInstall("The Pro USB Content package is available for pre-order only.");
+                else if (usbProOutOfStock) disableInstall("Sorry, the Pro USB Content package is currently out of stock.");
+                else {
                     msg.textContent = "Order number valid for PRO USB Content. You can now download.";
                     msg.className = "success";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
+                    btn.removeAttribute('aria-disabled');
                     btn.href = usbProLink;
                     btn.textContent = "Download Pro USB Content";
                 }
                 return;
             }
-            // BASIC Kit
+
             if (unsupportedOrders.includes(input)) {
-                if (basicPreOrder) {
-                    msg.textContent = "The BASIC kit is available for pre-order only. You can still install/download the USB contents below.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Pre-Order";
-                } else if (basicOutOfStock) {
+                if (basicPreOrder) disableInstall("The BASIC kit is available for pre-order only. You can still install/download the USB contents below.");
+                else if (basicOutOfStock) {
                     msg.textContent = "The BASIC kit is currently out of stock. You can still install/download the USB contents below.";
                     msg.className = "error";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
                     btn.href = unsupportedLink;
-                    btn.textContent = "Install Unsuported Version";
+                    btn.textContent = "Install Unsupported Version";
                 } else {
                     msg.textContent = "Order number valid for UNSUPPORTED version. You can now install.";
                     msg.className = "success";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
                     btn.href = unsupportedLink;
-                    btn.textContent = "Install Unsuported Version";
+                    btn.textContent = "Install Unsupported Version";
                 }
                 return;
             }
-            // PRO Kit
+
             if (supportedOrders.includes(input)) {
-                if (proPreOrder) {
-                    msg.textContent = "The PRO kit is available for pre-order only. You can still install/download the USB contents below.";
-                    msg.className = "error";
-                    btn.setAttribute('disabled', 'disabled');
-                    btn.style.pointerEvents = 'none';
-                    btn.style.opacity = '0.6';
-                    btn.href = "#";
-                    btn.textContent = "Pre-Order";
-                } else if (proOutOfStock) {
+                if (proPreOrder) disableInstall("The PRO kit is available for pre-order only. You can still install/download the USB contents below.");
+                else if (proOutOfStock) {
                     msg.textContent = "The PRO kit is currently out of stock. You can still install/download the USB contents below.";
                     msg.className = "error";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
                     btn.href = supportedLink;
-                    btn.textContent = "Install Suported Version";
+                    btn.textContent = "Install Supported Version";
                 } else {
                     msg.textContent = "Order number valid for SUPPORTED version. You can now install.";
                     msg.className = "success";
-                    btn.removeAttribute('disabled');
                     btn.style.pointerEvents = 'auto';
                     btn.style.opacity = '1';
                     btn.href = supportedLink;
-                    btn.textContent = "Install Suported Version";
+                    btn.textContent = "Install Supported Version";
                 }
                 return;
             }
-            // Invalid
+
             msg.textContent = "Invalid order number. Please check and try again.";
             msg.className = "error";
-            btn.setAttribute('disabled', 'disabled');
             btn.style.pointerEvents = 'none';
             btn.style.opacity = '0.6';
             btn.href = "#";
             btn.textContent = "Install Current Version";
+            btn.setAttribute('aria-disabled', 'true');
         }
 
         // Theme toggle logic
